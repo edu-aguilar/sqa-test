@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="quiz-data">
+
+  <script>
+    class QuizData extends Polymer.Element {
+      static get is() { return 'quiz-data'; }
+      static get properties() { return {
+        data: {
+          type: Object,
+          notify: true,
+          readOnly: true
+        },
+        type: {
+          type: String,
+          observer: '_typeChanged'
+        }
+      }}
+
+      _typeChanged(newType) {
+        if (newType) {
+          let url = `data/${newType}.json`;
+          fetch(url)
+            .then((resp) => resp.json())
+            .then((data) => { 
+              console.log(data); 
+              this.set('data', data); 
+            })
+            .catch((error) => { console.log(error); })
+        }
+      }
+
+    }
+
+    customElements.define(QuizData.is, QuizData);
+  </script>
+
+</dom-module>

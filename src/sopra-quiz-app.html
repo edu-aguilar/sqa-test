@@ -24,7 +24,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="question-view.html">
 <link rel="lazy-import" href="result-view.html">
 <link rel="lazy-import" href="not-found-view.html">
-<link rel="import" href="data-providers/quiz-answer-data.html">
+
+<link rel="import" href="data-providers/quiz-status-data.html">
+<link rel="import" href="data-providers/quiz-data.html">
 
 <dom-module id="sopra-quiz-app">
   <template>
@@ -61,7 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subrouteTail}}">
     </app-route>
 
-    <quiz-answer-data id="quizAnswerData"></quiz-answer-data>
+    <quiz-status-data id="quizStatusData"></quiz-status-data>
+    <quiz-data id="quizData" type="[[routeData.type]]" data="{{questionsList}}"></quiz-data>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
@@ -126,7 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready() {
         super.ready();
 
-        this.$.quizAnswerData.setQuizType(this.routeData.type);
+        this.$.quizStatusData.setQuizType(this.routeData.type);
         this.addEventListener('onRouteChange', this._onRouteChange);
       }
 
