@@ -26,13 +26,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>View One</h1>
       <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
       <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      <button on-click="_changeRoute"> Hola </button>
     </div>
   </template>
 
   <script>
     class LandingView extends Polymer.Element {
       static get is() { return 'landing-view'; }
+
+      _changeRoute(){
+        var event = new CustomEvent(
+          'onRouteChange',
+          {detail: {newRoute: 'result'}, composed: true}
+        );
+
+        this.dispatchEvent(event);
+      }
     }
+
+
 
     window.customElements.define(LandingView.is, LandingView);
   </script>

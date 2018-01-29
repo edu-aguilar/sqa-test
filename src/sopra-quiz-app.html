@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="question-view.html">
 <link rel="lazy-import" href="result-view.html">
 <link rel="lazy-import" href="not-found-view.html">
+<link rel="import" href="data-providers/quiz-answer-data.html">
 
 <dom-module id="sopra-quiz-app">
   <template>
@@ -59,6 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
+
+    <quiz-answer-data id="quizAnswerData"></quiz-answer-data>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
@@ -120,6 +123,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
       }
 
+      ready() {
+        super.ready();
+
+        this.$.quizAnswerData.setQuizType(this.routeData.type);
+        this.addEventListener('onRouteChange', this._onRouteChange);
+      }
+
       _routePageChanged(page) {
         if (!page) {
           this.set('route.path', 'frontend');
@@ -140,6 +150,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             null,
             this._showPage404.bind(this),
             true);
+      }
+
+      _onRouteChange(e) {
+        this.set('route.path', `${this.routeData.type}/${e.detail.newRoute}`);
       }
 
       _showPage404() {
