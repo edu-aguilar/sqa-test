@@ -56,7 +56,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route
         route="{{subroute}}"
         pattern="/:page"
-        data="{{subrouteData}}">
+        data="{{subrouteData}}"
+        tail="{{subrouteTail}}">
     </app-route>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
@@ -65,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="landing" href="[[rootPath]][[routeData.type]]/landing">View One</a>
-          <a name="question" href="[[rootPath]][[routeData.type]]/question">View Two</a>
+          <a name="question" href="[[rootPath]][[routeData.type]]/question/1">View Two</a>
           <a name="result" href="[[rootPath]][[routeData.type]]/result">View Three</a>
           <p>[[rootPath]][[routeData.type]]/</p>
         </iron-selector>
@@ -86,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <landing-view name="landing"></landing-view>
-          <question-view name="question"></question-view>
+          <question-view name="question" route="{{subrouteTail}}"></question-view>
           <result-view name="result"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
@@ -119,15 +120,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
       }
 
-      ready() {
-        super.ready();
-
-        // Load path frontend/landing by default
-        this.set('route.path', 'frontend');
-        this.set('subroute.path', 'landing');        
-      }
-
       _routePageChanged(page) {
+        if (!page) {
+          this.set('route.path', 'frontend');
+          this.set('subroute.path', 'landing'); 
+
+          this.page = 'landing';
+
+          return;
+        }
         this.page = page;
       }
 
