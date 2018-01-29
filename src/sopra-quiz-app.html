@@ -22,12 +22,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-<link rel="lazy-import" href="my-view1.html">
-<link rel="lazy-import" href="my-view2.html">
-<link rel="lazy-import" href="my-view3.html">
-<link rel="lazy-import" href="my-view404.html">
+<link rel="lazy-import" href="landing-view.html">
+<link rel="lazy-import" href="question-view.html">
+<link rel="lazy-import" href="result-view.html">
+<link rel="lazy-import" href="not-found-view.html">
 
-<dom-module id="my-app">
+<dom-module id="sopra-quiz-app">
   <template>
     <style>
       :host {
@@ -35,10 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-secondary-color: black;
 
         display: block;
-      }
-
-      app-drawer-layout:not([narrow]) [drawer-toggle] {
-        display: none;
       }
 
       app-header {
@@ -49,23 +45,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-
-      .drawer-list {
-        margin: 0 20px;
-      }
-
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-      }
-
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
-      }
     </style>
 
     <app-location
@@ -75,9 +54,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <app-route
         route="{{route}}"
-        pattern="[[rootPath]]:page"
+        pattern="[[rootPath]]:type"
         data="{{routeData}}"
         tail="{{subroute}}">
+    </app-route>
+
+    <app-route
+        route="{{subroute}}"
+        pattern="/:page"
+        data="{{subrouteData}}">
     </app-route>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
@@ -85,9 +70,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
+          <a name="landing" href="[[rootPath]][[routeData.type]]/landing">View One</a>
+          <a name="question" href="[[rootPath]][[routeData.type]]/question">View Two</a>
+          <a name="result" href="[[rootPath]][[routeData.type]]/result">View Three</a>
+          <p>[[rootPath]][[routeData.type]]/</p>
         </iron-selector>
       </app-drawer>
 
@@ -96,8 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
+            <div main-title> Sopra Quiz App </div>
           </app-toolbar>
         </app-header>
 
@@ -106,18 +91,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+          <landing-view name="landing"></landing-view>
+          <question-view name="question"></question-view>
+          <result-view name="result"></result-view>
+          <not-found-view name="not-found"></not-found-view>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
-      static get is() { return 'my-app'; }
+    class SopraQuizApp extends Polymer.Element {
+      static get is() { return 'sopra-quiz-app'; }
 
       static get properties() {
         return {
@@ -136,24 +121,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get observers() {
         return [
-          '_routePageChanged(routeData.page)',
+          '_routePageChanged(subrouteData.page)'
         ];
       }
 
-      _routePageChanged(page) {
-        // If no page was found in the route data, page will be an empty string.
-        // Default to 'view1' in that case.
-        this.page = page || 'view1';
+      ready() {
+        super.ready();
 
-        // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
-        }
+        // Load path frontend/landing by default
+        this.set('route.path', 'frontend');
+        this.set('subroute.path', 'landing');        
+      }
+
+      _routePageChanged(page) {
+        this.page = page;
       }
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
         Polymer.importHref(
             resolvedPageUrl,
             null,
@@ -162,10 +148,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _showPage404() {
-        this.page = 'view404';
+        this.page = 'not-found';
       }
     }
 
-    window.customElements.define(MyApp.is, MyApp);
+    window.customElements.define(SopraQuizApp.is, SopraQuizApp);
   </script>
 </dom-module>
