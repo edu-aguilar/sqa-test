@@ -1,0 +1,26 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="quiz-status-data">
+
+  <script>
+  (function() {
+    let quizStatusData = {};
+
+    class QuizStatusData extends Polymer.Element {
+      static get is() { return 'quiz-status-data'; }
+      static get properties() { return {}}
+
+      setQuizType(newType) {
+        quizStatusData.type = newType;
+      }
+
+      getQuizType() {
+        return quizStatusData.type;
+      }
+    }
+
+    customElements.define(QuizStatusData.is, QuizStatusData);
+  })();
+  </script>
+
+</dom-module>
