@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="data-providers/quiz-data.html">
+<link rel="import" href="styles/shared-styles.html">
 
 <link rel="lazy-import" href="landing-view.html">
 <link rel="lazy-import" href="question-view.html">
@@ -19,14 +20,21 @@
 
 <dom-module id="sopra-quiz-app">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
       }
 
       app-header {
-        color: black;
         background-color: white;
+      }
+
+      app-toolbar {
+        justify-content: center
+      }
+
+      app-toolbar .quiz-logo {
+        height: var(--sopra-quiz-app-header, 64px);
       }
     </style>
 
@@ -58,7 +66,7 @@
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <div main-title> Sopra Quiz App </div>
+            <img class="quiz-logo" src="../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
           </app-toolbar>
         </app-header>
 
