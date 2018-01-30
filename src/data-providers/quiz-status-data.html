@@ -4,18 +4,52 @@
 
   <script>
   (function() {
-    let quizStatusData = {};
+    let quizStatusData = {
+      answeredQuestions: {}
+    };
+
+    let suscribers = [];
 
     class QuizStatusData extends Polymer.Element {
       static get is() { return 'quiz-status-data'; }
-      static get properties() { return {}}
-
-      setQuizType(newType) {
-        quizStatusData.type = newType;
+      
+      static get properties() { 
+        return {
+          totalQuestions: Number,
+          answeredQuestions: {
+            type: Object,
+            notify: true,
+            value: () => quizStatusData.answeredQuestions
+          },
+          progress: {
+            type: Number,
+            notify: true,
+            computed: '_computeProgress(answeredQuestions.*, totalQuestions)'
+          }
+        }
       }
 
-      getQuizType() {
-        return quizStatusData.type;
+      constructor() {
+        super();
+        suscribers.push(this);
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        suscribers.splice(suscribers.indexOf(this), 1);
+      }
+
+      setAnsweredQuestion(questionId, answerId){
+        quizStatusData.answeredQuestions[questionId] = answerId;
+        this.__updateSuscribers(`answeredQuestions.${questionId}`);
+      }
+
+      _computeProgress(){
+        return Object.keys(this.answeredQuestions).length / this.totalQuestions;
+      }
+
+      __updateSuscribers(path) {
+        suscribers.forEach((suscriber) => { suscriber.notifyPath(path) });
       }
     }
 

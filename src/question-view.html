@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
+<link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
 <dom-module id="question-view">
@@ -29,12 +30,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{routeData}}">
     </app-route>
 
+    <quiz-status-data
+      id="quizStatus"
+      total-questions="[[quizData.questions.length]]"
+      progress="{{quizProgress}}">
+    </quiz-status-data>
+
     <div class="card">
       <div class="circle">2</div>
       <h1>View Two</h1>
       <p> [[route.path]] </p>
       <p> [[routeData.id]] </p>
       <p> [[quizData.testName]] </p>
+      <p> Progress: [[quizProgress]] </p>
     </div>
   </template>
 
@@ -47,6 +55,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           route: Object,
           quizData: Object
         };
+      }
+
+      setAnsweredQuestion(){
+        //this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
       }
     }
 
