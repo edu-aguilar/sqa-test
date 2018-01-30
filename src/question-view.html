@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="components/answer-item.html">
 
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
@@ -19,8 +22,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-
+        background-color: var(--sopra-gray-100);
         padding: 10px;
+      }
+
+      .question-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
     </style>
 
@@ -35,13 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       total-questions="[[quizData.questions.length]]"
       progress="{{quizProgress}}">
     </quiz-status-data>
+    
+    <div class="question-view">
+      <div class="question-container">
+        <template is="dom-repeat" items="{{currentQuestion.options}}" as="option">
+          <answer-item option="{{option}}"></answer-item>
+        </template>
+      </div>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p> [[route.path]] </p>
-      <p> [[routeData.id]] </p>
-      <p> [[quizData.testName]] </p>
       <p> Progress: [[quizProgress]] </p>
     </div>
   </template>
@@ -53,7 +64,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           route: Object,
-          quizData: Object
+          quizData: Object,
+          currentQuestion: {
+            type: Object,
+            value: {
+              "id": "1",
+              "question": "what is your name?",
+              "level": 1,
+              "options": [
+                {
+                  "id": "1",
+                  "value": "Karina, this is a very long text to test for clip and ellipsis"
+                },
+                {
+                  "id": "2",
+                  "value": "Edu"
+                },
+                {
+                  "id": "3",
+                  "value": "David"
+                },
+                {
+                  "id": "4",
+                  "value": "Alvaro"
+                }
+              ]
+            }
+          }
         };
       }
 
