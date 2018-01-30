@@ -8,7 +8,7 @@
       answeredQuestions: {}
     };
 
-    let suscribers = [];
+    let subscribers = [];
 
     class QuizStatusData extends Polymer.Element {
       static get is() { return 'quiz-status-data'; }
@@ -31,12 +31,12 @@
 
       constructor() {
         super();
-        suscribers.push(this);
+        subscribers.push(this);
       }
 
       disconnectedCallback() {
         super.disconnectedCallback();
-        suscribers.splice(suscribers.indexOf(this), 1);
+        subscribers.splice(subscribers.indexOf(this), 1);
       }
 
       setAnsweredQuestion(questionId, answerId){
@@ -49,7 +49,7 @@
       }
 
       __updateSuscribers(path) {
-        suscribers.forEach((suscriber) => { suscriber.notifyPath(path) });
+        subscribers.forEach((suscriber) => { suscriber.notifyPath(path) });
       }
     }
 
