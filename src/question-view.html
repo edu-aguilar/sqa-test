@@ -34,6 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>View Two</h1>
       <p> [[route.path]] </p>
       <p> [[routeData.id]] </p>
+      <p> [[quizData.testName]] </p>
     </div>
   </template>
 
@@ -43,7 +44,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          route: Object
+          route: Object,
+          quizData: Object
         };
       }
     }
