@@ -8,8 +8,8 @@
       static get properties() { return {
         data: {
           type: Object,
-          notify: true,
-          readOnly: true
+          value: () => {},
+          notify: true
         },
         type: {
           type: String,

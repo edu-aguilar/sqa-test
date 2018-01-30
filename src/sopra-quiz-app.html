@@ -64,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
 
     <quiz-status-data id="quizStatusData"></quiz-status-data>
-    <quiz-data id="quizData" type="[[routeData.type]]" data="{{questionsList}}"></quiz-data>
+    <quiz-data id="quizData" type="[[routeData.type]]" data="{{quizData}}"></quiz-data>
 
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
@@ -74,7 +74,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="landing" href="[[rootPath]][[routeData.type]]/landing">View One</a>
           <a name="question" href="[[rootPath]][[routeData.type]]/question/1">View Two</a>
           <a name="result" href="[[rootPath]][[routeData.type]]/result">View Three</a>
-          <p>[[rootPath]][[routeData.type]]/</p>
         </iron-selector>
       </app-drawer>
 
@@ -92,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <landing-view name="landing"></landing-view>
+          <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view name="question" route="{{subrouteTail}}"></question-view>
           <result-view name="result"></result-view>
           <not-found-view name="not-found"></not-found-view>
