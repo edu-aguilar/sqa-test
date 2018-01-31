@@ -13,14 +13,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="components/question-tabs.html">
 
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
-        padding: 10px;
+        background-color: var(--sopra-grey-100);
       }
     </style>
 
@@ -33,8 +33,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <quiz-status-data
       id="quizStatus"
       total-questions="[[quizData.questions.length]]"
-      progress="{{quizProgress}}">
+      progress="{{quizProgress}}"
+      answered-questions="{{answeredQuestions}}">
     </quiz-status-data>
+
+    <question-tabs
+      questions="[[quizData.questions]]"
+      answered-questions="[[answeredQuestions]]"
+      selected="{{routeData.id}}">
+    </question-tabs>
 
     <div class="card">
       <div class="circle">2</div>
@@ -43,6 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p> [[routeData.id]] </p>
       <p> [[quizData.testName]] </p>
       <p> Progress: [[quizProgress]] </p>
+      <p> Selected: [[routeData.id]] </p>
+      <button on-click="setAnsweredQuestion">Responder</button>
     </div>
   </template>
 
@@ -58,7 +67,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       setAnsweredQuestion(){
-        //this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
+        this._index = this._index? this._index + 1 : 1;
+        this.$.quizStatus.setAnsweredQuestion(this._index.toString(), '1')
       }
     }
 
