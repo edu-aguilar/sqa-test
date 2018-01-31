@@ -42,6 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-width: 0;
         outline: none;
         color: #ecf0f1;
+        cursor: pointer;
         background-color: var(--sopra-orange-500);
       }
 
@@ -88,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="description-wrapper">
       <p>[[quizData.description]] </p>
     </div>
-    <button>
+    <button on-click="_changeRoute">
       <span>Empezar</span>
     </button>
   </template>
@@ -106,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _changeRoute() {
         var event = new CustomEvent(
           'onRouteChange',
-          { detail: { newRoute: 'result' }, composed: true }
+          { detail: { newRoute: 'question/1' }, composed: true }
         );
 
         this.dispatchEvent(event);
