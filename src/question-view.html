@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <div class="question-view">
       <div class="question-container">
-        <answer-item option="[[option]]"></answer-item>
+        <!-- <answer-item option="[[option]]"></answer-item> -->
       </div>
 
       <p> Progress: [[quizProgress]] </p>
@@ -61,11 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           route: Object,
-          quizData: Object,
-          option: {
-            type: Object,
-            value: {id: '1', value: 'Karina, this is a very long text to test for clip and ellipsis'}
-          }
+          quizData: Object
         };
       }
 
