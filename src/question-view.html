@@ -20,8 +20,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style include="shared-styles">
       :host {
-        display: block;
-        padding: 10px;
+        display: grid;
+        height: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 50px 1fr 50px;
+        grid-template-areas: 
+          "tabs"
+          "question"
+          "footer";
+        justify-content: center;
+        align-items: center;
+      }
+
+      .questions-tabs {
+        grid-area: tabs;
+      }
+
+      .question-body {
+        grid-area: question;
+      }
+
+      .gradient-progress-bar {
+        grid-area: footer;
+      }
+
+      .question-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
 
@@ -37,11 +63,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       progress="{{quizProgress}}">
     </quiz-status-data>
 
-    <div class="question-view">
+    <div class="questions-tabs"> Question tabs go here! </div>
+
+    <div class="question-body">
       <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
 
-      <p> Progress: [[quizProgress]] </p>
+      <div class="question-controls">
+        <button> finish </button>
+        <button> back </button>
+        <button> next </button>
+      </div>
     </div>
+
+    <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
   </template>
 
   <script>
