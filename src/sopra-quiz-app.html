@@ -27,6 +27,21 @@
 
       app-header {
         background-color: white;
+        grid-area: header;
+      }
+
+      iron-pages {
+        grid-area: pages;
+        height: 100%;
+      }
+
+      app-header-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+        "header"
+        "pages";
       }
 
       app-toolbar {
