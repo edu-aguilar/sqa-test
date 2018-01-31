@@ -52,9 +52,11 @@
       }
     </style>
 
-    <div class="item-container">
-      <span> {{ option.id }} </span> {{ option.value }}
-    </div>
+    <template is="dom-if" if="{{option.id}}">
+      <div class="item-container">
+        <span> {{ option.id }} </span> {{ option.value }}
+      </div>
+    </template>
   </template>
 
   <script>
@@ -65,7 +67,7 @@
         return {
           option: {
             type: Object,
-            value: () => { return {id: '1', value: 'Karina, this is a very long text to test for clip and ellipsis'}; }
+            value: () => {}
           }
         }
       }
