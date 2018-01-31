@@ -150,7 +150,12 @@
       }
 
       _onRouteChange(e) {
-        this.set('route.path', `${this.routeData.type}/${e.detail.newRoute}`);
+        const newRoute = e.detail.newRoute;
+        let path = newRoute === 'not-found'
+          ? `test/${newRoute}`
+          : `${this.routeData.type}/${newRoute}`;
+
+        this.set('route.path', path);
       }
 
       _showPage404() {
