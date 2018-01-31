@@ -1,0 +1,77 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Quiz status data</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/data-providers/quiz-status-data.html">
+  </head>
+  <body>
+    <test-fixture id="FirstInstance">
+      <template>
+        <quiz-status-data
+          total-questions="10">
+        </quiz-status-data>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="SecondInstance">
+      <template>
+        <quiz-status-data
+          total-questions="10">
+        </quiz-status-data>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('quiz-status-data tests', function() {
+        test('Initial progress should be 0', function() {
+          var component = fixture('FirstInstance');
+          assert.equal(component.progress, 0);
+        });
+        test('Progress is incremented correctly', function() {
+          var component = fixture('FirstInstance');
+          component.setAnsweredQuestion('question', 'response');
+          assert.equal(component.progress, 0.1);
+        });
+        test('Progress is recalculated on total changes', function() {
+          var component = fixture('FirstInstance');
+          component.setAnsweredQuestion('question', 'response');
+          component.totalQuestions = 5;
+          assert.equal(component.progress, 0.2);
+        });
+        test('Answered questions property is updated correctly', function() {
+          var component = fixture('FirstInstance');
+          component.setAnsweredQuestion('question', 'response');
+          assert.equal(component.answeredQuestions.question, 'response');
+          assert.equal(Object.keys(component.answeredQuestions).length, 1);
+        });
+        test('Multiple instances share data correctly', function() {
+          var component1 = fixture('FirstInstance');
+          var component2 = fixture('SecondInstance');
+          component1.setAnsweredQuestion('question', 'response');
+          assert.equal(component1.answeredQuestions.question, 'response');
+          assert.equal(component1.progress, 0.1);
+          assert.equal(component2.answeredQuestions.question, 'response');
+          assert.equal(component2.progress, 0.1);
+        });
+      });
+    </script>
+  </body>
+</html>

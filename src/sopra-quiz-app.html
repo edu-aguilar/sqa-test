@@ -84,7 +84,7 @@
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <img class="quiz-logo" src="../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
+            <img class="quiz-logo" src="../../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
           </app-toolbar>
         </app-header>
 
@@ -127,8 +127,6 @@
 
       ready() {
         super.ready();
-
-        this.$.quizStatusData.setQuizType(this.routeData.type);
         this.addEventListener('onRouteChange', this._onRouteChange);
       }
 
