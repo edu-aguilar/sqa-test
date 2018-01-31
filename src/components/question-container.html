@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -13,12 +14,29 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        text-align: center;
+      }
+
+      p {
+        font-size: calc(var(--sopra-font-xxl) + 2px);
+        font-weight: bold;
+      }
+
+      answer-item {
+        margin-bottom: 20px;
       }
     </style>
 
     <div class="question-container">
-      <p> [[question.question]] </p>
-      <!-- <answer-item option="[[option]]"></answer-item> -->
+      <p> [[question.id]] - [[question.question]] </p>
+
+      <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
+          attr-for-selected="id">
+        <template is="dom-repeat" items="{{question.options}}" as="option">
+          <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
+        </template>
+      </iron-selector>
+      
     </div>
     
   </template>
@@ -34,8 +52,8 @@
             value: () => {}
           },
           selectedAnswer: {
-            type: Object,
-            value: () => {},
+            type: String,
+            value: '',
             notify: true
           }
         }

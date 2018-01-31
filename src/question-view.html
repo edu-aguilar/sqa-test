@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: grid;
         height: 100%;
         grid-template-columns: 1fr;
-        grid-template-rows: 50px 1fr 50px;
+        grid-template-rows: 30px 1fr 70px;
         grid-template-areas: 
           "tabs"
           "question"
@@ -38,6 +38,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .question-body {
         grid-area: question;
+        height: 100%;
+        background-color: var(--sopra-gray-100);
       }
 
       .gradient-progress-bar {
@@ -68,11 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="question-body">
       <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
 
-      <div class="question-controls">
-        <button> finish </button>
-        <button> back </button>
-        <button> next </button>
-      </div>
+      <div class="question-controls"> Control Buttons go here! </div>
     </div>
 
     <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
@@ -96,8 +94,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
       }
 
-      _setAnsweredQuestion(){
-        //this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
+      _setAnsweredQuestion(answerId) {
+        let questionId = this.routeData.id;
+        this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
       }
 
       _routeIdChanged(id) {
