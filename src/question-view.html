@@ -48,9 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <div class="question-view">
       <div class="question-container">
-        <template is="dom-repeat" items="{{currentQuestion.options}}" as="option">
-          <answer-item option="{{option}}"></answer-item>
-        </template>
+        <answer-item></answer-item>
       </div>
 
       <p> Progress: [[quizProgress]] </p>
@@ -64,33 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           route: Object,
-          quizData: Object,
-          currentQuestion: {
-            type: Object,
-            value: {
-              "id": "1",
-              "question": "what is your name?",
-              "level": 1,
-              "options": [
-                {
-                  "id": "1",
-                  "value": "Karina, this is a very long text to test for clip and ellipsis"
-                },
-                {
-                  "id": "2",
-                  "value": "Edu"
-                },
-                {
-                  "id": "3",
-                  "value": "David"
-                },
-                {
-                  "id": "4",
-                  "value": "Alvaro"
-                }
-              ]
-            }
-          }
+          quizData: Object
         };
       }
 
