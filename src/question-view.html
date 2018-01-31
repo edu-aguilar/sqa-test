@@ -95,8 +95,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _setAnsweredQuestion(answerId) {
-        let questionId = this.routeData.id;
-        this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
+        if (answerId) {
+          let questionId = this.routeData.id;
+          this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+        }
       }
 
       _routeIdChanged(id) {
