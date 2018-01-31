@@ -10,9 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 
-<link rel="import" href="components/answer-item.html">
+<link rel="import" href="components/question-container.html">
 
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
@@ -23,13 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         padding: 10px;
-      }
-
-      .question-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
       }
     </style>
 
@@ -44,11 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       total-questions="[[quizData.questions.length]]"
       progress="{{quizProgress}}">
     </quiz-status-data>
-    
+
     <div class="question-view">
-      <div class="question-container">
-        <!-- <answer-item option="[[option]]"></answer-item> -->
-      </div>
+      <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
 
       <p> Progress: [[quizProgress]] </p>
     </div>
@@ -65,8 +55,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      setAnsweredQuestion(){
+      static get observers() {
+        return [
+          '_routeIdChanged(routeData.id)',
+          '_setAnsweredQuestion(selectedAnswer)'
+        ];
+      }
+
+      _setAnsweredQuestion(){
         //this.$.quizStatus.setAnsweredQuestion(questionId, answerId)
+      }
+
+      _routeIdChanged(id) {
+        let question = this.quizData.questions.find((q) => {
+          return q.id === id;
+        });
+        this.set('question', question);
       }
     }
 

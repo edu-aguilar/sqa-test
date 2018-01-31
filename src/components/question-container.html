@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<link rel="import" href="answer-item.html">
+
+<dom-module id="question-container">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+    <div class="question-container">
+      <p> [[question.question]] </p>
+      <!-- <answer-item option="[[option]]"></answer-item> -->
+    </div>
+    
+  </template>
+
+  <script>
+    class QuestionContainer extends Polymer.Element {
+      static get is() { return 'question-container'; }
+
+      static get properties() {
+        return {
+          question: {
+            type: Object,
+            value: () => {}
+          },
+          selectedAnswer: {
+            type: Object,
+            value: () => {},
+            notify: true
+          }
+        }
+      }
+    }
+
+    window.customElements.define(QuestionContainer.is, QuestionContainer);
+  </script>
+</dom-module>
