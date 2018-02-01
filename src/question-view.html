@@ -67,21 +67,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       answered-questions="{{answeredQuestions}}">
     </quiz-status-data>
 
-    <div class="questions-tabs"> Question tabs go here! </div>
+    <div class="question-tabs">
+      <question-tabs
+        questions="[[quizData.questions]]"
+        answered-questions="[[answeredQuestions]]"
+        selected="{{routeData.id}}">
+      </question-tabs>
+    </div>
 
     <div class="question-body">
       <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
       <p> [[route.path]] </p>
       <p> [[routeData.id]] </p>
-      <p> [[quizData.testName]] </p>
-      <p> Progress: [[quizProgress]] </p>
-      <p> Selected: [[routeData.id]] </p>
-      <button on-click="setAnsweredQuestion">Responder</button>
 
       <div class="question-controls"> 
         Control Buttons go here! 
-        <!-- This is here just for testing how the components sets de answered questions -->
-        <a href="frontend/question/2"> Go to next </a>
       </div>
     </div>
 
@@ -113,17 +113,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
 
-      setAnsweredQuestion(){
-        this._index = this._index? this._index + 1 : 1;
-        this.$.quizStatus.setAnsweredQuestion(this._index.toString(), '1');
-      }
-
       _routeIdChanged(id) {
         let question = this.quizData.questions.find((q) => {
-          return q.id === id;
+          return Number(q.id) === Number(id);
         });
-        this.set('question', question);
-        this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+        
+        if (question) {
+          this.set('question', question);
+          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+        }
       }
     }
 
