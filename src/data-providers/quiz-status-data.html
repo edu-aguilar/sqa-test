@@ -41,7 +41,6 @@
 
       setAnsweredQuestion(questionId, answerId){
         quizStatusData.answeredQuestions[questionId] = answerId;
-        console.log(quizStatusData);
         this.__updateSuscribers(`answeredQuestions.${questionId}`);
       }
 
