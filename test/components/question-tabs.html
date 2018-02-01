@@ -1,0 +1,75 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/components/question-tabs.html">
+  </head>
+  <body>
+    <test-fixture id="QuestionTabs">
+      <template>
+        <question-tabs
+          questions='[{"id": "1", "question": "question", "options": [{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Karina"}]},
+            {"id": "2", "question": "question", "options": [{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Karina"}]}]' 
+          answered-questions='{"1": "2"}'
+          selected='2'>
+        </question-tabs>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('question-tabs tests', function() {
+        test('Shuld load required components', function(done) {
+          const questionTabs = fixture('QuestionTabs');
+
+          flush(function() {
+            const paperTabs = questionTabs.shadowRoot.querySelector('paper-tabs');
+            const paperTab = questionTabs.shadowRoot.querySelectorAll('paper-tab');
+            
+            done();
+            
+            assert(paperTabs, 'paperTabs is neither `null` nor `undefined`');
+            assert(paperTab, 'paperTab is neither `null` nor `undefined`');
+          });
+        });
+
+        test('Properties should be the right type', function() {
+          const questionTabs = fixture('QuestionTabs');
+
+          assert.typeOf(questionTabs.questions, 'array');
+          assert.typeOf(questionTabs.answeredQuestions, 'object');
+          assert.typeOf(questionTabs.selected, 'number');
+        });
+
+        test('Should mark tab as selected', function(done) {
+          const questionTabs = fixture('QuestionTabs');
+
+          flush(function() {
+            const paperTabSelected = questionTabs.shadowRoot.querySelector('.iron-selected');
+            
+            done();
+
+            assert.equal(Number(paperTabSelected.textContent), 2);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
