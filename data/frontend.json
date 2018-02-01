@@ -1,6 +1,7 @@
 {
+  "id": "1",  
   "testName": "Frontend test",
-  "description": "This is a test",
+  "description": "Bienvenido a Sopra Steria Quiz, la plataforma que nos ayuda a realizar una primera aproximación sobre el nivel técnico de nuestros candidatos a través de unas preguntas de selección simple. Si estás listo, presiona el botón de más abajo para comenzar tu prueba. ¡Mucha suerte!",
   "questions": [
     {
       "id": "1",

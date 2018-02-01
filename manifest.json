@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "SopraSteria Quiz",
+  "short_name": "SopraSteria Quiz",
+  "description": "A SopraSteria quiz to check the candidate's development skills",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",
