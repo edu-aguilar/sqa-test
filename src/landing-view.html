@@ -107,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _changeRoute() {
         var event = new CustomEvent(
           'onRouteChange',
-          { detail: { newRoute: 'question/1' }, composed: true }
+          { detail: { newRoute: `question/${this.quizData.id}` }, composed: true }
         );
 
         this.dispatchEvent(event);

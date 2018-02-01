@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="landingDescriptionOK">
     <template>
-      <landing-view quiz-data='{"testName": "Frontend title", "description": "descripcion test"}'></landing-view>
+      <landing-view quiz-data='{"id":"69696969","testName": "Frontend title", "description": "descripcion test"}'></landing-view>
     </template>
   </test-fixture>
 
@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     suite('landing view tests', function () {
 
-      test('quizData received should be equal to quizData', function () {
+      test('quizData received should be equal to quizDataMock', function () {
         let landingView = fixture('landingDescriptionOK');
         assert.equal(landingView.quizData.testName, quizDataMock.testName);
         assert.equal(landingView.quizData.description, quizDataMock.description);
@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('when click start, and emit the event', function () {
         let landingView = fixture('landingDescriptionOK');
         landingView.addEventListener('onRouteChange', function (event) {
-          assert.equal(event.detail.newRoute, 'question/1');
+          assert.equal(event.detail.newRoute, 'question/69696969');
         });
         landingView._changeRoute();
       });
