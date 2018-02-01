@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
+<link rel="import" href="components/question-container.html">
+
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
 <link rel="import" href="components/question-tabs.html">
@@ -18,9 +20,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
-      :host {
-        display: block;
-        background-color: var(--sopra-grey-100);
+      .question-view-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 70px;
+        grid-template-areas: 
+          "question"
+          "footer";
+        justify-content: center;
+        align-items: center;
+      }
+
+      .question-body {
+        grid-area: question;
+        height: 100%;
+        background-color: var(--sopra-gray-100);
+      }
+
+      .gradient-progress-bar {
+        grid-area: footer;
+      }
+
+      .question-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
 
@@ -37,22 +61,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       answered-questions="{{answeredQuestions}}">
     </quiz-status-data>
 
-    <question-tabs
-      questions="[[quizData.questions]]"
-      answered-questions="[[answeredQuestions]]"
-      selected="{{routeData.id}}">
-    </question-tabs>
-
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p> [[route.path]] </p>
-      <p> [[routeData.id]] </p>
-      <p> [[quizData.testName]] </p>
-      <p> Progress: [[quizProgress]] </p>
-      <p> Selected: [[routeData.id]] </p>
-      <button on-click="setAnsweredQuestion">Responder</button>
+    <div class="question-tabs">
+      <question-tabs
+        questions="[[quizData.questions]]"
+        answered-questions="[[answeredQuestions]]"
+        selected="{{routeData.id}}">
+      </question-tabs>
     </div>
+
+    <div class="question-view-container">
+      <div class="question-body">
+        <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+  
+        <div class="question-controls"> 
+          Control Buttons go here! 
+        </div>
+      </div>
+    
+      <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
+    </di>
   </template>
 
   <script>
@@ -66,9 +93,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      setAnsweredQuestion(){
-        this._index = this._index? this._index + 1 : 1;
-        this.$.quizStatus.setAnsweredQuestion(this._index.toString(), '1')
+      static get observers() {
+        return [
+          '_routeIdChanged(routeData.id)',
+          '_setAnsweredQuestion(selectedAnswer)'
+        ];
+      }
+
+      _setAnsweredQuestion(answerId) {
+        if (answerId) {
+          let questionId = this.routeData.id;
+          this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+        }
+      }
+
+      _routeIdChanged(id) {
+        let question = this.quizData.questions.find((q) => {
+          return Number(q.id) === Number(id);
+        });
+        
+        if (question) {
+          this.set('question', question);
+          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+        }
       }
     }
 
