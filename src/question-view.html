@@ -62,7 +62,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <quiz-status-data
       id="quizStatus"
       total-questions="[[quizData.questions.length]]"
-      progress="{{quizProgress}}">
+      progress="{{quizProgress}}"
+      answered-questions="{{answeredQuestions}}">
     </quiz-status-data>
 
     <div class="questions-tabs"> Question tabs go here! </div>
@@ -70,7 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="question-body">
       <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
 
-      <div class="question-controls"> Control Buttons go here! </div>
+      <div class="question-controls"> 
+        Control Buttons go here! 
+        <a href="frontend/question/2"> Go to next </a>
+      </div>
     </div>
 
     <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
@@ -106,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return q.id === id;
         });
         this.set('question', question);
+        this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
       }
     }
 
