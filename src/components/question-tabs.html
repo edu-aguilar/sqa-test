@@ -9,7 +9,7 @@
 <dom-module id="question-tabs">
   <template>
     <style include="shared-styles">
-      paper-tabs{
+      paper-tabs {
         --paper-tabs: {
           background-color: var(--sopra-grey-200);
           height: 32px;
@@ -30,7 +30,7 @@
 
     <paper-tabs selected="{{selectedIndex}}" scrollable fit-container>
       <template is="dom-repeat" items="{{questions}}">
-        <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]">[[_pageNumber(index)]]</paper-tab>
+        <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
       </template>
     </paper-tabs>
 
