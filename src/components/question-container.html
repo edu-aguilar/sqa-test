@@ -2,6 +2,8 @@
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
+<link rel="import" href="../data-providers/quiz-status-data.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 
 <link rel="import" href="answer-item.html">
@@ -27,6 +29,11 @@
       }
     </style>
 
+    <quiz-status-data
+      id="quizStatus"
+      answered-questions="[[answeredQuestions]]">
+    </quiz-status-data>
+
     <div class="question-container">
       <p> [[question.id]] - [[question.question]] </p>
 
@@ -36,7 +43,6 @@
           <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
         </template>
       </iron-selector>
-      
     </div>
     
   </template>
