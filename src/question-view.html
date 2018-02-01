@@ -20,21 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
-      :host {
+      .question-view-container {
         display: grid;
-        height: 100%;
         grid-template-columns: 1fr;
-        grid-template-rows: 30px 1fr 70px;
+        grid-template-rows: 1fr 70px;
         grid-template-areas: 
-          "tabs"
           "question"
           "footer";
         justify-content: center;
         align-items: center;
-      }
-
-      .questions-tabs {
-        grid-area: tabs;
       }
 
       .question-body {
@@ -75,17 +69,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </question-tabs>
     </div>
 
-    <div class="question-body">
-      <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
-      <p> [[route.path]] </p>
-      <p> [[routeData.id]] </p>
-
-      <div class="question-controls"> 
-        Control Buttons go here! 
+    <div class="question-view-container">
+      <div class="question-body">
+        <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+  
+        <div class="question-controls"> 
+          Control Buttons go here! 
+        </div>
       </div>
-    </div>
-
-    <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
+    
+      <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
+    </di>
   </template>
 
   <script>
