@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="components/question-tabs.html">
 
 <dom-module id="question-view">
   <template>
@@ -70,6 +71,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="question-body">
       <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+      <p> [[route.path]] </p>
+      <p> [[routeData.id]] </p>
+      <p> [[quizData.testName]] </p>
+      <p> Progress: [[quizProgress]] </p>
+      <p> Selected: [[routeData.id]] </p>
+      <button on-click="setAnsweredQuestion">Responder</button>
 
       <div class="question-controls"> 
         Control Buttons go here! 
@@ -104,6 +111,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           let questionId = this.routeData.id;
           this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
         }
+      }
+
+      setAnsweredQuestion(){
+        this._index = this._index? this._index + 1 : 1;
+        this.$.quizStatus.setAnsweredQuestion(this._index.toString(), '1');
       }
 
       _routeIdChanged(id) {
