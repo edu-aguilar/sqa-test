@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -19,37 +9,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="data-providers/quiz-status-data.html">
+<link rel="import" href="data-providers/quiz-data.html">
+<link rel="import" href="styles/shared-styles.html">
 
 <link rel="lazy-import" href="landing-view.html">
 <link rel="lazy-import" href="question-view.html">
 <link rel="lazy-import" href="result-view.html">
 <link rel="lazy-import" href="not-found-view.html">
 
-<link rel="import" href="data-providers/quiz-status-data.html">
-<link rel="import" href="data-providers/quiz-data.html">
-
 <dom-module id="sopra-quiz-app">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
-
         display: block;
       }
 
       app-header {
-        color: #fff;
-        background-color: var(--app-primary-color);
+        background-color: white;
+        grid-area: header;
+      }
+
+      iron-pages {
+        grid-area: pages;
+        height: 100%;
+      }
+
+      app-header-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 64px 1fr;
+        grid-template-areas:
+        "header"
+        "pages";
+      }
+
+      app-toolbar {
+        justify-content: center;
+      }
+
+      app-toolbar .quiz-logo {
+        height: var(--sopra-quiz-app-header, 64px);
       }
     </style>
 
     <app-location
+        id="appLocation"
         route="{{route}}"
         url-space-regex="^[[rootPath]]">
     </app-location>
 
     <app-route
+        id="appRouteType"
         route="{{route}}"
         pattern="[[rootPath]]:type"
         data="{{routeData}}"
@@ -57,6 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
 
     <app-route
+        id="appRoutePage"
         route="{{subroute}}"
         pattern="/:page"
         data="{{subrouteData}}"
@@ -66,23 +78,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <quiz-status-data id="quizStatusData"></quiz-status-data>
     <quiz-data id="quizData" type="[[routeData.type]]" data="{{quizData}}"></quiz-data>
 
-    <app-drawer-layout fullbleed narrow="{{narrow}}">
-      <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="landing" href="[[rootPath]][[routeData.type]]/landing">View One</a>
-          <a name="question" href="[[rootPath]][[routeData.type]]/question/1">View Two</a>
-          <a name="result" href="[[rootPath]][[routeData.type]]/result">View Three</a>
-        </iron-selector>
-      </app-drawer>
+    <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
 
-      <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <div main-title> Sopra Quiz App </div>
+            <img class="quiz-logo" src="../../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
           </app-toolbar>
         </app-header>
 
@@ -112,9 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observer: '_pageChanged',
           },
           routeData: Object,
-          subroute: String,
-          // This shouldn't be neccessary, but the Analyzer isn't picking up
-          // Polymer.Element#rootPath
+          subroute: Object,
           rootPath: String,
         };
       }
@@ -134,9 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (!page) {
           this.set('route.path', 'frontend');
           this.set('subroute.path', 'landing'); 
-
           this.page = 'landing';
-
           return;
         }
         this.page = page;
@@ -153,7 +151,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _onRouteChange(e) {
-        this.set('route.path', `${this.routeData.type}/${e.detail.newRoute}`);
+        const newRoute = e.detail.newRoute;
+        let path = newRoute === 'not-found'
+          ? `test/${newRoute}`
+          : `${this.routeData.type}/${newRoute}`;
+
+        this.set('route.path', path);
       }
 
       _showPage404() {
