@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<link href="http://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css"/>
+
+<dom-module id="progress-timer">
+  <template>
+    <style include="shared-styles">
+      .progress-timer-container {
+        @apply --progress-timer-props;
+
+        --progress-timer-props: {
+          font-family: 'Orbitron', sans-serif;
+          font-size: var(--sopra-font-xxl);
+          color: white;
+        } 
+      }
+    </style>
+
+    <div class="progress-timer-container">
+      [[formattedTime]]
+    </div>
+    </template>
+  </template>
+
+  <script>
+    class ProgressTimer extends Polymer.Element {
+      static get is() { return 'progress-timer'; }
+
+      static get properties() {
+        return {
+          timePassed: {
+            type: Number,
+            value: 0
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        this.formattedTime = this._formatTime(this.timePassed);
+      }
+
+      start() {
+        this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
+      }
+
+      pause() {
+        clearInterval(this.timeInterval);
+      }
+
+      reset() {
+        this.timePassed = 0;
+      }
+
+      _updateTime() {
+        this.timePassed++;
+        this.formattedTime = this._formatTime(this.timePassed);
+      }
+
+      _formatTime() {
+        const date = new Date(null);
+        date.setSeconds(this.timePassed);
+        const result = date.toISOString().substr(11, 8);
+        return result;
+      }
+    }
+
+    window.customElements.define(ProgressTimer.is, ProgressTimer);
+  </script>
+</dom-module>
