@@ -11,34 +11,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
-<link rel="import" href="components/question-container.html">
+<link rel="import" href="styles/shared-styles.html">
 
 <link rel="import" href="data-providers/quiz-status-data.html">
-<link rel="import" href="styles/shared-styles.html">
+
 <link rel="import" href="components/question-tabs.html">
+<link rel="import" href="components/question-container.html">
+<link rel="import" href="components/progress-timer.html">
 
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
       .question-view-container {
         display: grid;
+        height: 100%;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 70px;
+        grid-template-rows: auto 1fr 70px;
         grid-template-areas: 
+          "tabs"
           "question"
           "footer";
         justify-content: center;
         align-items: center;
       }
 
+      .question-tabs {
+        grid-area: tabs;
+      }
+
       .question-body {
         grid-area: question;
         height: 100%;
-        background-color: var(--sopra-gray-100);
+        background-color: var(--sopra-grey-100);
       }
 
       .gradient-progress-bar {
         grid-area: footer;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        background-color: var(--sopra-orange-500);
       }
 
       .question-controls {
@@ -61,15 +75,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       answered-questions="{{answeredQuestions}}">
     </quiz-status-data>
 
-    <div class="question-tabs">
-      <question-tabs
-        questions="[[quizData.questions]]"
-        answered-questions="[[answeredQuestions]]"
-        selected="{{routeData.id}}">
-      </question-tabs>
-    </div>
-
     <div class="question-view-container">
+      <div class="question-tabs">
+        <question-tabs
+          questions="[[quizData.questions]]"
+          answered-questions="[[answeredQuestions]]"
+          selected="{{routeData.id}}">
+        </question-tabs>
+      </div>
+      
       <div class="question-body">
         <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
   
@@ -78,7 +92,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     
-      <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
+      <div class="gradient-progress-bar"> 
+        <p> Progress: [[quizProgress]] </p> 
+        <button on-click="startTimer"> Start time </button>
+        <button on-click="pauseTimer"> Pause time </button>
+        <button on-click="resetTimer"> Reset time </button>
+        <progress-timer id="progressTime" time-passed="[[timePassed]]"></progress-timer>
+      </div>
     </di>
   </template>
 
@@ -98,6 +118,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           '_routeIdChanged(routeData.id)',
           '_setAnsweredQuestion(selectedAnswer)'
         ];
+      }
+
+      startTimer() {
+        this.$.progressTime.start();
+      }
+
+      pauseTimer() {
+        this.$.progressTime.pause();
+      }
+
+      resetTimer() {
+        this.$.progressTime.reset();
       }
 
       _setAnsweredQuestion(answerId) {
