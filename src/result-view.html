@@ -10,34 +10,112 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
 
 <dom-module id="result-view">
   <template>
     <style include="shared-styles">
       :host {
-        display: block;
-        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
 
-      h1 {
-        color: var(--sopra-orange-500);
-        font-size: var(--sopra-font-xs);
+      .box-wrapper {
+        width: 80%;
       }
+
+      .box-wrapper > div {
+        height: 90px
+      }
+
+      .box-wrapper > p {
+        margin: 1em;
+        text-align: center;
+        line-height: 1.7;
+        font-size: var(--sopra-font-xl);
+        color: #333333;
+      }
+
+      @media screen and (min-width: 768px) {
+        .box-wrapper {
+          width: 65%;
+        }
+        .box-wrapper>p {
+          font-size: var(--sopra-font-xxl);
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        .box-wrapper {
+          width: 45%;
+        }
+        .box-wrapper>p {
+          font-size: var(--sopra-font-xxxl);
+        }
+      }
+
     </style>
-
-    <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+    <div class="box-wrapper">
+      <p>
+        ¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos
+        pueda ponerse en contacto contigo.
+      </p>
+    </div>
+    <form id="form1"class="box-wrapper">
+          <div>
+            <label>Nombre*</label>
+            <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
+          </div>
+          <div>
+            <label>Apellidos*</label>
+            <input class="input-quiz" name="name" value="{{user.surname::input}}" type="text" required>
+          </div>
+          <div>
+            <label>Télefono</label>
+            <input class="input-quiz" name="telefono" value="{{user.telefono::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+          </div>
+          <div>
+            <label>Email*</label>
+            <input class="input-quiz"   name="email" value="{{user.email::input}}" type="email" required>
+          </div>
+    </form>  
+    <div>
+      <button class="button-quiz" disabled$="{{!isValid}}">
+        <span>Enviar</span>
+      </button>
     </div>
   </template>
 
   <script>
     class ResultView extends Polymer.Element {
       static get is() { return 'result-view'; }
-    }
+      static get observers() {
+        return [
+           'myTestFunction(user.*)'
+        ]
+      }
+      static get properties() {
+        return {
+          user: {
+            type: Object,
+            value: { },
+            notify: true
+          },
+          isValid: {
+            type: Boolean,
+            value: false,
+            notify: true
+          }
+        }
+      }  
 
+      myTestFunction(){
+       this.isValid =  this.$.form1.checkValidity();
+      }
+      
+    }
     window.customElements.define(ResultView.is, ResultView);
   </script>
 </dom-module>
