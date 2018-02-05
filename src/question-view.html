@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="import" href="components/question-container.html">
+<link rel="import" href="components/gradient-progress-bar.html">
 
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="styles/shared-styles.html">
@@ -77,7 +78,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           Control Buttons go here! 
         </div>
       </div>
-    
+      
+      <gradient-progress-bar progress="[[quizProgress]]">
+        <div slot="left">left</div>
+        <div slot="center">center</div>
+        <div slot="right">right</div>
+      </gradient-progress-bar>
       <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
     </di>
   </template>
