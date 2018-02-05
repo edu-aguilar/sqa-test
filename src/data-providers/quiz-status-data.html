@@ -45,7 +45,7 @@
       }
 
       _computeProgress(){
-        return Object.keys(this.answeredQuestions).length / this.totalQuestions;
+        return Object.keys(this.answeredQuestions).length / this.totalQuestions * 100;
       }
 
       __updateSuscribers(path) {
