@@ -13,11 +13,11 @@
       }
 
       .progress {
-        background-color: var(--gradient-progress-bar-progress-background, var(--sopra-orange-500));
         height: 100%;
         position: absolute;
         top: 0;
         transition: ease-in 0.3s;
+        background-image: linear-gradient(to left, var(--gradient-progress-bar-background, var(--sopra-red-500)) 0%, var(--gradient-progress-bar-progress-background, var(--sopra-orange-500)) 3%);
         @apply --gradient-progress-bar-progress;
       }
 
