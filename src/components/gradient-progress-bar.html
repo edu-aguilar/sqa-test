@@ -87,11 +87,7 @@
 
       _onProgress(progress) {
         let progressBar = this.shadowRoot.querySelector('.progress');
-        if (progress === 100) {
-          progressBar.style.width = '130%';
-          return;
-        }
-        progressBar.style.width = `${progress}%`;
+        progressBar.style.width = progress === 100 ? '130%' : `${progress}%`;
       }
 
     }
