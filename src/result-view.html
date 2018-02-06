@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .box-wrapper {
           width: 65%;
         }
-        .box-wrapper>p {
+        .box-wrapper > p {
           font-size: var(--sopra-font-xxl);
         }
       }
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .box-wrapper {
           width: 45%;
         }
-        .box-wrapper>p {
+        .box-wrapper > p {
           font-size: var(--sopra-font-xxxl);
         }
       }
@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         pueda ponerse en contacto contigo.
       </p>
     </div>
-    <form id="form1"class="box-wrapper">
+    <form id="form1" class="box-wrapper">
           <div>
             <label>Nombre*</label>
             <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() { return 'result-view'; }
       static get observers() {
         return [
-           'myTestFunction(user.*)'
+           '_checkFormValid(user.*)'
         ]
       }
       static get properties() {
@@ -110,7 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }  
 
-      myTestFunction(){
+      _checkFormValid(){
        this.isValid =  this.$.form1.checkValidity();
       }
 
