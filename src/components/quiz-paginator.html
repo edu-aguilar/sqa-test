@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="quiz-paginator">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: flex;
+
+      }
+        span{
+          font-size: var(--sopra-font-xxxl);
+        }
+
+        .start{
+          flex-grow: 1;
+        }
+
+    
+     
+    </style>
+    <div class="start">
+        <span>Finalizar</span>
+    </div>
+    <div>
+        <span>Anterior</span>
+    </div>
+    <div>
+        <span>Siguiente</span>
+    </div>
+  </template>
+
+  <script>
+    class QuizPaginator extends Polymer.Element {
+      static get is() { return 'quiz-paginator'; }
+
+      static get properties() {
+        return {
+          option: {
+            type: Object,
+            value: () => { }
+          }
+        }
+      }
+    }
+
+    window.customElements.define(QuizPaginator.is, QuizPaginator);
+  </script>
+</dom-module>

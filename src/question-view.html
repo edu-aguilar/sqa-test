@@ -42,11 +42,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         grid-area: footer;
       }
 
-      .question-controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
 
     </style>
 
@@ -75,10 +70,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="question-view-container">
       <div class="question-body">
         <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
-  
-        <div class="question-controls"> 
-          Control Buttons go here! 
-        </div>
       </div>
       
       <gradient-progress-bar progress="[[quizProgress]]">
