@@ -21,31 +21,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
-      .question-view-container {
+
+      question-tabs {
+        grid-area: tabs;
+      }
+
+      question-container {
+        grid-area: question;
+      }
+
+      gradient-progress-bar {
+        grid-area: progressbar;
+      }
+
+      :host {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 70px;
-        grid-template-areas: 
-          "question"
-          "footer";
-        justify-content: center;
-        align-items: center;
-      }
-
-      .question-body {
-        grid-area: question;
-        height: 100%;
-        background-color: var(--sopra-gray-100);
-      }
-
-      .gradient-progress-bar {
-        grid-area: footer;
-      }
-
-      .question-controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        grid-template-rows: 32px 1fr 60px;
+        grid-template-areas: "tabs" "question" "progressbar";
       }
 
     </style>
@@ -64,30 +57,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       answered-questions-count="{{answeredQuestionsCount}}">
     </quiz-status-data>
 
-    <div class="question-tabs">
-      <question-tabs
-        questions="[[quizData.questions]]"
-        answered-questions="[[answeredQuestions]]"
-        selected="{{routeData.id}}">
-      </question-tabs>
-    </div>
+    <question-tabs
+      questions="[[quizData.questions]]"
+      answered-questions="[[answeredQuestions]]"
+      selected="{{routeData.id}}">
+    </question-tabs>
 
-    <div class="question-view-container">
-      <div class="question-body">
-        <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
-  
-        <div class="question-controls"> 
-          Control Buttons go here! 
-        </div>
-      </div>
-      
-      <gradient-progress-bar progress="[[quizProgress]]">
-        <div slot="left">[[quizData.testName]]</div>
-        <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
-        <div slot="right">00:00</div>
-      </gradient-progress-bar>
-      <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
-    </di>
+    <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+
+    <gradient-progress-bar progress="[[quizProgress]]">
+      <div slot="left">[[quizData.testName]]</div>
+      <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
+      <div slot="right">00:00</div>
+    </gradient-progress-bar>
+
   </template>
 
   <script>
