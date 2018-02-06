@@ -48,13 +48,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('Progress is incremented correctly', function() {
           var component = fixture('FirstInstance');
           component.setAnsweredQuestion('question', 'response');
-          assert.equal(component.progress, 0.1);
+          assert.equal(component.progress, 0.1 * 100);
         });
         test('Progress is recalculated on total changes', function() {
           var component = fixture('FirstInstance');
           component.setAnsweredQuestion('question', 'response');
           component.totalQuestions = 5;
-          assert.equal(component.progress, 0.2);
+          assert.equal(component.progress, 0.2 * 100);
         });
         test('Answered questions property is updated correctly', function() {
           var component = fixture('FirstInstance');
@@ -67,9 +67,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var component2 = fixture('SecondInstance');
           component1.setAnsweredQuestion('question', 'response');
           assert.equal(component1.answeredQuestions.question, 'response');
-          assert.equal(component1.progress, 0.1);
+          assert.equal(component1.progress, 0.1 * 100);
           assert.equal(component2.answeredQuestions.question, 'response');
-          assert.equal(component2.progress, 0.1);
+          assert.equal(component2.progress, 0.1 * 100);
         });
       });
     </script>

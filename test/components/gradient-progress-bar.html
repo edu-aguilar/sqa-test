@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>Gradient Progress Bar tests</title>
+
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../../src/components/gradient-progress-bar.html">
+</head>
+
+<body>
+
+  <test-fixture id="progressBar">
+    <template>
+      <gradient-progress-bar></gradient-progress-bar>
+    </template>
+  </test-fixture>
+
+  <script>
+
+    suite('Validating default component API', function () {
+      
+      const progressBar = fixture('progressBar');
+
+      test('Default properties', function () {
+        assert.typeOf(progressBar.progress, 'number');
+      });
+
+      test('Needed observer', function () {
+        assert.typeOf(progressBar._onProgress, 'function');
+      });
+
+    });
+
+    suite('Validating default component API', function () {
+
+      const progressBar = fixture('progressBar');
+
+      test('_onProgress observer should update progress-bar style', function () {
+        const newValue = 40;
+        progressBar.progress = newValue;
+        assert.equal(progressBar.shadowRoot.querySelector('.progress').style.width, `${newValue}%`);
+      });
+
+    });
+
+  </script>
+</body>
+
+</html>
