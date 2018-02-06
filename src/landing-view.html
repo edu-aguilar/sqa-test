@@ -35,21 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 80%;
       }
 
-
-      button {
-        margin-top: 2em;
-        padding: 1em 3em 1em 3em;
-        border-width: 0;
-        outline: none;
-        color: #ecf0f1;
-        cursor: pointer;
-        background-color: var(--sopra-orange-500);
-      }
-
-      button > span {
-        font-size: var(--sopra-font-xxl);
-      }
-
       .description-wrapper > p {
         margin: 1em;
         text-align : center;
@@ -89,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="description-wrapper">
       <p>[[quizData.description]] </p>
     </div>
-    <button on-click="_changeRoute">
+    <button class="button-quiz" on-click="_changeRoute">
       <span>Empezar</span>
     </button>
   </template>
