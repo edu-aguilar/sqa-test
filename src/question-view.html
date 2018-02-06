@@ -47,6 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         justify-content: center;
         align-items: center;
       }
+
     </style>
 
     <app-route
@@ -59,7 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       id="quizStatus"
       total-questions="[[quizData.questions.length]]"
       progress="{{quizProgress}}"
-      answered-questions="{{answeredQuestions}}">
+      answered-questions="{{answeredQuestions}}"
+      answered-questions-count="{{answeredQuestionsCount}}">
     </quiz-status-data>
 
     <div class="question-tabs">
@@ -80,9 +82,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       
       <gradient-progress-bar progress="[[quizProgress]]">
-        <div slot="left">left</div>
-        <div slot="center">center</div>
-        <div slot="right">right</div>
+        <div slot="left">[[quizData.testName]]</div>
+        <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
+        <div slot="right">00:00</div>
       </gradient-progress-bar>
       <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
     </di>
