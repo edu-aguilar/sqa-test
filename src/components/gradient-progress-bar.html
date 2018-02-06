@@ -7,7 +7,7 @@
       :host {
         width: 100%;
         height: var(--gradient-progress-bar-height, 60px);
-        background-color: var(--gradient-progress-bar-background, var(--sopra-red-500));
+        background-color: var(--gradient-progress-bar-background, var(--sopra-orange-500));
         position: relative;
         @apply --gradient-progress-bar;
       }
@@ -17,7 +17,7 @@
         position: absolute;
         top: 0;
         transition: ease-in 0.3s;
-        background-image: linear-gradient(to left, var(--gradient-progress-bar-background, var(--sopra-red-500)) 0%, var(--gradient-progress-bar-progress-background, var(--sopra-orange-500)) 3%);
+        background-image: linear-gradient(to left, var(--gradient-progress-bar-background, var(--sopra-orange-500)) 0%, var(--gradient-progress-bar-progress-background, var(--sopra-red-500)) 3%);
         @apply --gradient-progress-bar-progress;
       }
 
@@ -35,6 +35,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        color: white;
         @apply --gradient-progress-bar-slots-wrapper-slot-wrapper;
       }
 
