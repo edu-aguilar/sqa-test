@@ -97,7 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <button on-click="startTimer"> Start time </button>
         <button on-click="pauseTimer"> Pause time </button>
         <button on-click="resetTimer"> Reset time </button>
-        <progress-timer id="progressTime" time-passed="[[timePassed]]"></progress-timer>
+        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
       </div>
     </di>
   </template>
@@ -121,15 +121,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       startTimer() {
-        this.$.progressTime.start();
+        this.$.progressTimer.start();
       }
 
       pauseTimer() {
-        this.$.progressTime.pause();
+        this.$.progressTimer.pause();
       }
 
       resetTimer() {
-        this.$.progressTime.reset();
+        this.$.progressTimer.reset();
       }
 
       _setAnsweredQuestion(answerId) {

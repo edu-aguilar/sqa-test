@@ -38,7 +38,7 @@
 
       ready() {
         super.ready();
-        this.formattedTime = this._formatTime(this.timePassed);
+        this.formattedTime = '00:00:00';
       }
 
       start() {
@@ -51,6 +51,7 @@
 
       reset() {
         this.timePassed = 0;
+        this.formattedTime = this._formatTime(this.timePassed);
       }
 
       _updateTime() {
