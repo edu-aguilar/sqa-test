@@ -30,24 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script>
-      // describe('Thing', function() {
+      let clockTick = 3000;
 
-      //   beforeEach(function() {
-      //     this.clock = sinon.useFakeTimers();
-      //   });
-
-      //   afterEach(function() {
-      //     this.clock = sinon.restore();
-      //   });
-
-      //   it('should increase time', function(){
-      //     let progressTimer = fixture('ProgressTimer');
-      //     progressTimer.start();
-      //     this.clock.tick(101);
-      //     console.log(progressTimer.timePassed);
-      //     assert.equal(progressTimer.timePassed, 10); 
-      //   });
-      // });
       suite('progress-timer tests', function() {
         test('timePassed should be a number', function() {
           let progressTimer = fixture('ProgressTimer');
@@ -61,11 +45,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           let clock = sinon.useFakeTimers(0);
 
           progressTimer.start();
-
-          clock.tick(3000);
-
+          clock.tick(clockTick);
           progressTimer.pause();
           
+          assert.equal(progressTimer.timePassed, 3); 
+        });
+
+        test('timePassed should reset', function() {
+          let progressTimer = fixture('ProgressTimer');
+          progressTimer.timePassed = 0;
+          
+          let clock = sinon.useFakeTimers(0);
+
+          progressTimer.start();
+          clock.tick(clockTick);
+          progressTimer.reset();
+          assert.equal(progressTimer.timePassed, 0); 
+        });
+
+        test('timePassed should be paused', function() {
+          let progressTimer = fixture('ProgressTimer');
+          progressTimer.timePassed = 0;
+          
+          let clock = sinon.useFakeTimers(0);
+
+          progressTimer.start();
+          clock.tick(clockTick);
+          progressTimer.pause();
+          clock.tick(clockTick + 1000);
           assert.equal(progressTimer.timePassed, 3); 
         });
       });
