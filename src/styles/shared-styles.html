@@ -2,12 +2,18 @@
 
 <link rel="import" href="app-colors.html">
 <link rel="import" href="app-sizes.html">
+<link rel="import" href="app-form-items.html">
 
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
   <template>
-    <style include="app-colors app-sizes">
-      
+    <style include="app-colors app-sizes app-form-items">
+  
+      iron-pages > * {
+        height: 100%;
+        box-sizing: border-box;
+      }
+
     </style>
   </template>
 </dom-module>

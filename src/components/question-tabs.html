@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="question-tabs">
+  <template>
+    <style include="shared-styles">
+      paper-tabs {
+        --paper-tabs: {
+          background-color: var(--sopra-grey-200);
+          height: 32px;
+        };
+        --paper-tabs-selection-bar-color: black;
+      }
+
+      paper-tab {
+        --paper-tab-ink: var(--sopra-blue-500);
+      }
+
+      paper-tab.answered {
+        --paper-tab-content: {
+          font-weight: 800;
+        };
+      }
+    </style>
+
+    <paper-tabs selected="{{selectedIndex}}" scrollable fit-container>
+      <template is="dom-repeat" items="{{questions}}">
+        <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
+      </template>
+    </paper-tabs>
+
+  </template>
+
+  <script>
+    class QuestionTabs extends Polymer.Element {
+      static get is() { return 'question-tabs'; }
+
+      static get properties() {
+        return {
+          questions: Array,
+          answeredQuestions: Object,
+          selected: {
+            type: Number,
+            notify: true
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_selectedChanged(selected)',
+          '_selectedIndexChanged(selectedIndex)'
+        ]
+      }
+
+      constructor() {
+        super();
+      }
+
+      _pageNumber(index) {
+        return index + 1;
+      }
+
+      _pageIndex(pageNumber) {
+        return pageNumber - 1;
+      }
+
+      _answeredClass(question) {
+        return this.answeredQuestions[question.id]
+          ? 'answered'
+          : '';
+      }
+
+      _selectedChanged(selectedPageNumber){
+        this.selectedIndex = this._pageIndex(selectedPageNumber);
+      }
+      _selectedIndexChanged(selectedIndex){
+        this.selected = this._pageNumber(selectedIndex);
+      }
+    }
+
+    window.customElements.define(QuestionTabs.is, QuestionTabs);
+  </script>
+</dom-module>

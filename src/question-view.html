@@ -13,13 +13,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="styles/shared-styles.html">
 
+<link rel="import" href="data-providers/quiz-status-data.html">
+
+<link rel="import" href="components/question-tabs.html">
+<link rel="import" href="components/question-container.html">
+<link rel="import" href="components/gradient-progress-bar.html">
+<link rel="import" href="components/progress-timer.html">
+
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
-      :host {
-        display: block;
+      question-tabs {
+        grid-area: tabs;
+      }
 
-        padding: 10px;
+      question-container {
+        grid-area: question;
+      }
+
+      gradient-progress-bar {
+        grid-area: progressbar;
+      }
+
+      :host {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 32px 1fr 60px;
+        grid-template-areas: "tabs" "question" "progressbar";
       }
     </style>
 
@@ -29,12 +49,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{routeData}}">
     </app-route>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p> [[route.path]] </p>
-      <p> [[routeData.id]] </p>
-    </div>
+    <quiz-status-data
+      id="quizStatus"
+      total-questions="[[quizData.questions.length]]"
+      progress="{{quizProgress}}"
+      answered-questions="{{answeredQuestions}}"
+      answered-questions-count="{{answeredQuestionsCount}}">
+    </quiz-status-data>
+
+    <question-tabs
+      questions="[[quizData.questions]]"
+      answered-questions="[[answeredQuestions]]"
+      selected="{{routeData.id}}">
+    </question-tabs>
+
+    <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+
+    <gradient-progress-bar progress="[[quizProgress]]">
+      <div slot="left">[[quizData.testName]]</div>
+      <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
+      <div slot="right">
+        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
+      </div>
+    </gradient-progress-bar>
   </template>
 
   <script>
@@ -43,8 +80,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          route: Object
+          route: Object,
+          quizData: Object
         };
+      }
+
+      static get observers() {
+        return [
+          '_routeIdChanged(routeData.id)',
+          '_setAnsweredQuestion(selectedAnswer)'
+        ];
+      }
+
+      ready() {
+        super.ready();
+        this.$.progressTimer.start();
+      }
+
+      _setAnsweredQuestion(answerId) {
+        if (answerId) {
+          let questionId = this.routeData.id;
+          this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+        }
+      }
+
+      _routeIdChanged(id) {
+        let question = this.quizData.questions.find((q) => {
+          return Number(q.id) === Number(id);
+        });
+        
+        if (question) {
+          this.set('question', question);
+          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+        }
       }
     }
 

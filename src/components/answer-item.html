@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="answer-item">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        width: 100%;
+        height: auto;
+      }
+
+      .item-container {
+        background-color: white;
+        border-radius: 25px;
+        padding: 10px 25px;
+        flex-grow: 1;
+        align-items: center;
+        font-size: var(--sopra-font-m);
+        display: flex;
+      }
+
+      .item-container:hover {
+        cursor: pointer;
+        background-color: var(--sopra-blue-500);
+        color: white;
+        transition: 0.3s all;
+      }
+
+      .item-container span {
+        margin-right: 20px;
+        font-size: var(--sopra-font-xl);
+        border-right: 2px solid var(--sopra-blue-500);
+        width: auto;
+        padding: 5px 12px 5px 12px;
+        border-radius: 50%;
+        text-align: center;
+        border: 1px solid #000;
+        align-self: center;
+      }
+
+      .item-container:hover span {
+        border-color: white;
+      }
+
+      :host(.iron-selected) .item-container {
+        background-color: var(--sopra-blue-500);
+        color: white;
+      }
+
+      :host(.iron-selected) .item-container span {
+        border-color: white;
+      }
+    </style>
+
+    <template is="dom-if" if="{{option.id}}">
+      <div class="item-container">
+        <span> {{ option.id }} </span> {{ option.value }}
+      </div>
+    </template>
+  </template>
+
+  <script>
+    class AnswerItem extends Polymer.Element {
+      static get is() { return 'answer-item'; }
+
+      static get properties() {
+        return {
+          option: {
+            type: Object,
+            value: () => {}
+          }
+        }
+      }
+    }
+
+    window.customElements.define(AnswerItem.is, AnswerItem);
+  </script>
+</dom-module>
