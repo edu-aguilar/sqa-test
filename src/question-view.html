@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div slot="left">[[quizData.testName]]</div>
       <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
       <div slot="right">
-        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
+        <progress-timer id="progressTimer" time-passed="[[timePassed]]" quiz-type="[[quizType]]"></progress-timer>
       </div>
     </gradient-progress-bar>
   </template>
@@ -81,7 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           route: Object,
-          quizData: Object
+          quizData: Object,
+          quizType: String
         };
       }
 
@@ -108,7 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         let question = this.quizData.questions.find((q) => {
           return Number(q.id) === Number(id);
         });
-        
+
         if (question) {
           this.set('question', question);
           this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
