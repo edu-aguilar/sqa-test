@@ -50,11 +50,11 @@
 
       _computeProgress(){
         this.answeredQuestionsCount = Object.keys(this.answeredQuestions).length;
-        return this.answeredQuestionsCount / this.totalQuestions * 100;
+        return this.answewredQuestionsCount / this.totalQuestions * 100;
       }
 
       __updateSuscribers(path) {
-        subscribers.forEach((suscriber) => { suscriber.notifyPath(path) });
+        subscribers.forEach((subscriber) => { subscriber.notifyPath(path) });
       }
     }
 
