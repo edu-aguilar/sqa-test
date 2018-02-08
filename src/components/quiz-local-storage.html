@@ -26,7 +26,6 @@
       }
 
       updateStorage(type, key, data) {
-        console.log('updateStorage for '+type+' key: '+key); // TODO: Delete this log
         if (!this.storageData[type]) {
           this.set('storageData.' +type, {
             'quizData': {},
