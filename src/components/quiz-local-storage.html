@@ -13,16 +13,17 @@
 
       static get is() { return 'quiz-local-storage'; }
 
-      static get properties() { return {
-
-        storageData: {
-          type: Object,
-          value: () => {
-            return {};
-          },
-          notify: true
+      static get properties() {
+        return {
+          storageData: {
+            type: Object,
+            value: () => {
+              return {};
+            },
+            notify: true
+          }
         }
-      }}
+      }
 
       updateStorage(type, key, data) {
         console.log('updateStorage for '+type+' key: '+key); // TODO: Delete this log
