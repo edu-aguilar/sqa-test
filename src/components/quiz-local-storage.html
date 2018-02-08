@@ -4,7 +4,7 @@
 <dom-module id="quiz-local-storage">
 
   <template>
-    <app-localstorage-document key="quiz-local-storage" data="{{dataToStore}}"></app-localstorage-document>
+    <app-localstorage-document key="quiz-local-storage" data="{{storageData}}"></app-localstorage-document>
   </template>
 
   <script>
@@ -15,32 +15,29 @@
 
       static get properties() { return {
 
-        dataToStore: {
+        storageData: {
           type: Object,
           value: () => {
-            return {
-              'quizData': {},
-              'type': '',
-              'answeredQuestions': {},
-              'time': ''
-            };
+            return {};
           },
           notify: true
         }
       }}
+      // 'quizData': {},
+      // 'answeredQuestions': {},
+      // 'time': ''
 
-      updateStorage(key, data) {
-        console.log('updateStorage key: '+key); // TODO: Delete this log
-        this.set('dataToStore.'+key, data);
+      updateStorage(type, key, data) {
+        console.log('updateStorage for '+type+' key: '+key); // TODO: Delete this log
+        this.set('storageData.' +type, {
+          'quizData': {},
+          'answeredQuestions': {},
+          'time': ''});
+        this.set('storageData.' +type+ '.' +key, data);
       }
 
       clearStorage() {
-        this.set('dataToStore', {
-          'quizData': {},
-          'type': '',
-          'answeredQuestions': {},
-          'time': ''
-        });
+        this.set('storageData', {});
       }
     }
 
