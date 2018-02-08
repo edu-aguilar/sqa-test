@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="data-providers/quiz-data.html">
+<link rel="import" href="components/quiz-local-storage.html">
 <link rel="import" href="styles/shared-styles.html">
 
 <link rel="lazy-import" href="landing-view.html">
@@ -75,8 +76,17 @@
         tail="{{subrouteTail}}">
     </app-route>
 
+    <quiz-local-storage
+      id="quizLocalStorage"
+      data-to-store="{{storedData}}">
+    </quiz-local-storage>
     <quiz-status-data id="quizStatusData"></quiz-status-data>
-    <quiz-data id="quizData" type="[[routeData.type]]" data="{{quizData}}"></quiz-data>
+    <quiz-data
+      id="quizData"
+      type="[[routeData.type]]"
+      data="{{quizData}}"
+      stored-data={{storedData}}>
+    </quiz-data>
 
     <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
 
@@ -133,7 +143,7 @@
       _routePageChanged(page) {
         if (!page) {
           this.set('route.path', 'frontend');
-          this.set('subroute.path', 'landing'); 
+          this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
         }

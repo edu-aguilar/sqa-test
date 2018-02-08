@@ -1,12 +1,22 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="quiz-data">
-
+  <template>
+    <quiz-local-storage
+      id="quizLocalStorage"
+      data-to-store="{{dataToStore}}">
+    </quiz-local-storage>
+  </template>
   <script>
     class QuizData extends Polymer.Element {
       static get is() { return 'quiz-data'; }
       static get properties() { return {
         data: {
+          type: Object,
+          value: () => {},
+          notify: true
+        },
+        storedData: {
           type: Object,
           value: () => {},
           notify: true
@@ -20,11 +30,13 @@
       _typeChanged(newType) {
         if (newType) {
           let url = `data/${newType}.json`;
+          debugger;
           fetch(url)
             .then((resp) => resp.json())
-            .then((data) => { 
-              console.log(data); 
-              this.set('data', data); 
+            .then((data) => {
+              this.$.quizLocalStorage.updateStorage('quizData', data);
+              this.$.quizLocalStorage.updateStorage('type', newType);
+              this.set('data', data);
             })
             .catch(() => { this._notifyError() })
         }
