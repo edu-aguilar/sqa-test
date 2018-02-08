@@ -4,7 +4,7 @@
   <template>
     <quiz-local-storage
       id="quizLocalStorage"
-      data-to-store="{{dataToStore}}">
+      storage-data="{{storageData}}">
     </quiz-local-storage>
   </template>
   <script>
@@ -16,29 +16,30 @@
           value: () => {},
           notify: true
         },
-        storedData: {
-          type: Object,
-          value: () => {},
-          notify: true
-        },
         type: {
-          type: String,
+          type: String
+        },
+        storageData: {
           observer: '_typeChanged'
         }
       }}
 
-      _typeChanged(newType) {
-        if (newType) {
-          let url = `data/${newType}.json`;
-          debugger;
-          fetch(url)
+      _typeChanged() {
+        if (this.type) {
+          if (!this.$.quizLocalStorage.storageData[this.type]) {
+            console.log('Loading data from json...'); // TODO: remove this comments
+            let url = `data/${this.type}.json`;
+            fetch(url)
             .then((resp) => resp.json())
             .then((data) => {
-              this.$.quizLocalStorage.updateStorage('quizData', data);
-              this.$.quizLocalStorage.updateStorage('type', newType);
+              this.$.quizLocalStorage.updateStorage(this.type, 'quizData', data);
               this.set('data', data);
             })
             .catch(() => { this._notifyError() })
+          } else {
+            console.log('Loading data from storage...'); // TODO: remove this comments
+            this.set('data', this.$.quizLocalStorage.storageData[this.type].quizData);
+          }
         }
       }
 
