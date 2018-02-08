@@ -20,11 +20,11 @@
           type: String
         },
         storageData: {
-          observer: '_typeChanged'
+          observer: '_storageChanged'
         }
       }}
 
-      _typeChanged() {
+      _storageChanged() {
         if (this.type) {
           if (!this.$.quizLocalStorage.storageData[this.type]) {
             console.log('Loading data from json...'); // TODO: remove this comments
