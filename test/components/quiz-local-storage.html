@@ -1,0 +1,64 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/components/quiz-local-storage.html">
+  </head>
+  <body>
+    <test-fixture id="localStorage">
+      <template>
+        <quiz-local-storage id="quizLocalStorage" storage-data="{}">
+        </quiz-local-storage>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('quiz-local-storage tests', function() {
+        test('Should initialize localStorage', function(done) {
+          const quizLocalStorage = fixture('localStorage');
+          assert(quizLocalStorage, 'quizLocalStorage is neither `null` nor `undefined`');
+          done();
+        });
+
+        test('localStorage has to be right types', function() {
+          const quizLocalStorage = fixture('localStorage');
+          assert.typeOf(quizLocalStorage.storageData, 'object');
+        });
+
+        test('Should update localStorage', function() {
+          const quizLocalStorage = fixture('localStorage');
+          quizLocalStorage.updateStorage('test', 'quizData', 'test');
+          assert.typeOf(quizLocalStorage.storageData.test.quizData, 'string');
+          assert(quizLocalStorage.storageData.test.quizData === 'test');
+        });
+
+        test('Should clear localStorage', function() {
+          const quizLocalStorage = fixture('localStorage');
+          quizLocalStorage.updateStorage('test', 'quizData', 'test');
+          assert(quizLocalStorage.storageData.test.quizData === 'test');
+          quizLocalStorage.clearStorage();
+          assert.typeOf(quizLocalStorage.storageData.test, 'undefined');
+        });
+
+      });
+    </script>
+  </body>
+</html>
