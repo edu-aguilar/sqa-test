@@ -1,7 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="quiz-status-data">
-
+  <template>
+    <quiz-local-storage
+      id="quizLocalStorage"
+      storage-data="{{storageData}}">
+    </quiz-local-storage>
+  </template>
   <script>
   (function() {
     let quizStatusData = {
@@ -12,8 +17,8 @@
 
     class QuizStatusData extends Polymer.Element {
       static get is() { return 'quiz-status-data'; }
-      
-      static get properties() { 
+
+      static get properties() {
         return {
           totalQuestions: Number,
           answeredQuestions: {
@@ -29,6 +34,12 @@
           answeredQuestionsCount: {
             type: Number,
             notify: true
+          },
+          storageData: {
+            observer: '_loadFromStorage'
+          },
+          quizType: {
+            type: String
           }
         }
       }
@@ -43,8 +54,14 @@
         subscribers.splice(subscribers.indexOf(this), 1);
       }
 
+      _loadFromStorage() {
+        if (this.$.quizLocalStorage.storageData[this.quizType]) {
+          quizStatusData.answeredQuestions = this.$.quizLocalStorage.storageData[this.quizType].answeredQuestions || {};
+        }
+      }
       setAnsweredQuestion(questionId, answerId){
         quizStatusData.answeredQuestions[questionId] = answerId;
+        this.$.quizLocalStorage.updateStorage(this.quizType, 'answeredQuestions.'+questionId, answerId);
         this.__updateSuscribers(`answeredQuestions.${questionId}`);
       }
 
