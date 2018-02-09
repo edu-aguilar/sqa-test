@@ -78,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
+        this.$.progressTimer.start();
         this.addEventListener('onPageQuestionChange', this._pageChange);
       }
 
@@ -86,11 +87,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           '_routeIdChanged(routeData.id)',
           '_setAnsweredQuestion(selectedAnswer)'
         ];
-      }
-
-      ready() {
-        super.ready();
-        this.$.progressTimer.start();
       }
 
       _setAnsweredQuestion(answerId) {
