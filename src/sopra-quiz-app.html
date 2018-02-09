@@ -78,14 +78,14 @@
 
     <quiz-local-storage
       id="quizLocalStorage"
-      data-to-store="{{storedData}}">
+      storage-data="{{storageData}}">
     </quiz-local-storage>
     <quiz-status-data id="quizStatusData" quiz-type="[[routeData.type]]"></quiz-status-data>
     <quiz-data
       id="quizData"
       type="[[routeData.type]]"
       data="{{quizData}}"
-      stored-data={{storedData}}>
+      storage-data={{storageData}}>
     </quiz-data>
 
     <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
