@@ -8,40 +8,48 @@
         display: flex;
 
       }
-        span{
-          font-size: var(--sopra-font-xxxl);
-        }
 
-        .start{
-          flex-grow: 1;
-        }
+      .finish{
+        flex-grow: 1;
+        text-align: left;
+      }
+
+      button{  
+        font-size: var(--sopra-font-xxxl);
+        margin-top: 2em;
+        border-width: 0;
+        outline: none;
+        color: var(--sopra-blue-500);
+        cursor: pointer;
+        background-color: transparent;
+      }
+
+
+      button[disabled]:active{
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
 
     
-     
     </style>
-    <div class="start">
-        <span>Finalizar</span>
-    </div>
-    <div>
-        <span>Anterior</span>
-    </div>
-    <div>
-        <span>Siguiente</span>
-    </div>
+    <button class="finish" on-click="_changeRoute" data="finish">Finalizar</button>
+    <button class="back" on-click="_changeRoute" data="back">Anterior</button>
+    <button class="next"  on-click="_changeRoute" data="next" >Siguiente</button>
   </template>
 
   <script>
     class QuizPaginator extends Polymer.Element {
       static get is() { return 'quiz-paginator'; }
 
-      static get properties() {
-        return {
-          option: {
-            type: Object,
-            value: () => { }
-          }
-        }
+      _changeRoute(event) {
+          let  data =  event.target.getAttribute('data');
+          var event = new CustomEvent('onPageQuestionChange',
+                                      { detail: {  operation: data },
+                                        composed: true });
+          this.dispatchEvent(event);   
       }
+
     }
 
     window.customElements.define(QuizPaginator.is, QuizPaginator);

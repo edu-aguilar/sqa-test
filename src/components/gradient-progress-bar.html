@@ -9,6 +9,7 @@
         height: var(--gradient-progress-bar-height, 60px);
         background-color: var(--gradient-progress-bar-background, var(--sopra-orange-500));
         position: relative;
+        overflow: hidden;
         @apply --gradient-progress-bar;
       }
 
@@ -17,7 +18,7 @@
         position: absolute;
         top: 0;
         transition: ease-in 0.3s;
-        background-image: linear-gradient(to left, var(--gradient-progress-bar-background, var(--sopra-orange-500)) 0%, var(--gradient-progress-bar-progress-background, var(--sopra-red-500)) 3%);
+        background-image: linear-gradient(to left, var(--gradient-progress-bar-background, var(--sopra-orange-500)) 0%, var(--gradient-progress-bar-progress-background, var(--sopra-red-500)) 15%);
         @apply --gradient-progress-bar-progress;
       }
 
@@ -85,7 +86,8 @@
       }
 
       _onProgress(progress) {
-        this.shadowRoot.querySelector('.progress').style.width = `${progress}%`;
+        let progressBar = this.shadowRoot.querySelector('.progress');
+        progressBar.style.width = progress === 100 ? '130%' : `${progress}%`;
       }
 
     }

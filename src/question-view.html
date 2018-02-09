@@ -21,64 +21,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="question-view">
   <template>
     <style include="shared-styles">
-      .question-view-container {
+      question-tabs {
+        grid-area: tabs;
+      }
+
+      question-container {
+        grid-area: question;
+      }
+
+      gradient-progress-bar {
+        grid-area: progressbar;
+      }
+
+      :host {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 70px;
-        grid-template-areas: 
-          "question"
-          "footer";
-        justify-content: center;
-        align-items: center;
+        grid-template-rows: 32px 1fr 60px;
+        grid-template-areas: "tabs" "question" "progressbar";
       }
-
-      .question-body {
-        grid-area: question;
-        height: 100%;
-        background-color: var(--sopra-gray-100);
-      }
-
-      .gradient-progress-bar {
-        grid-area: footer;
-      }
-
-
     </style>
 
-    <app-route
-      route="{{route}}"
-      pattern="/:id"
-      data="{{routeData}}">
+    <app-route route="{{route}}" pattern="/:id" data="{{routeData}}">
     </app-route>
 
-    <quiz-status-data
-      id="quizStatus"
-      total-questions="[[quizData.questions.length]]"
-      progress="{{quizProgress}}"
-      answered-questions="{{answeredQuestions}}"
+    <quiz-status-data id="quizStatus" total-questions="[[quizData.questions.length]]" progress="{{quizProgress}}" answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}">
     </quiz-status-data>
 
-    <div class="question-tabs">
-      <question-tabs
-        questions="[[quizData.questions]]"
-        answered-questions="[[answeredQuestions]]"
-        selected="{{routeData.id}}">
-      </question-tabs>
-    </div>
+    <question-tabs questions="[[quizData.questions]]" answered-questions="[[answeredQuestions]]" selected="{{routeData.id}}">
+    </question-tabs>
 
-    <div class="question-view-container">
-      <div class="question-body">
-        <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
-      </div>
-      
-      <gradient-progress-bar progress="[[quizProgress]]">
-        <div slot="left">[[quizData.testName]]</div>
-        <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
-        <div slot="right">00:00</div>
-      </gradient-progress-bar>
-      <div class="gradient-progress-bar"> <p> Progress: [[quizProgress]] </p> </div>
-    </di>
+    <question-container quiz-data="[[quizData]]" question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+
+
+    <gradient-progress-bar progress="[[quizProgress]]">
+      <div slot="left">[[quizData.testName]]</div>
+      <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
+      <div slot="right">00:00</div>
+    </gradient-progress-bar>
+
   </template>
 
   <script>
@@ -92,6 +73,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
+      ready() {
+        super.ready();
+        this.addEventListener('onPageQuestionChange', this._pageChange);
+      }
+
       static get observers() {
         return [
           '_routeIdChanged(routeData.id)',
@@ -103,6 +89,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (answerId) {
           let questionId = this.routeData.id;
           this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+          // check if finish button have to be enabled
+          this.shadowRoot
+          .querySelector('question-container')
+          .shadowRoot.querySelector('quiz-paginator')
+          .shadowRoot
+          .querySelector('.finish')
+          .disabled = Object.keys(this.answeredQuestions).length === this.quizData.questions.length  ? false : true;
         }
       }
 
@@ -110,14 +103,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         let question = this.quizData.questions.find((q) => {
           return Number(q.id) === Number(id);
         });
-        
+
+        this._setButtonDisabled(this.quizData.questions.findIndex(i => i.id == question.id));
+
         if (question) {
           this.set('question', question);
           this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+
         }
       }
+
+      _pageChange(event) {
+
+        let data = event.detail.operation;
+        let index = this.quizData.questions.findIndex(i => i.id == this.question.id);
+
+        switch (data) {
+          case 'next':
+            index++;
+            break;
+          case 'back':
+            index--;
+            break;
+          case 'finish':
+            var event = new CustomEvent('onRouteChange', { detail: { newRoute: 'result' }, composed: true });
+            this.dispatchEvent(event);
+            break;
+          default:
+            break;
+        }  
+
+        this.routeData.id =  this.quizData.questions[index].id;
+        this.notifyPath('routeData.id');
+             
+      }
+
+
+      _setButtonDisabled(index) {
+
+        let quizPaginator = this.shadowRoot.querySelector('question-container')
+                                .shadowRoot.querySelector('quiz-paginator')
+
+        if (index === this.quizData.questions.length - 1) {
+          quizPaginator.shadowRoot.querySelector('.next').disabled = true;
+          quizPaginator.shadowRoot.querySelector('.back').disabled = false;
+        } else if (index === 0) {
+          quizPaginator.shadowRoot.querySelector('.next').disabled = false;
+          quizPaginator.shadowRoot.querySelector('.back').disabled = true;
+        } else {
+          quizPaginator.shadowRoot.querySelector('.next').disabled = false;
+          quizPaginator.shadowRoot.querySelector('.back').disabled = false;
+        }
+        
+      }
+
+
     }
 
     window.customElements.define(QuestionView.is, QuestionView);
+
   </script>
 </dom-module>
