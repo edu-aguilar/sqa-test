@@ -11,12 +11,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
-<link rel="import" href="components/question-container.html">
-<link rel="import" href="components/gradient-progress-bar.html">
+<link rel="import" href="styles/shared-styles.html">
 
 <link rel="import" href="data-providers/quiz-status-data.html">
-<link rel="import" href="styles/shared-styles.html">
+
 <link rel="import" href="components/question-tabs.html">
+<link rel="import" href="components/question-container.html">
+<link rel="import" href="components/gradient-progress-bar.html">
+<link rel="import" href="components/progress-timer.html">
 
 <dom-module id="question-view">
   <template>
@@ -57,9 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <gradient-progress-bar progress="[[quizProgress]]">
       <div slot="left">[[quizData.testName]]</div>
       <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
-      <div slot="right">00:00</div>
+      <div slot="right">
+        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
+      </div>
     </gradient-progress-bar>
-
   </template>
 
   <script>
@@ -83,6 +86,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           '_routeIdChanged(routeData.id)',
           '_setAnsweredQuestion(selectedAnswer)'
         ];
+      }
+
+      ready() {
+        super.ready();
+        this.$.progressTimer.start();
       }
 
       _setAnsweredQuestion(answerId) {
