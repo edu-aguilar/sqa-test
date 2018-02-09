@@ -27,12 +27,12 @@
 
       updateStorage(type, key, data) {
         if (!this.storageData[type]) {
-          this.set('storageData.' +type, {
+          this.set(`storageData.${type}`, {
             'quizData': {},
             'answeredQuestions': {},
             'time': 0});
         }
-        this.set('storageData.' +type+ '.' +key, data);
+        this.set(`storageData.${type}.${key}`, data);
       }
 
       clearStorage() {

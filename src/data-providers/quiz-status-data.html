@@ -62,7 +62,7 @@
       }
       setAnsweredQuestion(questionId, answerId){
         quizStatusData.answeredQuestions[questionId] = answerId;
-        this.$.quizLocalStorage.updateStorage(this.quizType, 'answeredQuestions.'+questionId, answerId);
+        this.$.quizLocalStorage.updateStorage(this.quizType, `answeredQuestions.${questionId}`, answerId);
         this.__updateSuscribers(`answeredQuestions.${questionId}`);
       }
 
