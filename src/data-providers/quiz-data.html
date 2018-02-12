@@ -28,6 +28,7 @@
       _storageChanged() {
         if (this.type) {
           if (!this.$.quizLocalStorage.storageData[this.type]) {
+            console.log('Loading data from json...');
             let url = `data/${this.type}.json`;
             fetch(url)
             .then((resp) => resp.json())
@@ -37,6 +38,7 @@
             })
             .catch(() => { this._notifyError() })
           } else {
+            console.log('Loading data from storage...');
             this.set('data', this.$.quizLocalStorage.storageData[this.type].quizData);
           }
         }
