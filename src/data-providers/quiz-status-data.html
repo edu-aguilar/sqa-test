@@ -44,6 +44,10 @@
       }
 
       setAnsweredQuestion(questionId, answerId){
+        if (!quizStatusData.answeredQuestions[questionId]) {
+          quizStatusData.answeredQuestions[questionId] = ''; 
+          this.__updateSuscribers(`answeredQuestions.${questionId}`);
+        }
         quizStatusData.answeredQuestions[questionId] = answerId;
         this.__updateSuscribers(`answeredQuestions.${questionId}`);
       }
