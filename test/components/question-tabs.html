@@ -69,6 +69,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             assert.equal(Number(paperTabSelected.textContent), 2);
           });
         });
+
+        test('Should mark tab as answered', function(done) {
+          const questionTabs = fixture('QuestionTabs');
+
+          flush(function() {
+            const paperTabAnswered = questionTabs.shadowRoot.querySelector('.answered');
+
+            done();
+
+            assert.equal(Number(paperTabAnswered.textContent), 1);
+          });
+        });
       });
     </script>
   </body>
