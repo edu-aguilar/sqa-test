@@ -46,10 +46,10 @@
       setAnsweredQuestion(questionId, answerId){
         if (!quizStatusData.answeredQuestions[questionId]) {
           quizStatusData.answeredQuestions[questionId] = ''; 
-          this.__updateSuscribers(`answeredQuestions.${questionId}`);
+          this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
-        this.__updateSuscribers(`answeredQuestions.${questionId}`);
+        this.__updateSubscribers(`answeredQuestions.${questionId}`);
       }
 
       _computeProgress(){
@@ -57,7 +57,7 @@
         return this.answeredQuestionsCount / this.totalQuestions * 100;
       }
 
-      __updateSuscribers(path) {
+      __updateSubscribers(path) {
         subscribers.forEach((subscriber) => { subscriber.notifyPath(path) });
       }
     }

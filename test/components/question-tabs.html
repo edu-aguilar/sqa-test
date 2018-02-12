@@ -42,11 +42,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           flush(function() {
             const paperTabs = questionTabs.shadowRoot.querySelector('paper-tabs');
             const paperTab = questionTabs.shadowRoot.querySelectorAll('paper-tab');
-            
-            done();
-            
+
             assert(paperTabs, 'paperTabs is neither `null` nor `undefined`');
             assert(paperTab, 'paperTab is neither `null` nor `undefined`');
+            done();
           });
         });
 
@@ -63,10 +62,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           flush(function() {
             const paperTabSelected = questionTabs.shadowRoot.querySelector('.iron-selected');
-            
-            done();
-
             assert.equal(Number(paperTabSelected.textContent), 2);
+            done();
           });
         });
 
@@ -75,10 +72,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           flush(function() {
             const paperTabAnswered = questionTabs.shadowRoot.querySelector('.answered');
-
-            done();
-
             assert.equal(Number(paperTabAnswered.textContent), 1);
+            done();
           });
         });
       });
