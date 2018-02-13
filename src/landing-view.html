@@ -19,11 +19,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
       }
 
       .landing-img {
         width: 100%;
-        height: 230px;
+        height: 50%;
         background-image: url(../images/landing-background.jpeg);
         background-repeat: no-repeat;
         background-size: cover;
@@ -31,8 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .description-wrapper {
         background-color: rgba(255, 255, 255, 0.5);
-        margin-top: -80px;
         width: 80%;
+        position: absolute;
       }
 
       .description-wrapper > p {
@@ -49,7 +50,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       @media screen and (min-width: 768px) {
         .landing-img {
-          height: 300px;
           background-attachment: fixed;
           background-position: center; 
         }
@@ -62,14 +62,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       @media screen and (min-width: 1024px) {
-        .landing-img {
-          height: 360px;
-        }
         .description-wrapper {
           width: 50%;
-        }
-        .description-wrapper > p {
-          font-size: var(--sopra-font-xxxl);
         }
       }
 
