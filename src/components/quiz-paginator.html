@@ -4,17 +4,17 @@
 <dom-module id="quiz-paginator">
   <template>
     <style include="shared-styles">
-       :host {
+      :host {
         display: flex;
 
       }
 
-      .finish{
+      .finish {
         flex-grow: 1;
         text-align: left;
       }
 
-      button{  
+      button {
         font-size: var(--sopra-font-xxxl);
         margin-top: 2em;
         border-width: 0;
@@ -24,34 +24,63 @@
         background-color: transparent;
       }
 
-
-      button[disabled]:active{
+      button[disabled]:active {
         opacity: 0.4;
         cursor: not-allowed;
         pointer-events: none;
       }
-
-    
     </style>
-    <button class="finish" on-click="_changeRoute" data="finish" disabled>Finalizar</button>
-    <button class="back" on-click="_changeRoute" data="back">Anterior</button>
-    <button class="next"  on-click="_changeRoute" data="next" >Siguiente</button>
+    <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">Finalizar</button>
+    <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">Anterior</button>
+    <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">Siguiente</button>
   </template>
 
   <script>
     class QuizPaginator extends Polymer.Element {
       static get is() { return 'quiz-paginator'; }
+      static get properties() {
+        return {
+          answeredQuestionsCount: {
+            type: Number,
+            observer: '_observerIfFinished'
+          },
+          currentQuestionId: {
+            type: Number,
+            observer: '_observerRouterId'
+          },
+          quizData: Object,
+          finishDisabled: {
+            type: Boolean,
+            value: false
+          },
+          backDisabled: {
+            type: Boolean,
+            value: false
+          },
+          nextDisabled: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
 
       _changeRoute(event) {
-          let  data =  event.target.getAttribute('data');
-          var event = new CustomEvent('onPageQuestionChange',
-                                      { detail: {  operation: data },
-                                        composed: true });
-          this.dispatchEvent(event);   
+        let data = event.target.getAttribute('data');
+        var event = new CustomEvent('onPageQuestionChange', { detail: { operation: data }, composed: true });
+        this.dispatchEvent(event);
+      }
+
+      _observerIfFinished() {
+          this.finishDisabled = !(this.answeredQuestionsCount === this.quizData.questions.length)
+      }
+
+      _observerRouterId() {
+        const index = parseInt(this.currentQuestionId)
+        this.nextDisabled = index === this.quizData.questions.length ? true : false;
+        this.backDisabled = index === 1 ? true : false;
       }
 
     }
-
     window.customElements.define(QuizPaginator.is, QuizPaginator);
   </script>
 </dom-module>

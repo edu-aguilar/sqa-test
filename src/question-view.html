@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <question-tabs questions="[[quizData.questions]]" answered-questions="[[answeredQuestions]]" selected="{{routeData.id}}">
     </question-tabs>
 
-    <question-container quiz-data="[[quizData]]" question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+    <question-container quiz-data="[[quizData]]" current-question-id="[[routeData.id]]" answered-questions-count="{{answeredQuestionsCount}}" question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
 
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -93,13 +93,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (answerId) {
           let questionId = this.routeData.id;
           this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
-          // check if finish button have to be enabled
-          this.shadowRoot
-          .querySelector('question-container')
-          .shadowRoot.querySelector('quiz-paginator')
-          .shadowRoot
-          .querySelector('.finish')
-          .disabled = Object.keys(this.answeredQuestions).length === this.quizData.questions.length  ? false : true;
         }
       }
 
@@ -108,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return Number(q.id) === Number(id);
         });
 
-        this._setButtonDisabled(this.quizData.questions.findIndex(i => i.id == question.id));
+      //  this._setButtonDisabled(this.quizData.questions.findIndex(i => i.id == question.id));
 
         if (question) {
           this.set('question', question);
@@ -141,26 +134,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.notifyPath('routeData.id');
              
       }
-
-
-      _setButtonDisabled(index) {
-
-        let quizPaginator = this.shadowRoot.querySelector('question-container')
-                                .shadowRoot.querySelector('quiz-paginator')
-
-        if (index === this.quizData.questions.length - 1) {
-          quizPaginator.shadowRoot.querySelector('.next').disabled = true;
-          quizPaginator.shadowRoot.querySelector('.back').disabled = false;
-        } else if (index === 0) {
-          quizPaginator.shadowRoot.querySelector('.next').disabled = false;
-          quizPaginator.shadowRoot.querySelector('.back').disabled = true;
-        } else {
-          quizPaginator.shadowRoot.querySelector('.next').disabled = false;
-          quizPaginator.shadowRoot.querySelector('.back').disabled = false;
-        }
-        
-      }
-
 
     }
 
