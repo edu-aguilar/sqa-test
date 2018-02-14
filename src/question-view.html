@@ -50,12 +50,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
 
     <quiz-status-data
-      id="quizStatus"
+      id="quizStatusData"
       total-questions="[[quizData.questions.length]]"
       progress="{{quizProgress}}"
       answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}"
-      quiz-type="[[quizType]]">
+      time-passed="{{timePassed}}">
+      <!-- TODO: retrieve time listener to set start time -->
     </quiz-status-data>
 
     <question-tabs
@@ -70,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div slot="left">[[quizData.testName]]</div>
       <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
       <div slot="right">
-        <progress-timer id="progressTimer" time-passed="[[timePassed]]" quiz-type="[[quizType]]"></progress-timer>
+        <progress-timer id="progressTimer" time-passed="{{timePassed}}"></progress-timer>
       </div>
     </gradient-progress-bar>
   </template>
@@ -83,7 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           route: Object,
           quizData: Object,
-          quizType: String
+          timePassed: {
+            type: Number,
+            notify: true,
+            observer: '_updateStorageTime'
+          }
         };
       }
 
@@ -96,13 +101,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        this.$.progressTimer.start();
+        this.$.progressTimer.start(this.timePassed);
       }
 
+      _updateStorageTime(timePassed) {
+        this.$.quizStatusData.updateTime(timePassed);
+      }
+      
       _setAnsweredQuestion(answerId) {
         if (answerId) {
           let questionId = this.routeData.id;
-          this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+          this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
         }
       }
 

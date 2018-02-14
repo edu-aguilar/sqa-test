@@ -76,16 +76,11 @@
         tail="{{subrouteTail}}">
     </app-route>
 
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="[[storageData]]">
-    </quiz-local-storage>
     <quiz-status-data id="quizStatusData" quiz-type="[[routeData.type]]"></quiz-status-data>
     <quiz-data
       id="quizData"
-      type="[[routeData.type]]"
-      data="{{quizData}}"
-      storage-data={{storageData}}>
+      quiz-type="[[routeData.type]]"
+      data="{{quizData}}">
     </quiz-data>
 
     <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
@@ -104,7 +99,7 @@
             fallback-selection="view404"
             role="main">
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
-          <question-view name="question" route="{{subrouteTail}}" quiz-data="[[quizData]]" quiz-type="[[routeData.type]]"></question-view>
+          <question-view name="question" route="{{subrouteTail}}" quiz-data="[[quizData]]"></question-view>
           <result-view name="result"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>

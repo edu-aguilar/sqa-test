@@ -26,10 +26,18 @@
             notify: true,
             value: () => quizStatusData.answeredQuestions
           },
+          quizType: {
+            type: String,
+            observer: '_setQuizType'
+          },
           progress: {
             type: Number,
             notify: true,
             computed: '_computeProgress(answeredQuestions.*, totalQuestions)'
+          },
+          timePassed: {
+            type: Number,
+            notify: true
           },
           answeredQuestionsCount: {
             type: Number,
@@ -38,9 +46,6 @@
           storageData: {
             type: Object,
             observer: '_loadFromStorage'
-          },
-          quizType: {
-            type: String
           }
         }
       }
@@ -55,7 +60,17 @@
         subscribers.splice(subscribers.indexOf(this), 1);
       }
 
-      _loadFromStorage() {
+      updateTime(timePassed) {
+        if (quizStatusData.quizType && this.$.quizLocalStorage.storageData[quizStatusData.quizType]) {
+          this.$.quizLocalStorage.updateStorage(quizStatusData.quizType, 'timePassed', timePassed);
+        }
+      }
+
+      _setQuizType(quizType) {
+        if (quizType) quizStatusData.quizType = quizType;
+      }
+
+      _loadFromStorage(storageData) {
         if (this.$.quizLocalStorage.storageData[this.quizType]) {
           quizStatusData.answeredQuestions = this.$.quizLocalStorage.storageData[this.quizType].answeredQuestions || {};
         }

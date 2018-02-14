@@ -13,10 +13,6 @@
         }
       }
     </style>
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="{{storageData}}">
-    </quiz-local-storage>
     <div class="progress-timer-container">
       [[formattedTime]]
     </div>
@@ -31,14 +27,8 @@
         return {
           timePassed: {
             type: Number,
-            value: 0
-          },
-          quizType: {
-            type: String
-          },
-          storageData: {
-            type: Object,
-            observer: '_loadFromStorage'
+            value: 0,
+            notify: true
           }
         }
       }
@@ -46,13 +36,6 @@
       ready() {
         super.ready();
         this.formattedTime = '00:00:00';
-      }
-
-      _loadFromStorage() {
-        if (this.$.quizLocalStorage.storageData[this.quizType]) {
-          this.timePassed = this.$.quizLocalStorage.storageData[this.quizType].time || 0;
-          this.formattedTime = this._formatTime();
-        }
       }
 
       start() {
@@ -66,19 +49,13 @@
       reset() {
         this.timePassed = 0;
         this.formattedTime = this._formatTime();
-        this._updateStorageTime();
       }
 
       _updateTime() {
         this.timePassed++;
         this.formattedTime = this._formatTime();
-        this._updateStorageTime();
       }
 
-      _updateStorageTime() {
-        // TOIMPROVE: I think is not good update the storage every second
-        this.$.quizLocalStorage.updateStorage(this.quizType, 'time', this.timePassed);
-      }
       _formatTime() {
         const date = new Date(null);
         date.setSeconds(this.timePassed);
