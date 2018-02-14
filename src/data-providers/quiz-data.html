@@ -9,6 +9,8 @@
   </template>
   <script>
     class QuizData extends Polymer.Element {
+      // TODO: fix: This is not singleton,
+      // so when I call from APP and from questionView calls twice!
       static get is() { return 'quiz-data'; }
       static get properties() { return {
         data: {
@@ -16,7 +18,7 @@
           value: () => {},
           notify: true
         },
-        type: {
+        quizType: {
           type: String
         },
         storageData: {
@@ -25,21 +27,21 @@
         }
       }}
 
-      _storageChanged() {
-        if (this.type) {
-          if (!this.$.quizLocalStorage.storageData[this.type]) {
+      _storageChanged(storageData) {
+        if (this.quizType) {
+          if (!storageData[this.quizType]) {
             console.log('Loading data from json...');
-            let url = `data/${this.type}.json`;
+            let url = `data/${this.quizType}.json`;
             fetch(url)
             .then((resp) => resp.json())
             .then((data) => {
-              this.$.quizLocalStorage.updateStorage(this.type, 'quizData', data);
+              this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
               this.set('data', data);
             })
             .catch(() => { this._notifyError() })
           } else {
             console.log('Loading data from storage...');
-            this.set('data', this.$.quizLocalStorage.storageData[this.type].quizData);
+            this.set('data', storageData[this.quizType].quizData);
           }
         }
       }
