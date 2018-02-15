@@ -9,9 +9,7 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="data-providers/quiz-data.html">
-<link rel="import" href="components/quiz-local-storage.html">
 <link rel="import" href="styles/shared-styles.html">
 
 <link rel="lazy-import" href="landing-view.html">
@@ -76,7 +74,6 @@
         tail="{{subrouteTail}}">
     </app-route>
 
-    <quiz-status-data id="quizStatusData" quiz-type="[[routeData.type]]"></quiz-status-data>
     <quiz-data
       id="quizData"
       quiz-type="[[routeData.type]]"
@@ -99,7 +96,11 @@
             fallback-selection="view404"
             role="main">
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
-          <question-view name="question" route="{{subrouteTail}}" quiz-data="[[quizData]]"></question-view>
+          <question-view
+            name="question"
+            route="{{subrouteTail}}"
+            quiz-data="[[quizData]]"
+            quiz-type="[[routeData.type]]"></question-view>
           <result-view name="result"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>

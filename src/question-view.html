@@ -55,8 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       progress="{{quizProgress}}"
       answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}"
-      time-passed="{{timePassed}}">
-      <!-- TODO: retrieve time listener to set start time -->
+      time-passed="{{timePassed}}"
+      quiz-type="[[quizType]]">
     </quiz-status-data>
 
     <question-tabs
@@ -84,6 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           route: Object,
           quizData: Object,
+          quizType: String,
           timePassed: {
             type: Number,
             notify: true,
@@ -107,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _updateStorageTime(timePassed) {
         this.$.quizStatusData.updateTime(timePassed);
       }
-      
+
       _setAnsweredQuestion(answerId) {
         if (answerId) {
           let questionId = this.routeData.id;

@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../components/quiz-local-storage.html">
 
 <dom-module id="quiz-data">
   <template>
@@ -9,8 +10,6 @@
   </template>
   <script>
     class QuizData extends Polymer.Element {
-      // TODO: fix: This is not singleton,
-      // so when I call from APP and from questionView calls twice!
       static get is() { return 'quiz-data'; }
       static get properties() { return {
         data: {
@@ -19,17 +18,18 @@
           notify: true
         },
         quizType: {
-          type: String
+          type: String,
+          observer: '_loadData'
         },
         storageData: {
           type: Object,
-          observer: '_storageChanged'
+          observer: '_loadData'
         }
       }}
 
-      _storageChanged(storageData) {
-        if (this.quizType) {
-          if (!storageData[this.quizType]) {
+      _loadData() {
+        if (this.quizType && Object.keys(this.storageData).length > 0) {
+          if (!this.storageData[this.quizType]) {
             console.log('Loading data from json...');
             let url = `data/${this.quizType}.json`;
             fetch(url)
@@ -41,7 +41,7 @@
             .catch(() => { this._notifyError() })
           } else {
             console.log('Loading data from storage...');
-            this.set('data', storageData[this.quizType].quizData);
+            this.set('data', this.storageData[this.quizType].quizData);
           }
         }
       }

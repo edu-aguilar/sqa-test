@@ -26,7 +26,7 @@
       }
 
       updateStorage(quizType, key, data) {
-        if (!quizType) return; // TODO: This check is ok, but we have to check why sometimes is not defined!
+        if (!quizType) return;
         if (!this.storageData[quizType]) {
           this.set(`storageData.${quizType}`, {
             'quizData': {},

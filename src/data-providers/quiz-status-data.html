@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../components/quiz-local-storage.html">
 
 <dom-module id="quiz-status-data">
   <template>
@@ -28,6 +29,7 @@
           },
           quizType: {
             type: String,
+            value: () => quizStatusData.quizType,
             observer: '_setQuizType'
           },
           progress: {
@@ -61,18 +63,19 @@
       }
 
       updateTime(timePassed) {
-        if (quizStatusData.quizType && this.$.quizLocalStorage.storageData[quizStatusData.quizType]) {
-          this.$.quizLocalStorage.updateStorage(quizStatusData.quizType, 'timePassed', timePassed);
+        if (this.quizType && this.$.quizLocalStorage.storageData[this.quizType]) {
+          this.$.quizLocalStorage.updateStorage(this.quizType, 'timePassed', timePassed);
         }
       }
 
       _setQuizType(quizType) {
-        if (quizType) quizStatusData.quizType = quizType;
+        if (quizType) this.quizType = quizType;
       }
 
       _loadFromStorage(storageData) {
         if (this.$.quizLocalStorage.storageData[this.quizType]) {
-          quizStatusData.answeredQuestions = this.$.quizLocalStorage.storageData[this.quizType].answeredQuestions || {};
+          this.answeredQuestions = this.$.quizLocalStorage.storageData[this.quizType].answeredQuestions || {};
+          this.timePassed = this.$.quizLocalStorage.storageData[this.quizType].timePassed;
         }
       }
       setAnsweredQuestion(questionId, answerId){
