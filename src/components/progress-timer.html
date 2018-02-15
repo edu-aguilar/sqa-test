@@ -28,16 +28,19 @@
           timePassed: {
             type: Number,
             value: 0,
-            notify: true
+            notify: true,
+            observer: '_timeChange'
           }
         }
       }
 
       ready() {
         super.ready();
-        this.formattedTime = '00:00:00';
       }
-
+      _timeChange() {
+        this.formattedTime = this._formatTime();
+      }
+      
       start() {
         this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
       }
@@ -48,12 +51,10 @@
 
       reset() {
         this.timePassed = 0;
-        this.formattedTime = this._formatTime();
       }
 
       _updateTime() {
         this.timePassed++;
-        this.formattedTime = this._formatTime();
       }
 
       _formatTime() {
