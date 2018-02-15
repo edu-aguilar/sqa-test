@@ -7,10 +7,8 @@
       .progress-timer-container {
         @apply --progress-timer-props;
 
-        --progress-timer-props: {
-          font-size: var(--sopra-font-xxl);
-          color: white;
-        } 
+        font-size: var(--sopra-font-xxl);
+        color: white;
       }
     </style>
 
@@ -21,11 +19,29 @@
   </template>
 
   <script>
-    class ProgressTimer extends Polymer.Element {
+    /**
+      * `<progress-timer>` counts the seconds passed since the timer starts.
+      *
+      * ## Usage
+      * Just inject the `<progress-timer>` component with and *id* to provide easy access to its public functions and expose a variable of type `Number`
+      *
+      * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
+      *
+      * ## Styling
+      *
+      * | Custom property          | Description                                              | Default |
+      * |--------------------------|----------------------------------------------------------|---------|
+      * | `--progress-timer-props` | Mixin applied to time displayed (color, font type, etc). | {}      |
+      * 
+      * @customElement
+      * @polymer
+    */
+    class ProgressTimer extends (class extends Polymer.Element {}) {
       static get is() { return 'progress-timer'; }
 
       static get properties() {
         return {
+          /** Seconds passed since the *start()* method is called. */
           timePassed: {
             type: Number,
             value: 0
@@ -33,29 +49,38 @@
         }
       }
 
+      /** Gives initial format to `timePassed` when the component is instantiated. */
       ready() {
         super.ready();
         this.formattedTime = '00:00:00';
       }
 
+      /** Starts timer. */
       start() {
         this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
       }
 
+      /** Pauses timer. */
       pause() {
         clearInterval(this.timeInterval);
       }
 
+      /** Sets timer back to initial state (*timePassed = 0*). */
       reset() {
         this.timePassed = 0;
         this.formattedTime = this._formatTime(this.timePassed);
       }
 
+      /** Callback that adds one second to *timePassed*. */
       _updateTime() {
         this.timePassed++;
         this.formattedTime = this._formatTime(this.timePassed);
       }
 
+      /**
+        * Gives *timePassed* a certain format.
+        * @return {result} The time passed in a clock-like format (*HH:mm:ss*).
+      */
       _formatTime() {
         const date = new Date(null);
         date.setSeconds(this.timePassed);
