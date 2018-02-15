@@ -6,7 +6,6 @@
     <style include="shared-styles">
       :host {
         display: flex;
-
       }
 
       .finish {
@@ -32,8 +31,20 @@
       disabled$="{{finishDisabled}}">
       Finalizar
     </button>
-    <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">Anterior</button>
-    <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">Siguiente</button>
+    <button 
+      class="back"
+      on-click="_changeRoute"
+      data="back"
+      disabled$="{{backDisabled}}">
+      Anterior
+    </button>
+    <button
+      class="next"
+      on-click="_changeRoute"
+      data="next" 
+      disabled$="{{nextDisabled}}">
+      Siguiente
+    </button>
   </template>
 
   <script>

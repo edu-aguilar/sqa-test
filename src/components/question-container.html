@@ -51,7 +51,11 @@
           <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
         </template>
       </iron-selector>
-      <quiz-paginator quiz-data="[[quizData]]" current-question-id="[[currentQuestionId]]" answered-questions-count="{{answeredQuestionsCount}}"></quiz-paginator>
+      <quiz-paginator
+       quiz-data="[[quizData]]"
+       current-question-id="[[currentQuestionId]]"
+       answered-questions-count="{{answeredQuestionsCount}}">
+      </quiz-paginator>
     </div>
     
   </template>
