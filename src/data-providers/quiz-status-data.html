@@ -73,14 +73,14 @@
       }
 
       _loadFromStorage(storageData) {
-        if (this.$.quizLocalStorage.storageData[this.quizType]) {
-          this.answeredQuestions = this.$.quizLocalStorage.storageData[this.quizType].answeredQuestions || {};
-          this.timePassed = this.$.quizLocalStorage.storageData[this.quizType].timePassed;
+        if (storageData[this.quizType]) {
+          this.timePassed = storageData[this.quizType].timePassed;
+          this.answeredQuestions = storageData[this.quizType].answeredQuestions || {};
         }
       }
       setAnsweredQuestion(questionId, answerId){
         if (!quizStatusData.answeredQuestions[questionId]) {
-          quizStatusData.answeredQuestions[questionId] = ''; 
+          quizStatusData.answeredQuestions[questionId] = '';
           this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
