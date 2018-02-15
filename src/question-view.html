@@ -41,20 +41,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         grid-template-rows: 32px 1fr 60px;
         grid-template-areas: "tabs" "question" "progressbar";
       }
-    </style>
 
-    <app-route route="{{route}}" pattern="/:id" data="{{routeData}}">
+    </style>
+    
+    <app-route 
+      route="{{route}}" 
+      pattern="/:id" 
+      data="{{routeData}}">
     </app-route>
 
-    <quiz-status-data id="quizStatus" total-questions="[[quizData.questions.length]]" progress="{{quizProgress}}" answered-questions="{{answeredQuestions}}"
-      answered-questions-count="{{answeredQuestionsCount}}">
+    <quiz-status-data
+     id="quizStatus"
+     total-questions="[[quizData.questions.length]]"
+     progress="{{quizProgress}}"
+     answered-questions="{{answeredQuestions}}"
+     answered-questions-count="{{answeredQuestionsCount}}">
     </quiz-status-data>
 
-    <question-tabs questions="[[quizData.questions]]" answered-questions="[[answeredQuestions]]" selected="{{routeData.id}}">
+    <question-tabs
+     questions="[[quizData.questions]]"
+     answered-questions="[[answeredQuestions]]"
+     selected="{{routeData.id}}">
     </question-tabs>
 
-    <question-container quiz-data="[[quizData]]" current-question-id="[[routeData.id]]" answered-questions-count="{{answeredQuestionsCount}}" question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
-
+    <question-container
+     quiz-data="[[quizData]]"
+     current-question-id="[[routeData.id]]"
+     answered-questions-count="{{answeredQuestionsCount}}"
+     question="[[question]]" 
+     selected-answer="{{selectedAnswer}}">
+    </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
       <div slot="left">[[quizData.testName]]</div>
@@ -101,19 +117,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return Number(q.id) === Number(id);
         });
 
-      //  this._setButtonDisabled(this.quizData.questions.findIndex(i => i.id == question.id));
-
         if (question) {
           this.set('question', question);
           this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
-
         }
       }
 
       _pageChange(event) {
 
         let data = event.detail.operation;
-        let index = this.quizData.questions.findIndex(i => i.id == this.question.id);
+        let index = this.quizData.questions.findIndex(i => i.id === this.question.id);
 
         switch (data) {
           case 'next':

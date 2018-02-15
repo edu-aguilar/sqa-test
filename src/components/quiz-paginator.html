@@ -15,7 +15,7 @@
       }
 
       button {
-        font-size: var(--sopra-font-xxxl);
+        font-size: var(--sopra-font-xxl);
         margin-top: 2em;
         border-width: 0;
         outline: none;
@@ -24,13 +24,14 @@
         background-color: transparent;
       }
 
-      button[disabled]:active {
-        opacity: 0.4;
-        cursor: not-allowed;
-        pointer-events: none;
-      }
     </style>
-    <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">Finalizar</button>
+    <button 
+      class="finish"
+      on-click="_changeRoute"
+      data="finish"
+      disabled$="{{finishDisabled}}">
+      Finalizar
+    </button>
     <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">Anterior</button>
     <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">Siguiente</button>
   </template>
@@ -76,8 +77,8 @@
 
       _observerRouterId() {
         const index = parseInt(this.currentQuestionId)
-        this.nextDisabled = index === this.quizData.questions.length ? true : false;
-        this.backDisabled = index === 1 ? true : false;
+        this.nextDisabled = index === this.quizData.questions.length;
+        this.backDisabled = index === 1;
       }
 
     }
