@@ -22,7 +22,17 @@
       }
 
       paper-tab.answered {
+        @apply --paper-tab-content;
+
         --paper-tab-content: {
+          font-weight: 800;
+        };
+      }
+
+      paper-tab.iron-selected{
+        @apply --paper-tab-selected;
+        
+        --paper-tab-selected: {
           font-weight: 800;
         };
       }

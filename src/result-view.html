@@ -17,24 +17,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
+        padding: 20px 0px 20px 0px;
       }
 
       .box-wrapper {
         width: 80%;
-      }
-
-      .box-wrapper > div {
-        height: 90px
+        padding-bottom: 20px;
       }
 
       .box-wrapper > p {
         margin: 1em;
         text-align: center;
+        margin: 0px;
         line-height: 1.7;
         font-size: var(--sopra-font-xl);
         color: #333333;
+      }
+
+      #resultForm {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 80px;
       }
 
       @media screen and (min-width: 768px) {
@@ -45,46 +57,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-size: var(--sopra-font-xxl);
         }
       }
-
-      @media screen and (min-width: 1024px) {
-        .box-wrapper {
-          width: 45%;
-        }
-        .box-wrapper > p {
-          font-size: var(--sopra-font-xxxl);
-        }
-      }
-
     </style>
+
     <div class="box-wrapper">
       <p>
         ¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos
         pueda ponerse en contacto contigo.
       </p>
     </div>
-    <form id="form1" class="box-wrapper">
-          <div>
-            <label>Nombre*</label>
-            <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
-          </div>
-          <div>
-            <label>Apellidos*</label>
-            <input class="input-quiz" name="name" value="{{user.surname::input}}" type="text" required>
-          </div>
-          <div>
-            <label>Télefono</label>
-            <input class="input-quiz" name="telefono" value="{{user.telefono::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
-          </div>
-          <div>
-            <label>Email*</label>
-            <input class="input-quiz"   name="email" value="{{user.email::input}}" type="email" required>
-          </div>
-    </form>  
-    <div>
-      <button class="button-quiz" disabled$="{{!isValid}}">
-        <span>Enviar</span>
-      </button>
-    </div>
+
+    <form id="resultForm">
+      <div class="input-container">
+        <label>Nombre*</label>
+        <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
+      </div>
+
+      <div class="input-container">
+        <label>Apellidos*</label>
+        <input class="input-quiz" name="name" value="{{user.surname::input}}" type="text" required>
+      </div>
+
+      <div class="input-container">
+        <label>Télefono</label>
+        <input class="input-quiz" name="telefono" value="{{user.telefono::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+      </div>
+
+      <div class="input-container">
+        <label>Email*</label>
+        <input class="input-quiz"   name="email" value="{{user.email::input}}" type="email" required>
+      </div>
+    </form>
+
+    <button class="button-quiz" disabled$="{{!isValid}}">
+      <span>Enviar</span>
+    </button>
+
   </template>
 
   <script>
@@ -111,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }  
 
       _checkFormValid(){
-       this.isValid =  this.$.form1.checkValidity();
+       this.isValid =  this.$.resultForm.checkValidity();
       }
 
     }
