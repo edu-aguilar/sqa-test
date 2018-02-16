@@ -5,231 +5,330 @@
   "questions": [
     {
       "id": "1",
-      "question": "what is your name?",
+      "question": "¿Qué significan las iniciales CSS?",
       "level": 1,
       "options": [
         {
           "id": "1",
-          "value": "Karina, this is a larger answer to test component"
+          "value": "Cascading Style Sheets"
         },
         {
           "id": "2",
-          "value": "Edu"
+          "value": "Colorful Style Sheets"
         },
         {
           "id": "3",
-          "value": "David"
+          "value": "Creative Style Sheets"
         },
         {
           "id": "4",
-          "value": "Alvaro"
+          "value": "Computer Style Sheets"
         }
       ]
     },
     {
       "id": "2",
-      "question": "what is your age?",
+      "question": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
       "level": 4,
       "options": [
         {
           "id": "1",
-          "value": "23"
+          "value": "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\">"
         },
         {
           "id": "2",
-          "value": "27"
+          "value": "<style src=\"mystyle.css\">"
         },
         {
           "id": "3",
-          "value": "28"
-        },
-        {
-          "id": "4",
-          "value": "24"
+          "value": "<stylesheet>mystyle.css</stylesheet>"
         }
       ]
     },
     {
       "id": "3",
-      "question": "what is your name?",
+      "question": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
       "level": 1,
       "options": [
         {
           "id": "1",
-          "value": "Karina"
+          "value": "En la sección <body>"
         },
         {
           "id": "2",
-          "value": "Edu"
+          "value": "En la sección <head>"
         },
         {
           "id": "3",
-          "value": "David"
+          "value": "Al final del documento"
         },
         {
           "id": "4",
-          "value": "Alvaro"
+          "value": "Los tres anteriores"
         }
       ]
     },
     {
       "id": "4",
-      "question": "what is your age?",
+      "question": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
       "level": 4,
       "options": [
         {
           "id": "1",
-          "value": "23"
+          "value": "<script>"
         },
         {
           "id": "2",
-          "value": "27"
+          "value": "<style>"
         },
         {
           "id": "3",
-          "value": "28"
+          "value": "<css>"
         },
         {
           "id": "4",
-          "value": "24"
+          "value": "<style-html>"
         }
       ]
     },
     {
       "id": "5",
-      "question": "what is your name?",
+      "question": "¿Cuál es la sintaxis correcta?",
       "level": 1,
       "options": [
         {
           "id": "1",
-          "value": "Karina"
+          "value": "body:color=black;"
         },
         {
           "id": "2",
-          "value": "Edu"
+          "value": "{body;color:black;}"
         },
         {
           "id": "3",
-          "value": "David"
+          "value": "{body:color=black;}"
         },
         {
           "id": "4",
-          "value": "Alvaro"
+          "value": "body {color: black;}"
         }
       ]
     },
     {
       "id": "6",
-      "question": "what is your age?",
+      "question": "¿Cómo se insertan comentarios en un archivo CSS?",
       "level": 4,
       "options": [
         {
           "id": "1",
-          "value": "23"
+          "value": "/* this is a comment */"
         },
         {
           "id": "2",
-          "value": "27"
+          "value": "// this is a comment //"
         },
         {
           "id": "3",
-          "value": "28"
+          "value": "' this is a comment"
         },
         {
           "id": "4",
-          "value": "24"
+          "value": "// this is a comment"
         }
       ]
     },
     {
       "id": "7",
-      "question": "what is your name?",
+      "question": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
       "level": 1,
       "options": [
         {
           "id": "1",
-          "value": "Karina"
+          "value": "<script>"
         },
         {
           "id": "2",
-          "value": "Edu"
+          "value": "<scripting>"
         },
         {
           "id": "3",
-          "value": "David"
+          "value": "<js>"
         },
         {
           "id": "4",
-          "value": "Alvaro"
+          "value": "<javascript>"
         }
       ]
     },
     {
       "id": "8",
-      "question": "what is your age?",
+      "question": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
       "level": 4,
       "options": [
         {
           "id": "1",
-          "value": "23"
+          "value": "<script src=\"xxx.js\">"
         },
         {
           "id": "2",
-          "value": "27"
+          "value": "<script href=\"xxx.js\">"
         },
         {
           "id": "3",
-          "value": "28"
-        },
-        {
-          "id": "4",
-          "value": "24"
+          "value": "<script name=\"xxx.js\">"
         }
       ]
     },
     {
       "id": "9",
-      "question": "what is your name?",
+      "question": "¿Los script externos deben contener la etiqueta <script>?",
       "level": 1,
       "options": [
         {
           "id": "1",
-          "value": "Karina"
+          "value": "Si"
         },
         {
           "id": "2",
-          "value": "Edu"
-        },
-        {
-          "id": "3",
-          "value": "David"
-        },
-        {
-          "id": "4",
-          "value": "Alvaro"
+          "value": "No"
         }
       ]
     },
     {
       "id": "10",
-      "question": "what is your age?",
+      "question": "¿Qué significan las iniciales HTML?",
       "level": 4,
       "options": [
         {
           "id": "1",
-          "value": "23"
+          "value": "Hyper Text Markup Language"
         },
         {
           "id": "2",
-          "value": "27"
+          "value": "Home Tool Markup Language"
         },
         {
           "id": "3",
-          "value": "28"
+          "value": "Hyperlinks and Text Markup Language"
         },
         {
           "id": "4",
-          "value": "24"
+          "value": "Hybrid Tools Makeup Longitude"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "question": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+      "level": 4,
+      "options": [
+        {
+          "id": "1",
+          "value": "<a href=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "2",
+          "value": "<a url=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "3",
+          "value": "<a name=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "4",
+          "value": "<a> http://www.sopra-quiz.com </a>"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "question": "¿Con qué etiqueta se crean las listas enumeradas?",
+      "level": 4,
+      "options": [
+        {
+          "id": "1",
+          "value": "<ol>"
+        },
+        {
+          "id": "2",
+          "value": "<il>"
+        },
+        {
+          "id": "3",
+          "value": "<ul>"
+        },
+        {
+          "id": "4",
+          "value": "<lol>"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "question": "¿Cuál es la sintaxis correcta para crear un checkbox?",
+      "level": 4,
+      "options": [
+        {
+          "id": "1",
+          "value": "<checkbox>"
+        },
+        {
+          "id": "2",
+          "value": "<check>"
+        },
+        {
+          "id": "3",
+          "value": "<input type=\"check\">"
+        },
+        {
+          "id": "4",
+          "value": "<input type=\"checkbox\">"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "question": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+      "level": 4,
+      "options": [
+        {
+          "id": "1",
+          "value": "<a href=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "2",
+          "value": "<a url=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "3",
+          "value": "<a name=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "4",
+          "value": "<a> http://www.sopra-quiz.com </a>"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "question": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
+      "level": 4,
+      "options": [
+        {
+          "id": "1",
+          "value": "var colors = ['red', 'green', 'blue']"
+        },
+        {
+          "id": "2",
+          "value": "var colors = (1: 'red', 2: 'green', 3: 'blue')"
+        },
+        {
+          "id": "3",
+          "value": "var colors = {1: 'red', 2: 'green', 3: 'blue'}"
+        },
+        {
+          "id": "4",
+          "value": "var colors = 'red', 'green', 'blue'"
         }
       ]
     }
