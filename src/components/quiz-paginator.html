@@ -60,7 +60,7 @@
             type: Number,
             observer: '_observerRouterId'
           },
-          quizData: Object,
+          lengthQuestions: Number,
           finishDisabled: {
             type: Boolean,
             value: false
@@ -83,12 +83,12 @@
       }
 
       _observerIfFinished() {
-          this.finishDisabled = !(this.answeredQuestionsCount === this.quizData.questions.length)
+          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions)
       }
 
       _observerRouterId() {
         const index = parseInt(this.currentQuestionId)
-        this.nextDisabled = index === this.quizData.questions.length;
+        this.nextDisabled = index === this.lengthQuestions;
         this.backDisabled = index === 1;
       }
 

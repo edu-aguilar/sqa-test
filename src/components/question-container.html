@@ -52,7 +52,7 @@
         </template>
       </iron-selector>
       <quiz-paginator
-       quiz-data="[[quizData]]"
+       length-questions="[[quizData.questions.length]]"
        current-question-id="[[currentQuestionId]]"
        answered-questions-count="{{answeredQuestionsCount}}">
       </quiz-paginator>

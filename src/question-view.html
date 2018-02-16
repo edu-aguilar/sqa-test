@@ -142,10 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           default:
             break;
         }  
-
-        this.routeData.id =  this.quizData.questions[index].id;
-        this.notifyPath('routeData.id');
-             
+        this.set('routeData.id', this.quizData.questions[index].id);            
       }
 
     }
