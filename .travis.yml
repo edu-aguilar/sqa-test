@@ -30,6 +30,6 @@ deploy:
  provider: pages
  skip_cleanup: true
  local_dir: build/es5-bundled
- github_token: $GITHUBTOKEN # Set in travis-ci.org configuration dashboard
+ github_token: $GITHUBTOKEN # Set in travis-ci.org dashboard
  on:
    branch: master
