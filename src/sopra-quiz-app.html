@@ -73,7 +73,10 @@
         data="{{subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
-
+    <quiz-local-storage
+      id="quizLocalStorage"
+      storage-data="{{storageData}}">
+    </quiz-local-storage>
     <quiz-data
       id="quizData"
       quiz-type="[[routeData.type]]"
