@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get observers() {
         return [
-          '_routeIdChanged(routeData.id)',
+          '_routeIdChanged(routeData.id, answeredQuestions)',
           '_setAnsweredQuestion(selectedAnswer)'
         ];
       }
