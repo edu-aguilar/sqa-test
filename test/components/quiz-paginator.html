@@ -1,0 +1,109 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>quiz-paginator</title>
+
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../../src/components/quiz-paginator.html">
+</head>
+
+<body>
+  <test-fixture id="firstQuestionComplete">
+    <template>
+      <quiz-paginator length-questions="5" current-question-id="1" answered-questions-count="5">
+      </quiz-paginator>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="lastQuestionInComplete">
+    <template>
+      <quiz-paginator length-questions="5" current-question-id="5" answered-questions-count="3">
+      </quiz-paginator>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="MidPageQuestionInComplete">
+    <template>
+      <quiz-paginator length-questions="5" current-question-id="2" answered-questions-count="3">
+      </quiz-paginator>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('quiz paginator tests ', function () {
+      test('all questions answered in first page', function () {
+        const questionContainer = fixture('firstQuestionComplete');
+        const finish = questionContainer.shadowRoot.querySelector('.finish');
+        const back = questionContainer.shadowRoot.querySelector('.back');
+        const next = questionContainer.shadowRoot.querySelector('.next');
+        assert.equal(finish.disabled, false);
+        assert.equal(back.disabled, true);
+        assert.equal(next.disabled, false);
+      });
+      test('incomplete questions answered in last page', function () {
+        const questionContainer = fixture('lastQuestionInComplete');
+        const finish = questionContainer.shadowRoot.querySelector('.finish');
+        const back = questionContainer.shadowRoot.querySelector('.back');
+        const next = questionContainer.shadowRoot.querySelector('.next');
+        assert.equal(finish.disabled, true);
+        assert.equal(back.disabled, false);
+        assert.equal(next.disabled, true);
+      });
+      test('incomplete questions answered in mid page', function () {
+        const questionContainer = fixture('MidPageQuestionInComplete');
+        const finish = questionContainer.shadowRoot.querySelector('.finish');
+        const back = questionContainer.shadowRoot.querySelector('.back');
+        const next = questionContainer.shadowRoot.querySelector('.next');
+        assert.equal(finish.disabled, true);
+        assert.equal(back.disabled, false);
+        assert.equal(next.disabled, false);
+      });
+
+      test('capture event when next emit', function () {
+        let quizPaginator = fixture('MidPageQuestionInComplete');
+        const buttonNext = quizPaginator.shadowRoot.querySelector('.next');
+        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+          assert.equal(event.detail.operation, 'next');
+        });
+        buttonNext.click();
+      });
+
+      test('capture event when back emit', function () {
+        let quizPaginator = fixture('MidPageQuestionInComplete');
+        const buttonBack = quizPaginator.shadowRoot.querySelector('.back');
+        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+          assert.equal(event.detail.operation, 'back');
+        });
+        buttonBack.click();
+      });
+
+      test('capture event when finish emit', function () {
+        let quizPaginator = fixture('MidPageQuestionInComplete');
+        const buttonBack = quizPaginator.shadowRoot.querySelector('.finish');
+        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+          assert.equal(event.detail.operation, 'finish');
+        });
+        buttonBack.click();
+      });
+    });
+  </script>
+</body>
+
+</html>
