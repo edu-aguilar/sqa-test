@@ -77,8 +77,6 @@
       }
 
       _changeRoute(event) {
-        
-        debugger;
         let data = event.target.getAttribute('data');
         var event = new CustomEvent('onPageQuestionChange', { detail: { operation: data }, composed: true });
         this.dispatchEvent(event);
