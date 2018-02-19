@@ -36,8 +36,11 @@
       }
 
       loadFromStorage() {
-        console.log('Loading data from storage...');
-        this.set('data', this.storageData[this.quizType].quizData);
+        const quizData = this.storageData[this.quizType].quizData;
+        if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
+          console.log('Loading data from storage...');
+          this.set('data', quizData);
+        }
       }
 
       loadFromJson() {
