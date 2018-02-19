@@ -18,38 +18,38 @@
           notify: true
         },
         quizType: {
-          type: String,
-          observer: '_typeChanged'
+          type: String
         },
         storageData: {
           type: Object,
-          observer: '_storageChanged'
+          observer: '_loadData'
         }
       }}
 
-      _storageChanged(storage) {
-        this._loadData(false);
-      }
-      _typeChanged(type) {
-        this._loadData(true);
+      _loadData() {
+        if (!this.quizType) return;
+        if (this.storageData && this.storageData[this.quizType]) {
+          this.loadFromStorage();
+        } else {
+          this.loadFromJson();
+        }
       }
 
-      _loadData(fromTypeChanged) {
-        if (!this.quizType) return;
-        if (this.storageData[this.quizType]) {
-          console.log('Loading data from storage...');
-          this.set('data', this.storageData[this.quizType].quizData);
-        } else {
-          console.log('Loading data from json...');
-          let url = `data/${this.quizType}.json`;
-          fetch(url)
-          .then((resp) => resp.json())
-          .then((data) => {
-            this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
-            this.set('data', data);
-          })
-          .catch(() => { this._notifyError() })
-        }
+      loadFromStorage() {
+        console.log('Loading data from storage...');
+        this.set('data', this.storageData[this.quizType].quizData);
+      }
+
+      loadFromJson() {
+        console.log('Loading data from json...');
+        let url = `data/${this.quizType}.json`;
+        fetch(url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
+          this.set('data', data);
+        })
+        .catch(() => { this._notifyError() })
       }
 
       _notifyError() {
