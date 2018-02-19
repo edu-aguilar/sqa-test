@@ -31,7 +31,7 @@
       * | Custom property          | Description                                              | Default |
       * |--------------------------|----------------------------------------------------------|---------|
       * | `--progress-timer-props` | Mixin applied to time displayed (color, font type, etc). | {}      |
-      * 
+      *
       * @customElement
       * @polymer
     */
@@ -54,10 +54,12 @@
       ready() {
         super.ready();
       }
+
+      /** Observer to formatTime when time is changed */
       _timeChange() {
         this.formattedTime = this._formatTime();
       }
-      
+
       /** Starts timer. */
       start() {
         this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
