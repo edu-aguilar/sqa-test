@@ -1,43 +1,16 @@
-# Polymer App Toolbox - Starter Kit
+# Sopra Quiz 
 
-[![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
+<!-- [![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit) -->
 
-This template is a starting point for building apps using a drawer-based
-layout. The layout is provided by `app-layout` elements.
+This is an internal app created for testing the technical skills of possible new employees, in hopes of helping the human resources team with the recruitment process. It uses [Polymer 2](https://www.polymer-project.org/2.0/docs/about_20), [Flexbox Layout](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) and [CSS Grid Layout](https://css-tricks.com/snippets/css/complete-guide-grid/). 
 
-This template, along with the `polymer-cli` toolchain, also demonstrates use
-of the "PRPL pattern" This pattern allows fast first delivery and interaction with
-the content at the initial route requested by the user, along with fast subsequent
-navigation by pre-caching the remaining components required by the app and
-progressively loading them on-demand as the user navigates through the app.
-
-The PRPL pattern, in a nutshell:
-
-* **Push** components required for the initial route
-* **Render** initial route ASAP
-* **Pre-cache** components for remaining routes
-* **Lazy-load** and progressively upgrade next routes on-demand
-
-### Migrating from Polymer Starter Kit v1?
-
-[Check out our blog post that covers what's changed in PSK2 and how to migrate!](https://www.polymer-project.org/1.0/blog/2016-08-18-polymer-starter-kit-or-polymer-cli.html)
-
-### Quickstart
-
-We've recorded a Polycast to get you up and running with PSK2 fast!
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=HgJ0XCyBwzY&list=PLNYkxOF6rcIDdS7HWIC_BYRunV6MHs5xo&index=10">
-    <img src="https://img.youtube.com/vi/HgJ0XCyBwzY/0.jpg" alt="Polymer Starter Kit 2 video">
-  </a>
-</p>
+This project was created using the `polymer-cli` toolchain and is based of the `starter-kit` template provided by the Polymer team. 
 
 ### Setup
 
 ##### Prerequisites
 
-First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
-[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
+First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using [npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
     npm install -g polymer-cli
 
@@ -45,26 +18,31 @@ Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
     npm install -g bower
 
-##### Initialize project from template
+##### Install bower dependencies 
 
-    mkdir my-app
-    cd my-app
-    polymer init polymer-2-starter-kit
+After cloning the project from the repository, install the dependencies using bower 
+
+    cd sopra-quiz-app
+    bower install
 
 ### Start the development server
 
-This command serves the app at `http://127.0.0.1:8081` and provides basic URL
-routing for the app:
+This command serves the app at `http://127.0.0.1:8081` and provides basic URL routing for the app:
 
     polymer serve
 
+*Optional:* you can add the `-o` or `--open` flag and the command will serve the app and open it in your default browser.  
+
+    polymer serve -o
+
+
 ### Build
 
-The `polymer build` command builds your Polymer application for production, using build configuration options provided by the command line or in your project's `polymer.json` file.  
+The `polymer build` command builds your Polymer application for production, using build configuration options in our project's `polymer.json` file.  
 
 You can configure your `polymer.json` file to create multiple builds. This is necessary if you will be serving different builds optimized for different browsers. You can define your own named builds, or use presets. See the documentation on [building your project for production](https://www.polymer-project.org/2.0/toolbox/build-for-production) for more information.
 
-The Polymer Starter Kit is configured to create three builds using [the three supported presets](https://www.polymer-project.org/2.0/toolbox/build-for-production#build-presets):
+We maintain [the three builds](https://www.polymer-project.org/2.0/toolbox/build-for-production#build-presets) provided by the Polymer Starter Kit:
 
 ```
 "builds": [
@@ -103,8 +81,7 @@ This command serves your app. Replace `build-folder-name` with the folder name o
 
 ### Run tests
 
-This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester)
-against the browsers currently installed on your machine:
+This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester) against the browsers currently installed on your machine:
 
     polymer test
 
@@ -115,11 +92,36 @@ If running Windows you will need to set the following environment variables:
 
 Read More here [daffl/launchpad](https://github.com/daffl/launchpad#environment-variables-impacting-local-browsers-detection)
 
+We follow the recommendations provided by the Polymer team to document our components. You can read more about it in the [Polymer 2 documentation](https://www.polymer-project.org/2.0/docs/tools/documentation).
+
 ### Adding a new view
 
-You can extend the app by adding more views that will be demand-loaded
-e.g. based on the route, or to progressively render non-critical sections of the
-application. Each new demand-loaded fragment should be added to the list of
-`fragments` in the included `polymer.json` file. This will ensure those
-components and their dependencies are added to the list of pre-cached components
-and will be included in the build.
+You can extend the app by adding more views that will be demand-loaded e.g. based on the route, or to progressively render non-critical sections of the application. Each new demand-loaded fragment should be added to the list of `fragments` in the included `polymer.json` file. This will ensure those components and their dependencies are added to the list of pre-cached components and will be included in the build.
+
+### Work-flow
+
+We use `git-flow` to create our branches for new features and hotfixes, along with their rules for merging those into `develop` and updating `master`. For more information about `git-flow` you can read [Daniel Kummer's cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet/).
+
+Following these rules, you should always create your new branches from `develop` and once you're done you must create a **Pull Request** and **only the administrators can approve and merge your branch into `develop`**. 
+
+In general, we use English as our main language when coding. So, every commit, comment on pull requests, line of code, comment in code and documentation **has** to be written in English. 
+
+##### Semantic commits
+
+We like our commit messages to be **clear** and describe the content of the commit itself. Also, we use [semantic commits](https://seesparkbox.com/foundry/semantic_commit_messages) messages and this makes our `git log` easier to read and understand. 
+
+Commit type | Description
+------------ | -------------
+feat | new feature
+fix | bug fix
+docs | changes to documentation
+style | formatting, missing semi colons, etc; no code change
+refactor | refactoring production code
+test | adding missing tests, refactoring tests; no production code change
+chore | updating grunt tasks etc; no production code change
+
+An example of a semantic commit of type `chore` could be
+
+    git commit -m "chore: added semantic commit section to readme file" 
+
+
