@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
+<dom-module id="quiz-local-storage">
+
+  <template>
+    <app-localstorage-document key="quiz-local-storage" data="{{storageData}}"></app-localstorage-document>
+  </template>
+
+  <script>
+
+    class quizLocalStorage extends Polymer.Element {
+
+      static get is() { return 'quiz-local-storage'; }
+
+      static get properties() {
+        return {
+          storageData: {
+            type: Object,
+            value: () => {
+              return {};
+            },
+            notify: true
+          }
+        }
+      }
+
+      updateStorage(quizType, key, data) {
+        if (!quizType) return;
+        if (!this.storageData[quizType]) {
+          this.set(`storageData.${quizType}`, {
+            'quizData': {},
+            'answeredQuestions': {},
+            'timePassed': 0});
+        }
+        this.set(`storageData.${quizType}.${key}`, data);
+      }
+
+      clearStorage() {
+        this.set('storageData', {});
+      }
+    }
+
+    customElements.define(quizLocalStorage.is, quizLocalStorage);
+
+  </script>
+
+</dom-module>

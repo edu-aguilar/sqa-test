@@ -32,7 +32,11 @@
 
       .question-container {
         margin: 0px 20px;
-        width: 60%;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-self: center;
+        justify-content: center;
       }
 
       @media screen and (min-width: 1024px) {
@@ -42,7 +46,7 @@
       }
     </style>
 
-    <div class="question-container">
+    <div class="question-container responsive-container">
       <p> [[question.id]] - [[question.question]] </p>
 
       <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
@@ -51,12 +55,14 @@
           <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
         </template>
       </iron-selector>
-      <quiz-paginator
-       length-questions="[[quizData.questions.length]]"
-       current-question-id="[[currentQuestionId]]"
-       answered-questions-count="{{answeredQuestionsCount}}">
-      </quiz-paginator>
     </div>
+
+    <quiz-paginator
+      class="responsive-container"
+      length-questions="[[quizData.questions.length]]"
+      current-question-id="[[currentQuestionId]]"
+      answered-questions-count="{{answeredQuestionsCount}}">
+    </quiz-paginator>
     
   </template>
 
@@ -75,9 +81,9 @@
             value: '',
             notify: true
           },
-            answeredQuestionsCount: Number,
-            quizData: Object,
-            currentQuestionId: Number
+          answeredQuestionsCount: Number,
+          quizData: Object,
+          currentQuestionId: Number
         }
       }
     }

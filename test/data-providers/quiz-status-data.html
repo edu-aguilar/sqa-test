@@ -21,12 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Import the element to test -->
     <link rel="import" href="../../src/data-providers/quiz-status-data.html">
+    <link rel="import" href="../../src/components/quiz-local-storage.html">
   </head>
   <body>
     <test-fixture id="FirstInstance">
       <template>
         <quiz-status-data
-          total-questions="10">
+          total-questions="10"
+          quiz-type="frontend">
         </quiz-status-data>
       </template>
     </test-fixture>
@@ -34,8 +36,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <test-fixture id="SecondInstance">
       <template>
         <quiz-status-data
-          total-questions="10">
+          total-questions="10"
+          quiz-type="frontend">
         </quiz-status-data>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="storageInstance">
+      <template>
+        <quiz-local-storage
+          id="quizLocalStorage"
+          storage-data="{{storageData}}">
+        </quiz-local-storage>
       </template>
     </test-fixture>
 
@@ -63,6 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(Object.keys(component.answeredQuestions).length, 1);
         });
         test('Multiple instances share data correctly', function() {
+          fixture('storageInstance').clearStorage();
           var component1 = fixture('FirstInstance');
           var component2 = fixture('SecondInstance');
           component1.setAnsweredQuestion('question', 'response');
