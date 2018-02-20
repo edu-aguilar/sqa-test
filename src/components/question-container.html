@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="quiz-paginator.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -50,6 +51,11 @@
           <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
         </template>
       </iron-selector>
+      <quiz-paginator
+       length-questions="[[quizData.questions.length]]"
+       current-question-id="[[currentQuestionId]]"
+       answered-questions-count="{{answeredQuestionsCount}}">
+      </quiz-paginator>
     </div>
     
   </template>
@@ -68,7 +74,10 @@
             type: String,
             value: '',
             notify: true
-          }
+          },
+            answeredQuestionsCount: Number,
+            quizData: Object,
+            currentQuestionId: Number
         }
       }
     }
