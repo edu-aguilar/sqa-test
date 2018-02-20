@@ -17,13 +17,31 @@
 
         /* Common layout sizes*/
         --sopra-quiz-app-header: 64px;
+      }
 
-        /* Screen sizes for responsive design */
-        /* Example of use (we don't use vars because polymer doesn't support vars in media queries :( )*/
-        /* Small devices (tablets, 768px and up) */
-        /* @media (min-width: 768px) { ... } */
-        /* Large devices (large desktops, 1200px and up) */
-        /* @media (min-width: 1200px) { ... } */
+      /* Screen sizes for responsive design */
+      /* Example of use (we don't use vars because polymer doesn't support vars in media queries :( )*/
+      /* Small devices (tablets, 768px and up) */
+      /* @media (min-width: 768px) { ... } */
+      /* Large devices (large desktops, 1200px and up) */
+      /* @media (min-width: 1200px) { ... } */
+
+      @media screen and (min-width: 300px) {
+        .responsive-container {
+          width: 90%;
+        }
+      }
+
+      @media screen and (min-width: 768px) {
+        .responsive-container {
+          width: 70%;
+        }
+      }
+
+      @media screen and (min-width: 1200px) {
+        .responsive-container {
+          width: 50%;
+        }
       }
     </style>
   </template>
