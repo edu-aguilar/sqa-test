@@ -100,12 +100,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      ready() {
-        super.ready();
-        this.$.progressTimer.start();
-        this.addEventListener('onPageQuestionChange', this._pageChange);
-      }
-
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
@@ -116,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready() {
         super.ready();
         this.$.progressTimer.start();
+        this.addEventListener('onPageQuestionChange', this._pageChange);
       }
 
       _updateStorageTime(timePassed) {
