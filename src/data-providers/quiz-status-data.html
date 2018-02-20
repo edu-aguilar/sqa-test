@@ -1,7 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../components/quiz-local-storage.html">
 
 <dom-module id="quiz-status-data">
-
+  <template>
+    <quiz-local-storage
+      id="quizLocalStorage"
+      storage-data="{{storageData}}">
+    </quiz-local-storage>
+  </template>
   <script>
   (function() {
     let quizStatusData = {
@@ -12,8 +18,8 @@
 
     class QuizStatusData extends Polymer.Element {
       static get is() { return 'quiz-status-data'; }
-      
-      static get properties() { 
+
+      static get properties() {
         return {
           totalQuestions: Number,
           answeredQuestions: {
@@ -21,14 +27,27 @@
             notify: true,
             value: () => quizStatusData.answeredQuestions
           },
+          quizType: {
+            type: String,
+            value: () => quizStatusData.quizType,
+            observer: '_setQuizType'
+          },
           progress: {
             type: Number,
             notify: true,
             computed: '_computeProgress(answeredQuestions.*, totalQuestions)'
           },
+          timePassed: {
+            type: Number,
+            notify: true
+          },
           answeredQuestionsCount: {
             type: Number,
             notify: true
+          },
+          storageData: {
+            type: Object,
+            observer: '_loadFromStorage'
           }
         }
       }
@@ -43,12 +62,29 @@
         subscribers.splice(subscribers.indexOf(this), 1);
       }
 
+      updateTime(timePassed) {
+        if (this.quizType && this.$.quizLocalStorage.storageData[this.quizType]) {
+          this.$.quizLocalStorage.updateStorage(this.quizType, 'timePassed', timePassed);
+        }
+      }
+
+      _setQuizType(quizType) {
+        if (quizType) this.quizType = quizType;
+      }
+
+      _loadFromStorage(storageData) {
+        if (storageData[this.quizType]) {
+          this.timePassed = storageData[this.quizType].timePassed;
+          this.answeredQuestions = storageData[this.quizType].answeredQuestions || {};
+        }
+      }
       setAnsweredQuestion(questionId, answerId){
         if (!quizStatusData.answeredQuestions[questionId]) {
-          quizStatusData.answeredQuestions[questionId] = ''; 
+          quizStatusData.answeredQuestions[questionId] = '';
           this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
+        this.$.quizLocalStorage.updateStorage(this.quizType, `answeredQuestions.${questionId}`, answerId);
         this.__updateSubscribers(`answeredQuestions.${questionId}`);
       }
 

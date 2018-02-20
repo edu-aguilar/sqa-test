@@ -11,7 +11,6 @@
         @apply --progress-timer-props;
       }
     </style>
-
     <div class="progress-timer-container">
       [[formattedTime]]
     </div>
@@ -32,7 +31,7 @@
       * | Custom property          | Description                                              | Default |
       * |--------------------------|----------------------------------------------------------|---------|
       * | `--progress-timer-props` | Mixin applied to time displayed (color, font type, etc). | {}      |
-      * 
+      *
       * @customElement
       * @polymer
     */
@@ -44,7 +43,9 @@
           /** Seconds passed since the *start()* method is called. */
           timePassed: {
             type: Number,
-            value: 0
+            value: 0,
+            notify: true,
+            observer: '_timeChange'
           }
         }
       }
@@ -52,7 +53,11 @@
       /** Gives initial format to `timePassed` when the component is instantiated. */
       ready() {
         super.ready();
-        this.formattedTime = '00:00:00';
+      }
+
+      /** Observer to formatTime when time is changed */
+      _timeChange() {
+        this.formattedTime = this._formatTime();
       }
 
       /** Starts timer. */
@@ -68,13 +73,11 @@
       /** Sets timer back to initial state (*timePassed = 0*). */
       reset() {
         this.timePassed = 0;
-        this.formattedTime = this._formatTime(this.timePassed);
       }
 
       /** Callback that adds one second to *timePassed*. */
       _updateTime() {
         this.timePassed++;
-        this.formattedTime = this._formatTime(this.timePassed);
       }
 
       /**

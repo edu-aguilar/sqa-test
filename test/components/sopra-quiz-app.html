@@ -29,14 +29,12 @@
         const appLocation = appShell.shadowRoot.querySelector('#appLocation');
         const appRouteType = appShell.shadowRoot.querySelector('#appRouteType');
         const appRoutePage = appShell.shadowRoot.querySelector('#appRoutePage');
-        const quizStatusData = appShell.shadowRoot.querySelector('#quizStatusData');
         const quizData = appShell.shadowRoot.querySelector('#quizData');
         const appDrawer = appShell.shadowRoot.querySelector('#appDrawer');
 
         assert(appLocation !== null);
         assert(appRouteType !== null);
         assert(appRoutePage !== null);
-        assert(quizStatusData !== null);
         assert(quizData !== null);
         assert(appDrawer !== null);
       });
@@ -62,7 +60,7 @@
         const appShell = fixture('shell');
         const newPage = 'result';
         appShell.set('subrouteData.page', newPage);
-        
+
         assert.equal(appShell.page, newPage);
       });
 
