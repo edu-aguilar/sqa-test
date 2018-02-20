@@ -120,7 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _setAnsweredQuestion(answerId) {
         if (answerId) {
           let questionId = this.routeData.id;
-          this.set('answeredQuestions.'+questionId, answerId);
+          this.set(`answeredQuestions.${questionId}`, answerId);
           this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
         }
       }
