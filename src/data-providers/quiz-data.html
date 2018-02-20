@@ -1,7 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../components/quiz-local-storage.html">
 
 <dom-module id="quiz-data">
-
+  <template>
+    <quiz-local-storage
+      id="quizLocalStorage"
+      storage-data="{{storageData}}">
+    </quiz-local-storage>
+  </template>
   <script>
     class QuizData extends Polymer.Element {
       static get is() { return 'quiz-data'; }
@@ -11,23 +17,42 @@
           value: () => {},
           notify: true
         },
-        type: {
-          type: String,
-          observer: '_typeChanged'
+        quizType: {
+          type: String
+        },
+        storageData: {
+          type: Object,
+          observer: '_loadData'
         }
       }}
 
-      _typeChanged(newType) {
-        if (newType) {
-          let url = `data/${newType}.json`;
-          fetch(url)
-            .then((resp) => resp.json())
-            .then((data) => { 
-              console.log(data); 
-              this.set('data', data); 
-            })
-            .catch(() => { this._notifyError() })
+      _loadData() {
+        if (!this.quizType) return;
+        if (this.storageData && this.storageData[this.quizType]) {
+          this.loadFromStorage();
+        } else {
+          this.loadFromJson();
         }
+      }
+
+      loadFromStorage() {
+        const quizData = this.storageData[this.quizType].quizData;
+        if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
+          console.log('Loading data from storage...');
+          this.set('data', quizData);
+        }
+      }
+
+      loadFromJson() {
+        console.log('Loading data from json...');
+        let url = `data/${this.quizType}.json`;
+        fetch(url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
+          this.set('data', data);
+        })
+        .catch(() => { this._notifyError() })
       }
 
       _notifyError() {
