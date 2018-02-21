@@ -96,11 +96,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class ResultView extends Polymer.Element {
-      static get is() { return 'result-view'; }
+      static get is() {return 'result-view';}
       static get observers() {
         return [
            '_checkFormValid(user.*)'
-        ]
+        ];
       }
       static get properties() {
         return {
@@ -114,13 +114,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: false,
             notify: true
           }
-        }
-      }  
-
-      _checkFormValid(){
-       this.isValid =  this.$.resultForm.checkValidity();
+        };
       }
 
+      _checkFormValid() {
+       this.isValid = this.$.resultForm.checkValidity();
+      }
     }
     window.customElements.define(ResultView.is, ResultView);
   </script>

@@ -113,7 +113,7 @@
 
   <script>
     class SopraQuizApp extends Polymer.Element {
-      static get is() { return 'sopra-quiz-app'; }
+      static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
         return {
@@ -123,7 +123,7 @@
           page: {
             type: String,
             reflectToAttribute: true,
-            observer: '_pageChanged',
+            observer: '_pageChanged'
           },
           routeData: Object,
           subroute: Object,

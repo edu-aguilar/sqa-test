@@ -10,8 +10,8 @@
   </template>
   <script>
     class QuizData extends Polymer.Element {
-      static get is() { return 'quiz-data'; }
-      static get properties() { return {
+      static get is() {return 'quiz-data';}
+      static get properties() {return {
         data: {
           type: Object,
           value: () => {},
@@ -24,7 +24,7 @@
           type: Object,
           observer: '_loadData'
         }
-      }}
+      };}
 
       _loadData() {
         if (!this.quizType) return;
@@ -38,13 +38,11 @@
       loadFromStorage() {
         const quizData = this.storageData[this.quizType].quizData;
         if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
-          console.log('Loading data from storage...');
           this.set('data', quizData);
         }
       }
 
       loadFromJson() {
-        console.log('Loading data from json...');
         let url = `data/${this.quizType}.json`;
         fetch(url)
         .then((resp) => resp.json())
@@ -52,20 +50,19 @@
           this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
           this.set('data', data);
         })
-        .catch(() => { this._notifyError() })
+        .catch(() => {this._notifyError();});
       }
 
       _notifyError() {
         let event = new CustomEvent(
           'onRouteChange',
           {
-            detail: { newRoute: 'not-found' },
+            detail: {newRoute: 'not-found'},
             composed: true
           }
         );
         this.dispatchEvent(event);
       }
-
     }
 
     customElements.define(QuizData.is, QuizData);

@@ -24,34 +24,21 @@
         background-color: transparent;
         @apply --button-styles;
       }
-
     </style>
-    <button 
-      class="finish"
-      on-click="_changeRoute"
-      data="finish"
-      disabled$="{{finishDisabled}}">
+    <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">
       Finalizar
     </button>
-    <button 
-      class="back"
-      on-click="_changeRoute"
-      data="back"
-      disabled$="{{backDisabled}}">
+    <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">
       Anterior
     </button>
-    <button
-      class="next"
-      on-click="_changeRoute"
-      data="next" 
-      disabled$="{{nextDisabled}}">
+    <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">
       Siguiente
     </button>
   </template>
 
   <script>
     class QuizPaginator extends Polymer.Element {
-      static get is() { return 'quiz-paginator'; }
+      static get is() {return 'quiz-paginator';}
       static get properties() {
         return {
           answeredQuestionsCount: {
@@ -75,25 +62,28 @@
             type: Boolean,
             value: false
           }
-        }
+        };
       }
 
-      _changeRoute(event) {
-        let data = event.target.getAttribute('data');
-        var event = new CustomEvent('onPageQuestionChange', { detail: { operation: data }, composed: true });
+      _changeRoute(e) {
+        const data = e.target.getAttribute('data');
+        const event = new CustomEvent('onPageQuestionChange',
+          {
+            detail: {operation: data},
+            composed: true
+          });
         this.dispatchEvent(event);
       }
 
       _observerIfFinished() {
-          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions)
+        this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions);
       }
 
       _observerRouterId() {
-        const index = parseInt(this.currentQuestionId)
+        const index = parseInt(this.currentQuestionId);
         this.nextDisabled = index === this.lengthQuestions;
         this.backDisabled = index === 1;
       }
-
     }
     window.customElements.define(QuizPaginator.is, QuizPaginator);
   </script>

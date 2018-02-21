@@ -73,7 +73,7 @@
 
   <script>
     class GradientProgressBar extends Polymer.Element {
-      static get is() { return 'gradient-progress-bar'; }
+      static get is() {return 'gradient-progress-bar';}
 
       static get properties() {
         return {
@@ -82,14 +82,13 @@
             value: 0,
             observer: '_onProgress'
           }
-        }
+        };
       }
 
       _onProgress(progress) {
         let progressBar = this.shadowRoot.querySelector('.progress');
         progressBar.style.width = progress === 100 ? '130%' : `${progress}%`;
       }
-
     }
 
     window.customElements.define(GradientProgressBar.is, GradientProgressBar);

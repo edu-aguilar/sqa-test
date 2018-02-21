@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class QuestionView extends Polymer.Element {
-      static get is() { return 'question-view'; }
+      static get is() {return 'question-view';}
 
       static get properties() {
         return {
@@ -134,15 +134,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
-          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this._selectedAnswer =
+            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
         }
       }
 
-      _pageChange(event) {
-
-        let data = event.detail.operation;
-        let index = this.quizData.questions.findIndex(i => i.id === this.question.id);
-
+      _pageChange(e) {
+        let data = e.detail.operation;
+        let index = this.quizData.questions.findIndex((i) => i.id === this.question.id);
+        let event;
         switch (data) {
           case 'next':
             index++;
@@ -151,15 +151,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             index--;
             break;
           case 'finish':
-            var event = new CustomEvent('onRouteChange', { detail: { newRoute: 'result' }, composed: true });
+            event = new CustomEvent('onRouteChange', {
+              detail: {
+                newRoute: 'result'
+              },
+              composed: true
+            });
             this.dispatchEvent(event);
             break;
           default:
             break;
-        }  
-        this.set('routeData.id', this.quizData.questions[index].id);            
+        }
+        this.set('routeData.id', this.quizData.questions[index].id);
       }
-
     }
 
     window.customElements.define(QuestionView.is, QuestionView);

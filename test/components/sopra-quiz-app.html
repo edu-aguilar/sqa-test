@@ -22,9 +22,8 @@
   </test-fixture>
 
   <script>
-    suite('sopra-quiz-app tests', function () {
-
-      test('We should have main components', function () {
+    suite('sopra-quiz-app tests', function() {
+      test('We should have main components', function() {
         const appShell = fixture('shell');
         const appLocation = appShell.shadowRoot.querySelector('#appLocation');
         const appRouteType = appShell.shadowRoot.querySelector('#appRouteType');
@@ -48,7 +47,7 @@
         assert.typeOf(appShell.rootPath, 'string');
       });
 
-      test('We have already defined needed component methods', function () {
+      test('We have already defined needed component methods', function() {
         const appShell = fixture('shell');
         assert.typeOf(appShell._routePageChanged, 'function');
         assert.typeOf(appShell._pageChanged, 'function');
@@ -56,14 +55,13 @@
         assert.typeOf(appShell._showPage404, 'function');
       });
 
-      test('_routePageChanged observer is fired when page changes and set page property properly', function () {
+      test('_routePageChanged observer is fired when page changes and set page property properly', function() {
         const appShell = fixture('shell');
         const newPage = 'result';
         appShell.set('subrouteData.page', newPage);
 
         assert.equal(appShell.page, newPage);
       });
-
     });
   </script>
 </body>
