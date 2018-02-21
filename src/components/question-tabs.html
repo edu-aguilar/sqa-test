@@ -14,7 +14,7 @@
           background-color: var(--sopra-grey-200);
           height: 32px;
         };
-        --paper-tabs-selection-bar-color: black;
+        --paper-tabs-selection-bar-color: var( --sopra-blue-100);
       }
 
       paper-tab {
@@ -22,25 +22,30 @@
       }
 
       paper-tab.answered {
-        @apply --paper-tab-content;
-
         --paper-tab-content: {
           font-weight: 800;
+          color: var( --sopra-blue-100);
         };
+        @apply --paper-tab-content;
       }
 
       paper-tab.iron-selected{
         @apply --paper-tab-selected;
         
         --paper-tab-selected: {
+          color:var( --sopra-blue-100);
           font-weight: 800;
         };
       }
+
+
+
     </style>
 
-    <paper-tabs selected="{{selectedIndex}}" scrollable fit-container>
+    <paper-tabs selected="{{_selectedIndex}}" scrollable fit-container>
       <template is="dom-repeat" items="{{questions}}">
-        <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
+            <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
+ 
       </template>
     </paper-tabs>
 
@@ -52,6 +57,7 @@
 
       static get properties() {
         return {
+          _selectedIndex: Number,
           questions: Array,
           answeredQuestions: Object,
           selected: {
@@ -64,7 +70,7 @@
       static get observers() {
         return [
           '_selectedChanged(selected)',
-          '_selectedIndexChanged(selectedIndex)'
+          '_selectedIndexChanged(_selectedIndex)'
         ]
       }
 
@@ -87,7 +93,7 @@
       }
 
       _selectedChanged(selectedPageNumber){
-        this.selectedIndex = this._pageIndex(selectedPageNumber);
+        this._selectedIndex = this._pageIndex(selectedPageNumber);
       }
       _selectedIndexChanged(selectedIndex){
         this.selected = this._pageNumber(selectedIndex);

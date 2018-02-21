@@ -41,35 +41,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         grid-template-rows: 32px 1fr 60px;
         grid-template-areas: "tabs" "question" "progressbar";
       }
-    </style>
 
-    <app-route
-      route="{{route}}"
-      pattern="/:id"
+    </style>
+    
+    <app-route 
+      route="{{route}}" 
+      pattern="/:id" 
       data="{{routeData}}">
     </app-route>
 
     <quiz-status-data
-      id="quizStatus"
+      id="quizStatusData"
       total-questions="[[quizData.questions.length]]"
       progress="{{quizProgress}}"
       answered-questions="{{answeredQuestions}}"
-      answered-questions-count="{{answeredQuestionsCount}}">
+      answered-questions-count="{{answeredQuestionsCount}}"
+      time-passed="{{timePassed}}"
+      quiz-type="[[quizType]]">
     </quiz-status-data>
 
     <question-tabs
-      questions="[[quizData.questions]]"
-      answered-questions="[[answeredQuestions]]"
-      selected="{{routeData.id}}">
+     questions="[[quizData.questions]]"
+     answered-questions="[[answeredQuestions]]"
+     selected="{{routeData.id}}">
     </question-tabs>
 
-    <question-container question="[[question]]" selected-answer="{{selectedAnswer}}"></question-container>
+    <question-container
+     quiz-data="[[quizData]]"
+     current-question-id="[[routeData.id]]"
+     answered-questions-count="{{answeredQuestionsCount}}"
+     question="[[_question]]" 
+     selected-answer="{{_selectedAnswer}}">
+    </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
       <div slot="left">[[quizData.testName]]</div>
       <div slot="center">[[answeredQuestionsCount]] / [[quizData.questions.length]]</div>
       <div slot="right">
-        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
+        <progress-timer id="progressTimer" time-passed="{{timePassed}}"></progress-timer>
       </div>
     </gradient-progress-bar>
   </template>
@@ -80,27 +89,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
+          _question: Object,
+          _selectedAnswer: String,
           route: Object,
-          quizData: Object
+          quizData: Object,
+          quizType: String,
+          timePassed: {
+            type: Number,
+            notify: true,
+            observer: '_updateStorageTime'
+          }
         };
       }
 
       static get observers() {
         return [
-          '_routeIdChanged(routeData.id)',
-          '_setAnsweredQuestion(selectedAnswer)'
+          '_routeIdChanged(routeData.id, answeredQuestions)',
+          '_setAnsweredQuestion(_selectedAnswer)'
         ];
       }
 
       ready() {
         super.ready();
         this.$.progressTimer.start();
+        this.addEventListener('onPageQuestionChange', this._pageChange);
+      }
+
+      _updateStorageTime(timePassed) {
+        this.$.quizStatusData.updateTime(timePassed);
       }
 
       _setAnsweredQuestion(answerId) {
         if (answerId) {
           let questionId = this.routeData.id;
-          this.$.quizStatus.setAnsweredQuestion(questionId, answerId);
+          this.set(`answeredQuestions.${questionId}`, answerId);
+          this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
         }
       }
 
@@ -108,14 +131,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         let question = this.quizData.questions.find((q) => {
           return Number(q.id) === Number(id);
         });
-        
+
         if (question) {
-          this.set('question', question);
-          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this.set('_question', question);
+          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
         }
       }
+
+      _pageChange(event) {
+
+        let data = event.detail.operation;
+        let index = this.quizData.questions.findIndex(i => i.id === this.question.id);
+
+        switch (data) {
+          case 'next':
+            index++;
+            break;
+          case 'back':
+            index--;
+            break;
+          case 'finish':
+            var event = new CustomEvent('onRouteChange', { detail: { newRoute: 'result' }, composed: true });
+            this.dispatchEvent(event);
+            break;
+          default:
+            break;
+        }  
+        this.set('routeData.id', this.quizData.questions[index].id);            
+      }
+
     }
 
     window.customElements.define(QuestionView.is, QuestionView);
+
   </script>
 </dom-module>

@@ -9,7 +9,6 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="data-providers/quiz-status-data.html">
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
@@ -71,14 +70,20 @@
         id="appRoutePage"
         route="{{subroute}}"
         pattern="/:page"
-        data="{{subrouteData}}"
+        data="{{_subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
+    <quiz-local-storage
+      id="quizLocalStorage"
+      storage-data="{{_storageData}}">
+    </quiz-local-storage>
+    <quiz-data
+      id="quizData"
+      quiz-type="[[routeData.type]]"
+      data="{{quizData}}">
+    </quiz-data>
 
-    <quiz-status-data id="quizStatusData"></quiz-status-data>
-    <quiz-data id="quizData" type="[[routeData.type]]" data="{{quizData}}"></quiz-data>
-
-    <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
+    <app-drawer-layout id="appDrawer" fullbleed narrow="{{_narrow}}">
 
       <app-header-layout has-scrolling-region>
 
@@ -94,7 +99,11 @@
             fallback-selection="view404"
             role="main">
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
-          <question-view name="question" route="{{subrouteTail}}" quiz-data="[[quizData]]"></question-view>
+          <question-view
+            name="question"
+            route="{{subrouteTail}}"
+            quiz-data="[[quizData]]"
+            quiz-type="[[routeData.type]]"></question-view>
           <result-view name="result"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
@@ -108,6 +117,9 @@
 
       static get properties() {
         return {
+          _subrouteData: Object,
+          _storageData: Object,
+          _narrow: Object,
           page: {
             type: String,
             reflectToAttribute: true,
@@ -115,13 +127,13 @@
           },
           routeData: Object,
           subroute: Object,
-          rootPath: String,
+          rootPath: String
         };
       }
 
       static get observers() {
         return [
-          '_routePageChanged(subrouteData.page)'
+          '_routePageChanged(_subrouteData.page)'
         ];
       }
 
@@ -133,7 +145,7 @@
       _routePageChanged(page) {
         if (!page) {
           this.set('route.path', 'frontend');
-          this.set('subroute.path', 'landing'); 
+          this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
         }

@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="quiz-paginator.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -31,6 +32,11 @@
 
       .question-container {
         margin: 0px 20px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-self: center;
+        justify-content: center;
       }
 
       @media screen and (min-width: 1024px) {
@@ -40,7 +46,7 @@
       }
     </style>
 
-    <div class="question-container">
+    <div class="question-container responsive-container">
       <p> [[question.id]] - [[question.question]] </p>
 
       <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
@@ -50,6 +56,13 @@
         </template>
       </iron-selector>
     </div>
+
+    <quiz-paginator
+      class="responsive-container"
+      length-questions="[[quizData.questions.length]]"
+      current-question-id="[[currentQuestionId]]"
+      answered-questions-count="{{answeredQuestionsCount}}">
+    </quiz-paginator>
     
   </template>
 
@@ -67,7 +80,10 @@
             type: String,
             value: '',
             notify: true
-          }
+          },
+          answeredQuestionsCount: Number,
+          quizData: Object,
+          currentQuestionId: Number
         }
       }
     }

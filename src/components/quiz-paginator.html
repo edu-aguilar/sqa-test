@@ -1,0 +1,100 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="quiz-paginator">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        height: 70px;
+        align-items: center;
+      }
+
+      .finish {
+        flex-grow: 1;
+        text-align: left;
+      }
+
+      button {
+        font-size: var(--sopra-font-xxl);
+        border-width: 0;
+        outline: none;
+        color: var(--sopra-blue-500);
+        cursor: pointer;
+        background-color: transparent;
+        @apply --button-styles;
+      }
+
+    </style>
+    <button 
+      class="finish"
+      on-click="_changeRoute"
+      data="finish"
+      disabled$="{{finishDisabled}}">
+      Finalizar
+    </button>
+    <button 
+      class="back"
+      on-click="_changeRoute"
+      data="back"
+      disabled$="{{backDisabled}}">
+      Anterior
+    </button>
+    <button
+      class="next"
+      on-click="_changeRoute"
+      data="next" 
+      disabled$="{{nextDisabled}}">
+      Siguiente
+    </button>
+  </template>
+
+  <script>
+    class QuizPaginator extends Polymer.Element {
+      static get is() { return 'quiz-paginator'; }
+      static get properties() {
+        return {
+          answeredQuestionsCount: {
+            type: Number,
+            observer: '_observerIfFinished'
+          },
+          currentQuestionId: {
+            type: Number,
+            observer: '_observerRouterId'
+          },
+          lengthQuestions: Number,
+          finishDisabled: {
+            type: Boolean,
+            value: false
+          },
+          backDisabled: {
+            type: Boolean,
+            value: false
+          },
+          nextDisabled: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      _changeRoute(event) {
+        let data = event.target.getAttribute('data');
+        var event = new CustomEvent('onPageQuestionChange', { detail: { operation: data }, composed: true });
+        this.dispatchEvent(event);
+      }
+
+      _observerIfFinished() {
+          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions)
+      }
+
+      _observerRouterId() {
+        const index = parseInt(this.currentQuestionId)
+        this.nextDisabled = index === this.lengthQuestions;
+        this.backDisabled = index === 1;
+      }
+
+    }
+    window.customElements.define(QuizPaginator.is, QuizPaginator);
+  </script>
+</dom-module>

@@ -21,11 +21,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Import the element to test -->
     <link rel="import" href="../../src/components/progress-timer.html">
+    <link rel="import" href="../../src/components/quiz-local-storage.html">
   </head>
   <body>
     <test-fixture id="ProgressTimer">
       <template>
-        <progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>
+        <progress-timer id="progressTimer" time-passed="10" quiz-type="frontend"></progress-timer>
       </template>
     </test-fixture>
 
@@ -41,39 +42,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('timePassed should increase', function() {
           let progressTimer = fixture('ProgressTimer');
           progressTimer.timePassed = 0;
-          
+
           let clock = sinon.useFakeTimers(0);
 
           progressTimer.start();
           clock.tick(clockTick);
           progressTimer.pause();
-          
-          assert.equal(progressTimer.timePassed, 3); 
+
+          assert.equal(progressTimer.timePassed, 3);
         });
 
         test('timePassed should reset', function() {
           let progressTimer = fixture('ProgressTimer');
           progressTimer.timePassed = 0;
-          
+
           let clock = sinon.useFakeTimers(0);
 
           progressTimer.start();
           clock.tick(clockTick);
           progressTimer.reset();
-          assert.equal(progressTimer.timePassed, 0); 
+          assert.equal(progressTimer.timePassed, 0);
         });
 
         test('timePassed should be paused', function() {
           let progressTimer = fixture('ProgressTimer');
           progressTimer.timePassed = 0;
-          
+
           let clock = sinon.useFakeTimers(0);
 
           progressTimer.start();
           clock.tick(clockTick);
           progressTimer.pause();
           clock.tick(clockTick + 1000);
-          assert.equal(progressTimer.timePassed, 3); 
+          assert.equal(progressTimer.timePassed, 3);
         });
       });
     </script>
