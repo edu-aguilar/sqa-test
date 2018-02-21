@@ -97,15 +97,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           timePassed: {
             type: Number,
             notify: true,
-            observer: '_updateStorageTime',
-          },
+            observer: '_updateStorageTime'
+          }
         };
       }
 
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(_selectedAnswer)',
+          '_setAnsweredQuestion(_selectedAnswer)'
         ];
       }
 
@@ -134,14 +134,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
-          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this._selectedAnswer =
+            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
         }
       }
 
-      _pageChange(event) {
-        let data = event.detail.operation;
+      _pageChange(e) {
+        let data = e.detail.operation;
         let index = this.quizData.questions.findIndex((i) => i.id === this.question.id);
-
+        let event;
         switch (data) {
           case 'next':
             index++;
@@ -150,7 +151,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             index--;
             break;
           case 'finish':
-            var event = new CustomEvent('onRouteChange', {detail: {newRoute: 'result'}, composed: true});
+            event = new CustomEvent('onRouteChange', {
+              detail: {
+                newRoute: 'result'
+              },
+              composed: true
+            });
             this.dispatchEvent(event);
             break;
           default:

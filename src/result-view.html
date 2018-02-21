@@ -99,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() {return 'result-view';}
       static get observers() {
         return [
-           '_checkFormValid(user.*)',
+           '_checkFormValid(user.*)'
         ];
       }
       static get properties() {
@@ -107,13 +107,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           user: {
             type: Object,
             value: { },
-            notify: true,
+            notify: true
           },
           isValid: {
             type: Boolean,
             value: false,
-            notify: true,
-          },
+            notify: true
+          }
         };
       }
 

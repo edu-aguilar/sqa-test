@@ -62,15 +62,15 @@
           answeredQuestions: Object,
           selected: {
             type: Number,
-            notify: true,
-          },
+            notify: true
+          }
         };
       }
 
       static get observers() {
         return [
           '_selectedChanged(selected)',
-          '_selectedIndexChanged(_selectedIndex)',
+          '_selectedIndexChanged(_selectedIndex)'
         ];
       }
 
