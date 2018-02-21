@@ -1,6 +1,7 @@
 {
   "name": "polymer-starter-kit",
   "license": "BSD-3-Clause",
+  "version": "1.0.0",
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.0",

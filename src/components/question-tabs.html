@@ -42,7 +42,7 @@
 
     </style>
 
-    <paper-tabs selected="{{selectedIndex}}" scrollable fit-container>
+    <paper-tabs selected="{{_selectedIndex}}" scrollable fit-container>
       <template is="dom-repeat" items="{{questions}}">
             <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
  
@@ -57,6 +57,7 @@
 
       static get properties() {
         return {
+          _selectedIndex: Number,
           questions: Array,
           answeredQuestions: Object,
           selected: {
@@ -69,7 +70,7 @@
       static get observers() {
         return [
           '_selectedChanged(selected)',
-          '_selectedIndexChanged(selectedIndex)'
+          '_selectedIndexChanged(_selectedIndex)'
         ]
       }
 
@@ -92,7 +93,7 @@
       }
 
       _selectedChanged(selectedPageNumber){
-        this.selectedIndex = this._pageIndex(selectedPageNumber);
+        this._selectedIndex = this._pageIndex(selectedPageNumber);
       }
       _selectedIndexChanged(selectedIndex){
         this.selected = this._pageNumber(selectedIndex);
