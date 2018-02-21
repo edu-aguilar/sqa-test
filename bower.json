@@ -24,5 +24,8 @@
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "iron-component-page": "^3.0.1"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "postinstall": "npm i"
+  }
 }
