@@ -38,30 +38,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script>
-    let quizDataMock = { testName: "Frontend title", description: "descripcion test" };
+    let quizDataMock = {testName: 'Frontend title', description: 'descripcion test'};
 
-    suite('landing view tests', function () {
-
-      test('quizData received should be equal to quizDataMock', function () {
+    suite('landing view tests', function() {
+      test('quizData received should be equal to quizDataMock', function() {
         let landingView = fixture('landingDescriptionOK');
         assert.equal(landingView.quizData.testName, quizDataMock.testName);
         assert.equal(landingView.quizData.description, quizDataMock.description);
       });
 
-      test('when quizData is empty', function () {
+      test('when quizData is empty', function() {
         let landingView = fixture('landingDescriptionEmpty');
         let descriptionWrapper = landingView.shadowRoot.querySelector('.description-wrapper');
-        assert.equal(descriptionWrapper.innerText, "");
+        assert.equal(descriptionWrapper.innerText, '');
       });
 
-      test('when click start, and emit the event', function () {
+      test('when click start, and emit the event', function() {
         let landingView = fixture('landingDescriptionOK');
-        landingView.addEventListener('onRouteChange', function (event) {
+        landingView.addEventListener('onRouteChange', function(event) {
           assert.equal(event.detail.newRoute, 'question/69696969');
         });
         landingView._changeRoute();
       });
-
     });
   </script>
 </body>

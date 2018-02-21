@@ -36,20 +36,20 @@
       * @polymer
     */
     class ProgressTimer extends (class extends Polymer.Element {}) {
-      static get is() { return 'progress-timer'; }
+      static get is() {return 'progress-timer';}
 
       static get properties() {
         return {
-          //** Formatted time to show */
+          //* * Formatted time to show */
           _formattedTime: String,
           /** Seconds passed since the *start()* method is called. */
           timePassed: {
             type: Number,
             value: 0,
             notify: true,
-            observer: '_timeChange'
-          }
-        }
+            observer: '_timeChange',
+          },
+        };
       }
 
       /** Gives initial format to `timePassed` when the component is instantiated. */
@@ -64,7 +64,7 @@
 
       /** Starts timer. */
       start() {
-        this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
+        this.timeInterval = setInterval(() => {this._updateTime();}, 1000);
       }
 
       /** Pauses timer. */

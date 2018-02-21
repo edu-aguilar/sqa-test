@@ -47,8 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script>
-    suite('quiz paginator tests ', function () {
-      test('all questions answered in first page', function () {
+    suite('quiz paginator tests ', function() {
+      test('all questions answered in first page', function() {
         const questionContainer = fixture('firstQuestionComplete');
         const finish = questionContainer.shadowRoot.querySelector('.finish');
         const back = questionContainer.shadowRoot.querySelector('.back');
@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(back.disabled, true);
         assert.equal(next.disabled, false);
       });
-      test('incomplete questions answered in last page', function () {
+      test('incomplete questions answered in last page', function() {
         const questionContainer = fixture('lastQuestionInComplete');
         const finish = questionContainer.shadowRoot.querySelector('.finish');
         const back = questionContainer.shadowRoot.querySelector('.back');
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(back.disabled, false);
         assert.equal(next.disabled, true);
       });
-      test('incomplete questions answered in mid page', function () {
+      test('incomplete questions answered in mid page', function() {
         const questionContainer = fixture('MidPageQuestionInComplete');
         const finish = questionContainer.shadowRoot.querySelector('.finish');
         const back = questionContainer.shadowRoot.querySelector('.back');
@@ -76,28 +76,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         assert.equal(next.disabled, false);
       });
 
-      test('capture event when next emit', function () {
+      test('capture event when next emit', function() {
         let quizPaginator = fixture('MidPageQuestionInComplete');
         const buttonNext = quizPaginator.shadowRoot.querySelector('.next');
-        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+        quizPaginator.addEventListener('onPageQuestionChange', function(event) {
           assert.equal(event.detail.operation, 'next');
         });
         buttonNext.click();
       });
 
-      test('capture event when back emit', function () {
+      test('capture event when back emit', function() {
         let quizPaginator = fixture('MidPageQuestionInComplete');
         const buttonBack = quizPaginator.shadowRoot.querySelector('.back');
-        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+        quizPaginator.addEventListener('onPageQuestionChange', function(event) {
           assert.equal(event.detail.operation, 'back');
         });
         buttonBack.click();
       });
 
-      test('capture event when finish emit', function () {
+      test('capture event when finish emit', function() {
         let quizPaginator = fixture('MidPageQuestionInComplete');
         const buttonBack = quizPaginator.shadowRoot.querySelector('.finish');
-        quizPaginator.addEventListener('onPageQuestionChange', function (event) {
+        quizPaginator.addEventListener('onPageQuestionChange', function(event) {
           assert.equal(event.detail.operation, 'finish');
         });
         buttonBack.click();

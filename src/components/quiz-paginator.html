@@ -51,49 +51,48 @@
 
   <script>
     class QuizPaginator extends Polymer.Element {
-      static get is() { return 'quiz-paginator'; }
+      static get is() {return 'quiz-paginator';}
       static get properties() {
         return {
           answeredQuestionsCount: {
             type: Number,
-            observer: '_observerIfFinished'
+            observer: '_observerIfFinished',
           },
           currentQuestionId: {
             type: Number,
-            observer: '_observerRouterId'
+            observer: '_observerRouterId',
           },
           lengthQuestions: Number,
           finishDisabled: {
             type: Boolean,
-            value: false
+            value: false,
           },
           backDisabled: {
             type: Boolean,
-            value: false
+            value: false,
           },
           nextDisabled: {
             type: Boolean,
-            value: false
-          }
-        }
+            value: false,
+          },
+        };
       }
 
       _changeRoute(event) {
         let data = event.target.getAttribute('data');
-        var event = new CustomEvent('onPageQuestionChange', { detail: { operation: data }, composed: true });
+        var event = new CustomEvent('onPageQuestionChange', {detail: {operation: data}, composed: true});
         this.dispatchEvent(event);
       }
 
       _observerIfFinished() {
-          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions)
+          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions);
       }
 
       _observerRouterId() {
-        const index = parseInt(this.currentQuestionId)
+        const index = parseInt(this.currentQuestionId);
         this.nextDisabled = index === this.lengthQuestions;
         this.backDisabled = index === 1;
       }
-
     }
     window.customElements.define(QuizPaginator.is, QuizPaginator);
   </script>

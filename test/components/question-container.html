@@ -34,12 +34,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script>
       suite('question-container tests', function() {
-        test('Should have all required components', function (done) {
+        test('Should have all required components', function(done) {
           const questionContainer = fixture('QuestionContainer');
           flush(function() {
             const ironSelector = questionContainer.shadowRoot.querySelector('iron-selector');
             const answerItem = questionContainer.shadowRoot.querySelectorAll('answer-item');
-          
+      
             done();
 
             assert(ironSelector, 'ironSelector is neither `null` nor `undefined`');
@@ -58,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           const questionContainer = fixture('QuestionContainer');
           flush(function() {
             const answerItem = questionContainer.shadowRoot.querySelector('.iron-selected');
-          
+      
             done();
 
             assert.equal(answerItem.id, '1');
