@@ -12,7 +12,7 @@
       }
     </style>
     <div class="progress-timer-container">
-      [[formattedTime]]
+      [[_formattedTime]]
     </div>
     </template>
   </template>
@@ -41,7 +41,7 @@
       static get properties() {
         return {
           //** Formatted time to show */
-          formattedTime: String,
+          _formattedTime: String,
           /** Seconds passed since the *start()* method is called. */
           timePassed: {
             type: Number,
@@ -59,7 +59,7 @@
 
       /** Observer to formatTime when time is changed */
       _timeChange() {
-        this.formattedTime = this._formatTime();
+        this._formattedTime = this._formatTime();
       }
 
       /** Starts timer. */
