@@ -70,8 +70,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      quiz-data="[[quizData]]"
      current-question-id="[[routeData.id]]"
      answered-questions-count="{{answeredQuestionsCount}}"
-     question="[[question]]" 
-     selected-answer="{{selectedAnswer}}">
+     question="[[_question]]" 
+     selected-answer="{{_selectedAnswer}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -85,25 +85,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class QuestionView extends Polymer.Element {
-      static get is() { return 'question-view'; }
+      static get is() {return 'question-view';}
 
       static get properties() {
         return {
+          _question: Object,
+          _selectedAnswer: String,
           route: Object,
           quizData: Object,
           quizType: String,
           timePassed: {
             type: Number,
             notify: true,
-            observer: '_updateStorageTime'
-          }
+            observer: '_updateStorageTime',
+          },
         };
       }
 
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(selectedAnswer)'
+          '_setAnsweredQuestion(_selectedAnswer)',
         ];
       }
 
@@ -131,15 +133,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         if (question) {
-          this.set('question', question);
-          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this.set('_question', question);
+          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
         }
       }
 
       _pageChange(event) {
-
         let data = event.detail.operation;
-        let index = this.quizData.questions.findIndex(i => i.id === this.question.id);
+        let index = this.quizData.questions.findIndex((i) => i.id === this.question.id);
 
         switch (data) {
           case 'next':
@@ -149,15 +150,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             index--;
             break;
           case 'finish':
-            var event = new CustomEvent('onRouteChange', { detail: { newRoute: 'result' }, composed: true });
+            var event = new CustomEvent('onRouteChange', {detail: {newRoute: 'result'}, composed: true});
             this.dispatchEvent(event);
             break;
           default:
             break;
-        }  
-        this.set('routeData.id', this.quizData.questions[index].id);            
+        }
+        this.set('routeData.id', this.quizData.questions[index].id);
       }
-
     }
 
     window.customElements.define(QuestionView.is, QuestionView);

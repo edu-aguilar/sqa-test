@@ -39,31 +39,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
 
-    suite('landing view tests', function () {
-
-      test('form with valid field', function () {
+    suite('landing view tests', function() {
+      test('form with valid field', function() {
         let resultView = fixture('formValidTest');
-        resultView.user = { name: "asdasd",
-                            surname: "Gonzalez",
-                            email: "alvarogonzalez@pepephone.com"
-                            }
+        resultView.user = {name: 'asdasd',
+                            surname: 'Gonzalez',
+                            email: 'alvarogonzalez@pepephone.com',
+                            };
 
         assert.equal(resultView.isValid, true);
       });
 
-      test('form with invalid field', function () {
+      test('form with invalid field', function() {
         let resultView = fixture('formInValidTest');
 
-        resultView.user = { name: "",
-                            surname: "Gonzalez",
-                            phone: "999999999",
-                            email: "alvarogonzalez@asdasd.com"
-                            }
+        resultView.user = {name: '',
+                            surname: 'Gonzalez',
+                            phone: '999999999',
+                            email: 'alvarogonzalez@asdasd.com',
+                            };
 
         assert.equal(resultView.isValid, false);
       });
-
-
     });
   </script>
 </body>

@@ -1,6 +1,7 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "sopra-quiz",
   "license": "BSD-3-Clause",
+  "version": "1.0.1",
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.0",
@@ -8,7 +9,7 @@
   },
   "scripts": {
     "lint": "npm run lint:javascript && polymer lint",
-    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
+    "lint:javascript": "eslint . --ext js,html",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   }

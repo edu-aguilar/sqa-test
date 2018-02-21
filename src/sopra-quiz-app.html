@@ -70,12 +70,12 @@
         id="appRoutePage"
         route="{{subroute}}"
         pattern="/:page"
-        data="{{subrouteData}}"
+        data="{{_subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
     <quiz-local-storage
       id="quizLocalStorage"
-      storage-data="{{storageData}}">
+      storage-data="{{_storageData}}">
     </quiz-local-storage>
     <quiz-data
       id="quizData"
@@ -83,7 +83,7 @@
       data="{{quizData}}">
     </quiz-data>
 
-    <app-drawer-layout id="appDrawer" fullbleed narrow="{{narrow}}">
+    <app-drawer-layout id="appDrawer" fullbleed narrow="{{_narrow}}">
 
       <app-header-layout has-scrolling-region>
 
@@ -113,10 +113,13 @@
 
   <script>
     class SopraQuizApp extends Polymer.Element {
-      static get is() { return 'sopra-quiz-app'; }
+      static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
         return {
+          _subrouteData: Object,
+          _storageData: Object,
+          _narrow: Object,
           page: {
             type: String,
             reflectToAttribute: true,
@@ -130,7 +133,7 @@
 
       static get observers() {
         return [
-          '_routePageChanged(subrouteData.page)'
+          '_routePageChanged(_subrouteData.page)',
         ];
       }
 

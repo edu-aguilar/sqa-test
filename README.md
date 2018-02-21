@@ -24,6 +24,7 @@ After cloning the project from the repository, install the dependencies using bo
 
     cd sopra-quiz-app
     bower install
+    npm install -g eslint eslint-config-google eslint-plugin-html
 
 ### Start the development server
 
