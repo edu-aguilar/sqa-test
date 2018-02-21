@@ -123,17 +123,17 @@
           page: {
             type: String,
             reflectToAttribute: true,
-            observer: '_pageChanged',
+            observer: '_pageChanged'
           },
           routeData: Object,
           subroute: Object,
-          rootPath: String,
+          rootPath: String
         };
       }
 
       static get observers() {
         return [
-          '_routePageChanged(_subrouteData.page)',
+          '_routePageChanged(_subrouteData.page)'
         ];
       }
 

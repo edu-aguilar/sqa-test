@@ -22,7 +22,8 @@
       * `<progress-timer>` counts the seconds passed since the timer starts.
       *
       * ## Usage
-      * Just inject the `<progress-timer>` component with and *id* to provide easy access to its public functions and expose a variable of type `Number`
+      * Just inject the `<progress-timer>` component with and *id* to provide
+      *  easy access to its public functions and expose a variable of type `Number`
       *
       * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
       *
@@ -47,8 +48,8 @@
             type: Number,
             value: 0,
             notify: true,
-            observer: '_timeChange',
-          },
+            observer: '_timeChange'
+          }
         };
       }
 

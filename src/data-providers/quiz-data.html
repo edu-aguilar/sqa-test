@@ -15,15 +15,15 @@
         data: {
           type: Object,
           value: () => {},
-          notify: true,
+          notify: true
         },
         quizType: {
-          type: String,
+          type: String
         },
         storageData: {
           type: Object,
-          observer: '_loadData',
-        },
+          observer: '_loadData'
+        }
       };}
 
       _loadData() {
@@ -38,13 +38,11 @@
       loadFromStorage() {
         const quizData = this.storageData[this.quizType].quizData;
         if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
-          console.log('Loading data from storage...');
           this.set('data', quizData);
         }
       }
 
       loadFromJson() {
-        console.log('Loading data from json...');
         let url = `data/${this.quizType}.json`;
         fetch(url)
         .then((resp) => resp.json())
@@ -60,7 +58,7 @@
           'onRouteChange',
           {
             detail: {newRoute: 'not-found'},
-            composed: true,
+            composed: true
           }
         );
         this.dispatchEvent(event);

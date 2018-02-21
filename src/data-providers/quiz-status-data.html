@@ -11,7 +11,7 @@
   <script>
   (function() {
     let quizStatusData = {
-      answeredQuestions: {},
+      answeredQuestions: {}
     };
 
     let subscribers = [];
@@ -25,30 +25,30 @@
           answeredQuestions: {
             type: Object,
             notify: true,
-            value: () => quizStatusData.answeredQuestions,
+            value: () => quizStatusData.answeredQuestions
           },
           quizType: {
             type: String,
             value: () => quizStatusData.quizType,
-            observer: '_setQuizType',
+            observer: '_setQuizType'
           },
           progress: {
             type: Number,
             notify: true,
-            computed: '_computeProgress(answeredQuestions.*, totalQuestions)',
+            computed: '_computeProgress(answeredQuestions.*, totalQuestions)'
           },
           timePassed: {
             type: Number,
-            notify: true,
+            notify: true
           },
           answeredQuestionsCount: {
             type: Number,
-            notify: true,
+            notify: true
           },
           storageData: {
             type: Object,
-            observer: '_loadFromStorage',
-          },
+            observer: '_loadFromStorage'
+          }
         };
       }
 
@@ -84,7 +84,11 @@
           this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
-        this.$.quizLocalStorage.updateStorage(this.quizType, `answeredQuestions.${questionId}`, answerId);
+        this.$.quizLocalStorage.updateStorage(
+          this.quizType,
+          `answeredQuestions.${questionId}`,
+          answerId
+        );
         this.__updateSubscribers(`answeredQuestions.${questionId}`);
       }
 

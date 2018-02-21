@@ -24,27 +24,14 @@
         background-color: transparent;
         @apply --button-styles;
       }
-
     </style>
-    <button 
-      class="finish"
-      on-click="_changeRoute"
-      data="finish"
-      disabled$="{{finishDisabled}}">
+    <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">
       Finalizar
     </button>
-    <button 
-      class="back"
-      on-click="_changeRoute"
-      data="back"
-      disabled$="{{backDisabled}}">
+    <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">
       Anterior
     </button>
-    <button
-      class="next"
-      on-click="_changeRoute"
-      data="next" 
-      disabled$="{{nextDisabled}}">
+    <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">
       Siguiente
     </button>
   </template>
@@ -56,36 +43,40 @@
         return {
           answeredQuestionsCount: {
             type: Number,
-            observer: '_observerIfFinished',
+            observer: '_observerIfFinished'
           },
           currentQuestionId: {
             type: Number,
-            observer: '_observerRouterId',
+            observer: '_observerRouterId'
           },
           lengthQuestions: Number,
           finishDisabled: {
             type: Boolean,
-            value: false,
+            value: false
           },
           backDisabled: {
             type: Boolean,
-            value: false,
+            value: false
           },
           nextDisabled: {
             type: Boolean,
-            value: false,
-          },
+            value: false
+          }
         };
       }
 
-      _changeRoute(event) {
-        let data = event.target.getAttribute('data');
-        var event = new CustomEvent('onPageQuestionChange', {detail: {operation: data}, composed: true});
+      _changeRoute(e) {
+        const data = e.target.getAttribute('data');
+        const event = new CustomEvent('onPageQuestionChange',
+          {
+            detail: {operation: data},
+            composed: true
+          });
         this.dispatchEvent(event);
       }
 
       _observerIfFinished() {
-          this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions);
+        this.finishDisabled = !(this.answeredQuestionsCount === this.lengthQuestions);
       }
 
       _observerRouterId() {
