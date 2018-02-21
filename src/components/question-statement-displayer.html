@@ -1,0 +1,95 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="question-statement-displayer">
+  <template>
+    <style include="shared-styles">
+      .progress-timer-container {
+        font-size: var(--sopra-font-xxl);
+        color: white;
+
+        @apply --progress-timer-props;
+      }
+    </style>
+    
+    </template>
+  </template>
+
+  <script>
+    /**
+      * `<progress-timer>` counts the seconds passed since the timer starts.
+      *
+      * ## Usage
+      * Just inject the `<progress-timer>` component with and *id* to provide easy access to its public functions and expose a variable of type `Number`
+      *
+      * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
+      *
+      * ## Styling
+      *
+      * | Custom property          | Description                                              | Default |
+      * |--------------------------|----------------------------------------------------------|---------|
+      * | `--progress-timer-props` | Mixin applied to time displayed (color, font type, etc). | {}      |
+      *
+      * @customElement
+      * @polymer
+    */
+    class QuestionStatementDisplayer extends (class extends Polymer.Element {}) {
+      static get is() { return 'question-statement-displayer'; }
+
+      static get properties() {
+        return {
+          /** Seconds passed since the *start()* method is called. */
+          timePassed: {
+            type: Number,
+            value: 0,
+            notify: true,
+            observer: '_timeChange'
+          }
+        }
+      }
+
+      /** Gives initial format to `timePassed` when the component is instantiated. */
+      ready() {
+        super.ready();
+      }
+
+      /** Observer to formatTime when time is changed */
+      _timeChange() {
+        this.formattedTime = this._formatTime();
+      }
+
+      /** Starts timer. */
+      start() {
+        this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
+      }
+
+      /** Pauses timer. */
+      pause() {
+        clearInterval(this.timeInterval);
+      }
+
+      /** Sets timer back to initial state (*timePassed = 0*). */
+      reset() {
+        this.timePassed = 0;
+      }
+
+      /** Callback that adds one second to *timePassed*. */
+      _updateTime() {
+        this.timePassed++;
+      }
+
+      /**
+        * Gives *timePassed* a certain format.
+        * @return {result} The time passed in a clock-like format (*HH:mm:ss*).
+      */
+      _formatTime() {
+        const date = new Date(null);
+        date.setSeconds(this.timePassed);
+        const result = date.toISOString().substr(11, 8);
+        return result;
+      }
+    }
+
+    window.customElements.define(QuestionStatementDisplayer.is, QuestionStatementDisplayer);
+  </script>
+</dom-module>
