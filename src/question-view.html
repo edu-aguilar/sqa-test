@@ -70,8 +70,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      quiz-data="[[quizData]]"
      current-question-id="[[routeData.id]]"
      answered-questions-count="{{answeredQuestionsCount}}"
-     question="[[question]]" 
-     selected-answer="{{selectedAnswer}}">
+     question="[[_question]]" 
+     selected-answer="{{_selectedAnswer}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -89,6 +89,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
+          _question: Object,
+          _selectedAnswer: String,
           route: Object,
           quizData: Object,
           quizType: String,
@@ -103,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(selectedAnswer)'
+          '_setAnsweredQuestion(_selectedAnswer)'
         ];
       }
 
@@ -131,8 +133,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         if (question) {
-          this.set('question', question);
-          this.selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this.set('_question', question);
+          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
         }
       }
 
