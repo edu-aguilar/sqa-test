@@ -60,10 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="box-wrapper">
-      <p>
-        ¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos
-        pueda ponerse en contacto contigo.
-      </p>
+      <p>[[resultMessage]]</p>
     </div>
 
     <form id="resultForm">
@@ -104,6 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       static get properties() {
         return {
+          resultMessage: String,
           user: {
             type: Object,
             value: { },

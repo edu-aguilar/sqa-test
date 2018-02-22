@@ -104,7 +104,7 @@
             route="{{subrouteTail}}"
             quiz-data="[[quizData]]"
             quiz-type="[[routeData.type]]"></question-view>
-          <result-view name="result"></result-view>
+          <result-view name="result" result-message="[[quizData.resultMessage]]"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
       </app-header-layout>
