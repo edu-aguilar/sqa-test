@@ -4,31 +4,48 @@
 <dom-module id="question-statement-displayer">
   <template>
     <style include="shared-styles">
-      .progress-timer-container {
-        font-size: var(--sopra-font-xxl);
-        color: white;
-
-        @apply --progress-timer-props;
+      :host {
       }
+
+      p {
+        font-size: calc(var(--sopra-font-xxl) + 2px);
+        font-weight: bold;
+      }
+
+      img {
+        height: 200px;
+        width: 200px;
+        margin-bottom: 20px;
+      }
+
     </style>
     
-    </template>
+    <!-- <p> [[questionId]] - [[question.title]] </p>
+    <template is="dom-if" if="[[question.image]]">
+      <img src$="[[question.image]]">
+    </template> -->
+    <p> Is this the statement of the question containing an image? </p>
+    <img src="https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png">
+  
   </template>
 
   <script>
     /**
-      * `<progress-timer>` counts the seconds passed since the timer starts.
+      * `<question-statement-displayer>` displays the question statement and adapts to questions with or without images.
       *
       * ## Usage
-      * Just inject the `<progress-timer>` component with and *id* to provide easy access to its public functions and expose a variable of type `Number`
+      * Just inject the `<question-statement-displayer>` component.
       *
-      * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
+      * `<question-statement-displayer 
+      *   question=[[question.question]] 
+      *   question-id=[[question.id]]>
+      *  </question-statement-displayer>`
       *
       * ## Styling
       *
       * | Custom property          | Description                                              | Default |
       * |--------------------------|----------------------------------------------------------|---------|
-      * | `--progress-timer-props` | Mixin applied to time displayed (color, font type, etc). | {}      |
+      * |  |  |  |
       *
       * @customElement
       * @polymer
@@ -38,55 +55,10 @@
 
       static get properties() {
         return {
-          /** Seconds passed since the *start()* method is called. */
-          timePassed: {
-            type: Number,
-            value: 0,
-            notify: true,
-            observer: '_timeChange'
-          }
+          /** Object containing the title of the question and an optional image */
+          question: Object,
+          questionId: String
         }
-      }
-
-      /** Gives initial format to `timePassed` when the component is instantiated. */
-      ready() {
-        super.ready();
-      }
-
-      /** Observer to formatTime when time is changed */
-      _timeChange() {
-        this.formattedTime = this._formatTime();
-      }
-
-      /** Starts timer. */
-      start() {
-        this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
-      }
-
-      /** Pauses timer. */
-      pause() {
-        clearInterval(this.timeInterval);
-      }
-
-      /** Sets timer back to initial state (*timePassed = 0*). */
-      reset() {
-        this.timePassed = 0;
-      }
-
-      /** Callback that adds one second to *timePassed*. */
-      _updateTime() {
-        this.timePassed++;
-      }
-
-      /**
-        * Gives *timePassed* a certain format.
-        * @return {result} The time passed in a clock-like format (*HH:mm:ss*).
-      */
-      _formatTime() {
-        const date = new Date(null);
-        date.setSeconds(this.timePassed);
-        const result = date.toISOString().substr(11, 8);
-        return result;
       }
     }
 

@@ -1,12 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
 
-<link rel="import" href="../data-providers/quiz-status-data.html">
-<link rel="import" href="quiz-paginator.html">
-<link rel="import" href="answer-container.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
+<link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="question-statement-displayer.html">
+<link rel="import" href="quiz-paginator.html">
+<link rel="import" href="answer-container.html">
 
 <dom-module id="question-container">
   <template>
@@ -18,6 +19,7 @@
         align-items: center;
         text-align: center;
         background-color: var(--sopra-grey-100);
+        overflow: hidden;
       }
 
       p {
@@ -26,12 +28,25 @@
       }
 
       .question-container {
-        margin: 0px 20px;
-        display: flex;
-        flex-direction: column;
+        padding: 0px 20px;
         flex-grow: 1;
-        align-self: center;
-        justify-content: center;
+        overflow: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas: "statement" "options";
+        justify-items: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      question-statement-displayer {
+        grid-area: statement;
+        /* margin-bottom: 20px; */
+      }
+
+      iron-selector {
+        grid-area: options;
       }
 
       @media screen and (min-width: 1024px) {
@@ -42,7 +57,8 @@
     </style>
 
     <div class="question-container responsive-container">
-      <p> [[question.id]] - [[question.question.title]] </p>
+      <question-statement-displayer></question-statement-displayer>
+      
       <answer-container 
         answer-type="[[question.type]]"
         options="[[question.options]]"
