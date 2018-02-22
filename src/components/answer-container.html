@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<link rel="import" href="answer-item.html">
+
+
+<dom-module id="answer-container">
+    <template>
+        <style include="shared-styles">
+            
+        </style>
+        <template is="dom-if" if="[[_isSelector(answerType)]]">
+            <iron-selector 
+                id="optionSelector" 
+                role="navigation" 
+                attr-for-selected="id"
+                selected="{{selectedAnswer.single}}"
+                selected-values="{{selectedAnswer.multiple}}"
+                multi="{{_isMultiple(answerType)}}">
+                <template is="dom-repeat" items="{{options}}" as="option">
+                    <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
+                </template>
+            </iron-selector>
+        </template>
+        <template is="dom-if" if="[[!_isSelector(answerType)]]">
+            <paper-textarea label="Escribe aquí tu respuesta" value="{{selectedAnswer.text}}"></paper-textarea>
+        </template>
+    </template>
+
+    <script>
+        class AnswerContainer extends Polymer.Element {
+            static get is() { return 'answer-container'; }
+
+            static get properties() {
+                return {
+                    answerType: String,
+                    options: Object,
+                    selectedAnswer: {
+                        type: Object,
+                        notify: true
+                    }
+                };
+            }
+            _isSelector(answerType) {
+                return (answerType === 'simple' || answerType === 'multiple');
+            }
+            _isMultiple(answerType) {
+                return (answerType === 'multiple');
+            }
+        }
+
+        window.customElements.define(AnswerContainer.is, AnswerContainer);
+    </script>
+</dom-module>
