@@ -60,10 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="box-wrapper">
-      <p>
-        ¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos
-        pueda ponerse en contacto contigo.
-      </p>
+      <p>[[resultMessage]]</p>
     </div>
 
     <form id="resultForm">
@@ -96,14 +93,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class ResultView extends Polymer.Element {
-      static get is() { return 'result-view'; }
+      static get is() {return 'result-view';}
       static get observers() {
         return [
            '_checkFormValid(user.*)'
-        ]
+        ];
       }
       static get properties() {
         return {
+          resultMessage: String,
           user: {
             type: Object,
             value: { },
@@ -114,13 +112,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: false,
             notify: true
           }
-        }
-      }  
-
-      _checkFormValid(){
-       this.isValid =  this.$.resultForm.checkValidity();
+        };
       }
 
+      _checkFormValid() {
+       this.isValid = this.$.resultForm.checkValidity();
+      }
     }
     window.customElements.define(ResultView.is, ResultView);
   </script>

@@ -1,12 +1,17 @@
 {
-  "id": "1",  
+  "id": "1",
   "testName": "Frontend test",
   "description": "Bienvenido a Sopra Steria Quiz, la plataforma que nos ayuda a realizar una primera aproximación sobre el nivel técnico de nuestros candidatos a través de unas preguntas de selección simple. Si estás listo, presiona el botón de más abajo para comenzar tu prueba. ¡Mucha suerte!",
+  "resultMessage":"¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos pueda ponerse en contacto contigo.",
   "questions": [
     {
       "id": "1",
-      "question": "¿Qué significan las iniciales CSS?",
+      "question": {
+        "title": "¿Qué significan las iniciales CSS?",
+        "image": ""
+      },
       "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -28,8 +33,12 @@
     },
     {
       "id": "2",
-      "question": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -47,8 +56,12 @@
     },
     {
       "id": "3",
-      "question": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
+      "question": {
+        "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
+        "image": ""
+      },
       "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -70,8 +83,12 @@
     },
     {
       "id": "4",
-      "question": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
+      "question": {
+        "title": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -93,8 +110,12 @@
     },
     {
       "id": "5",
-      "question": "¿Cuál es la sintaxis correcta?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta?",
+        "image": ""
+      },
       "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -116,8 +137,12 @@
     },
     {
       "id": "6",
-      "question": "¿Cómo se insertan comentarios en un archivo CSS?",
+      "question": {
+        "title": "¿Cómo se insertan comentarios en un archivo CSS?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -139,8 +164,12 @@
     },
     {
       "id": "7",
-      "question": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
+      "question": {
+        "title": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
+        "image": ""
+      },
       "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -162,8 +191,12 @@
     },
     {
       "id": "8",
-      "question": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -181,8 +214,12 @@
     },
     {
       "id": "9",
-      "question": "¿Los script externos deben contener la etiqueta <script>?",
+      "question": {
+        "title": "¿Los script externos deben contener la etiqueta <script>?",
+        "image": ""
+      },
       "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -196,8 +233,12 @@
     },
     {
       "id": "10",
-      "question": "¿Qué significan las iniciales HTML?",
+      "question": {
+        "title": "¿Qué significan las iniciales HTML?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -219,8 +260,12 @@
     },
     {
       "id": "11",
-      "question": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -242,8 +287,12 @@
     },
     {
       "id": "12",
-      "question": "¿Con qué etiqueta se crean las listas enumeradas?",
+      "question": {
+        "title": "¿Con qué etiqueta se crean las listas enumeradas?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -265,8 +314,12 @@
     },
     {
       "id": "13",
-      "question": "¿Cuál es la sintaxis correcta para crear un checkbox?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un checkbox?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -288,8 +341,12 @@
     },
     {
       "id": "14",
-      "question": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -311,8 +368,12 @@
     },
     {
       "id": "15",
-      "question": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
+        "image": ""
+      },
       "level": 4,
+      "type": "simple",
       "options": [
         {
           "id": "1",

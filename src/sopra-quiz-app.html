@@ -83,7 +83,7 @@
       data="{{quizData}}">
     </quiz-data>
 
-    <app-drawer-layout id="appDrawer" fullbleed narrow="{{_narrow}}">
+    <app-drawer-layout id="appDrawer" fullbleed>
 
       <app-header-layout has-scrolling-region>
 
@@ -104,7 +104,7 @@
             route="{{subrouteTail}}"
             quiz-data="[[quizData]]"
             quiz-type="[[routeData.type]]"></question-view>
-          <result-view name="result"></result-view>
+          <result-view name="result" result-message="[[quizData.resultMessage]]"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
       </app-header-layout>
@@ -113,17 +113,16 @@
 
   <script>
     class SopraQuizApp extends Polymer.Element {
-      static get is() { return 'sopra-quiz-app'; }
+      static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
         return {
           _subrouteData: Object,
           _storageData: Object,
-          _narrow: Object,
           page: {
             type: String,
             reflectToAttribute: true,
-            observer: '_pageChanged',
+            observer: '_pageChanged'
           },
           routeData: Object,
           subroute: Object,
