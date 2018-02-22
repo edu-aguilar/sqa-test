@@ -44,9 +44,23 @@
         text-align: center;
       }
 
+      #sopra-scroll::-webkit-scrollbar-track {
+        border-radius: 0px;
+      }
+
+      #sopra-scroll::-webkit-scrollbar {
+        width: 7px;
+      }
+
+      #sopra-scroll::-webkit-scrollbar-thumb {
+        border-radius: 7px;
+        box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+        background-color: var(--sopra-blue-500);
+      }
+
       question-statement-displayer {
         grid-area: statement;
-        /* margin-bottom: 20px; */
       }
 
       iron-selector {
@@ -60,7 +74,7 @@
       }
     </style>
 
-    <div class="question-container responsive-container">
+    <div class="question-container responsive-container" id="sopra-scroll">
       <question-statement-displayer></question-statement-displayer>
 
       <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
