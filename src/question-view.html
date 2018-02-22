@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           _question: Object,
-          _selectedAnswer: String,
+          _selectedAnswer: Object,
           route: Object,
           quizData: Object,
           quizType: String,
@@ -135,7 +135,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (question) {
           this.set('_question', question);
           this._selectedAnswer =
-            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+            this.answeredQuestions[question.id] ? 
+              this.answeredQuestions[question.id] : 
+              {  
+                single: '',
+                multiple: [],
+                text: '' 
+              };
         }
       }
 
