@@ -83,7 +83,7 @@
       data="{{quizData}}">
     </quiz-data>
 
-    <app-drawer-layout id="appDrawer" fullbleed narrow="{{_narrow}}">
+    <app-drawer-layout id="appDrawer" fullbleed>
 
       <app-header-layout has-scrolling-region>
 
@@ -119,7 +119,6 @@
         return {
           _subrouteData: Object,
           _storageData: Object,
-          _narrow: Object,
           page: {
             type: String,
             reflectToAttribute: true,
