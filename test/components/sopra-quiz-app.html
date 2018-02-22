@@ -41,6 +41,9 @@
 
       test('We have already defined needed component properties', function() {
         const appShell = fixture('shell');
+        
+        assert.typeOf(appShell._subrouteData, 'object');
+        assert.typeOf(appShell._storageData, 'object');
         assert.typeOf(appShell.page, 'string');
         assert.typeOf(appShell.routeData, 'object');
         assert.typeOf(appShell.subroute, 'object');
@@ -55,10 +58,10 @@
         assert.typeOf(appShell._showPage404, 'function');
       });
 
-      test('_routePageChanged observer is fired when page changes and set page property properly', function() {
+      test('_routePageChanged observer is fired when page changes and set the page property properly', function() {
         const appShell = fixture('shell');
         const newPage = 'result';
-        appShell.set('subrouteData.page', newPage);
+        appShell.set('_subrouteData.page', newPage);
 
         assert.equal(appShell.page, newPage);
       });
