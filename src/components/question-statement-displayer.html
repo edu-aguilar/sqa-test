@@ -1,31 +1,31 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../../bower_components/iron-image/iron-image.html"> -->
+
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="question-statement-displayer">
   <template>
     <style include="shared-styles">
-      :host {
-      }
-
       p {
         font-size: calc(var(--sopra-font-xxl) + 2px);
         font-weight: bold;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       img {
         height: 200px;
-        width: 200px;
+        width: auto;
         margin-bottom: 20px;
       }
-
     </style>
     
-    <!-- <p> [[questionId]] - [[question.title]] </p>
+    <p> [[questionId]] - [[question.title]] </p>
     <template is="dom-if" if="[[question.image]]">
+      <!-- <iron-image src$="[[question.image]]"></iron-image> -->
+
       <img src$="[[question.image]]">
-    </template> -->
-    <p> Is this the statement of the question containing an image? </p>
-    <img src="https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png">
+    </template>
   
   </template>
 

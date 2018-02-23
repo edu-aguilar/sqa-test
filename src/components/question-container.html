@@ -15,7 +15,6 @@
       :host {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         text-align: center;
         background-color: var(--sopra-grey-100);
@@ -27,21 +26,23 @@
         font-weight: bold;
       }
 
-      answer-item {
+      answer-item:not(:last-of-type) {
         margin-bottom: 20px;
       }
 
       .question-container {
-        padding: 0px 20px;
+        padding: 3% 0px;
+        width: 100%;
         flex-grow: 1;
-        overflow: auto;
+        height: calc(100% - 70px);
+        overflow-y: auto;
+        overflow-x: hidden;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
         grid-template-areas: "statement" "options";
         justify-items: center;
         align-items: center;
-        text-align: center;
       }
 
       #sopra-scroll::-webkit-scrollbar-track {
@@ -65,6 +66,9 @@
 
       iron-selector {
         grid-area: options;
+        min-width: 50%;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       @media screen and (min-width: 1024px) {
@@ -75,7 +79,10 @@
     </style>
 
     <div class="question-container responsive-container" id="sopra-scroll">
-      <question-statement-displayer></question-statement-displayer>
+      <question-statement-displayer 
+        question=[[question.question]] 
+        question-id=[[question.id]]>
+      </question-statement-displayer>
 
       <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
           attr-for-selected="id">
