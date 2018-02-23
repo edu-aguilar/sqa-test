@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!-- <link rel="import" href="../../bower_components/iron-image/iron-image.html"> -->
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -18,13 +18,22 @@
         width: auto;
         margin-bottom: 20px;
       }
+
+      iron-image{
+        height: 200px;
+        width: 100%;
+        margin-bottom: 20px;
+        --iron-image-width: 100%;
+        --iron-image-height: 100%;
+        /* --iron-image-placeholder: { background: #939ed5; }; */
+      }
     </style>
     
     <p> [[questionId]] - [[question.title]] </p>
     <template is="dom-if" if="[[question.image]]">
-      <!-- <iron-image src$="[[question.image]]"></iron-image> -->
+      <iron-image preload placeholder="../images/placeholder.gif" fade sizing="contain" src$="[[question.image]]"></iron-image>
 
-      <img src$="[[question.image]]">
+      <!-- <img src$="[[question.image]]"> -->
     </template>
   
   </template>
