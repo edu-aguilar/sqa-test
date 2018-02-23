@@ -17,8 +17,8 @@
                 id="optionSelector" 
                 role="navigation" 
                 attr-for-selected="id"
-                selected="{{selectedAnswer.single}}"
-                selected-values="{{selectedAnswer.multiple}}"
+                selected="{{singleAnswer}}"
+                selected-values="{{selectedAnswer}}"
                 multi="{{_isMultiple(answerType)}}">
                 <template is="dom-repeat" items="{{options}}" as="option">
                     <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
@@ -26,7 +26,7 @@
             </iron-selector>
         </template>
         <template is="dom-if" if="[[!_isSelector(answerType)]]">
-            <paper-textarea label="Escribe aquí tu respuesta" value="{{selectedAnswer.text}}"></paper-textarea>
+            <paper-textarea label="Escribe aquí tu respuesta" value="{{singleAnswer}}"></paper-textarea>
         </template>
     </template>
 
@@ -39,10 +39,33 @@
                     answerType: String,
                     options: Object,
                     selectedAnswer: {
-                        type: Object,
-                        notify: true
+                        type: Array,
+                        notify: true,
+                        observer: '_multipleChanged'                        
+                    },
+                    singleAnswer: {
+                        type: String,
+                        notify: true,
+                        observer: '_singleChanged'
                     }
                 };
+            }
+            constructor() {
+                console.log('constructor');
+                super();
+                this.singleAnswer = this._getSingleAnswer();
+            }
+            _singleChanged(singleAnswer) {
+                console.log('_singleChanged', singleAnswer);
+                this.selectedAnswer = [singleAnswer];
+            }
+            _multipleChanged(selectedAnswer) {
+                console.log('_multipleeChanged', selectedAnswer);
+            }
+            _getSingleAnswer() {
+                console.log('_getSingleAnswer', this.selectedAnswer);
+                return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ? 
+                    this.selectedAnswer[0] : '';
             }
             _isSelector(answerType) {
                 return (answerType === 'simple' || answerType === 'multiple');

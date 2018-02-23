@@ -90,7 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           _question: Object,
-          _selectedAnswer: Object,
+          _selectedAnswer: {
+            type: Array,
+            observer: '_setAnsweredQuestion'
+          },
           route: Object,
           quizData: Object,
           quizType: String,
@@ -120,6 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _setAnsweredQuestion(answerId) {
+        console.log('_setAnsweredQuestion', this.routeData.id, answerId) 
         if (answerId) {
           let questionId = this.routeData.id;
           this.set(`answeredQuestions.${questionId}`, answerId);
@@ -135,13 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (question) {
           this.set('_question', question);
           this._selectedAnswer =
-            this.answeredQuestions[question.id] ? 
-              this.answeredQuestions[question.id] : 
-              {  
-                single: '',
-                multiple: [],
-                text: '' 
-              };
+            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : [];
         }
       }
 
