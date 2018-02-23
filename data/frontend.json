@@ -9,7 +9,7 @@
       "id": "1",
       "question": {
         "title": "¿Qué significan las iniciales CSS?",
-        "image": ""
+        "image": "https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png"
       },
       "level": 1,
       "type": "simple",
@@ -35,8 +35,8 @@
     {
       "id": "2",
       "question": {
-        "title": "¿Cuál de estas sintaxis de HTML NO es correcta para referenciar una hoja de estilos externa?",
-        "image": ""
+        "title": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
+        "image": "http://yalsa.ala.org/blog/wp-content/uploads/2016/01/code.org_logo.png"
       },
       "level": 4,
       "type": "multiple",
@@ -69,7 +69,7 @@
       "id": "4",
       "question": {
         "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
-        "image": ""
+        "image": "https://thumbor.forbes.com/thumbor/960x0/smart/https%3A%2F%2Fblogs-images.forbes.com%2Frajatbhageria%2Ffiles%2F2017%2F09%2Fcode-copy-1200x1200.jpg%3Fwidth%3D960"
       },
       "level": 1,
       "type": "simple",
