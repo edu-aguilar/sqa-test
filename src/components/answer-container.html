@@ -10,7 +10,9 @@
 <dom-module id="answer-container">
     <template>
         <style include="shared-styles">
-            
+            answer-item {
+                margin-bottom: 20px;
+            }
         </style>
         <template is="dom-if" if="[[_isSelector(answerType)]]">
             <iron-selector 
@@ -29,7 +31,7 @@
             <paper-textarea label="Escribe aquí tu respuesta" value="{{singleAnswer}}"></paper-textarea>
         </template>
     </template>
-
+    
     <script>
         class AnswerContainer extends Polymer.Element {
             static get is() {return 'answer-container';}
