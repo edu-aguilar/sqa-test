@@ -141,7 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _pageChange(e) {
         let data = e.detail.operation;
-        let index = this.quizData.questions.findIndex((i) => i.id === this.question.id);
+        let index = this.quizData.questions.findIndex((i) => i.id === this._question.id);
         let event;
         switch (data) {
           case 'next':
