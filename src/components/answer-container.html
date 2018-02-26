@@ -32,7 +32,7 @@
 
     <script>
         class AnswerContainer extends Polymer.Element {
-            static get is() { return 'answer-container'; }
+            static get is() {return 'answer-container';}
 
             static get properties() {
                 return {
@@ -41,7 +41,7 @@
                     selectedAnswer: {
                         type: Array,
                         notify: true,
-                        observer: '_setSingleAnswer'                        
+                        observer: '_setSingleAnswer'
                     },
                     singleAnswer: {
                         type: String,
@@ -63,7 +63,7 @@
                 else this.singleAnswer = '';
             }
             _getSingleAnswer() {
-                return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ? 
+                return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
                     this.selectedAnswer[0] : '';
             }
 
