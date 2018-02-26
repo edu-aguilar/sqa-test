@@ -17,6 +17,7 @@
 <link rel="lazy-import" href="result-view.html">
 <link rel="lazy-import" href="not-found-view.html">
 
+
 <dom-module id="sopra-quiz-app">
   <template>
     <style include="shared-styles">
@@ -103,8 +104,9 @@
             name="question"
             route="{{subrouteTail}}"
             quiz-data="[[quizData]]"
-            quiz-type="[[routeData.type]]"></question-view>
-          <result-view name="result" result-message="[[quizData.resultMessage]]"></result-view>
+            quiz-type="[[routeData.type]]">
+          </question-view>
+          <result-view name="result" presencial="[[quizData.presencial]]" result-message="[[quizData.resultMessage]]"></result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
       </app-header-layout>
