@@ -11,12 +11,8 @@
         font-weight: bold;
         padding-left: 20px;
         padding-right: 20px;
-      }
 
-      img {
-        height: 200px;
-        width: auto;
-        margin-bottom: 20px;
+        @apply --question-statement-text;
       }
 
       iron-image{
@@ -25,15 +21,20 @@
         margin-bottom: 20px;
         --iron-image-width: 100%;
         --iron-image-height: 100%;
-        /* --iron-image-placeholder: { background: #939ed5; }; */
+
+        @apply --question-statement-image;
       }
     </style>
     
     <p> [[questionId]] - [[question.title]] </p>
     <template is="dom-if" if="[[question.image]]">
-      <iron-image preload placeholder="../images/placeholder.gif" fade sizing="contain" src$="[[question.image]]"></iron-image>
-
-      <!-- <img src$="[[question.image]]"> -->
+      <iron-image 
+        preload 
+        placeholder="../images/placeholder.gif" 
+        fade 
+        sizing="contain" 
+        src$="[[question.image]]">
+      </iron-image>
     </template>
   
   </template>
@@ -43,7 +44,7 @@
       * `<question-statement-displayer>` displays the question statement and adapts to questions with or without images.
       *
       * ## Usage
-      * Just inject the `<question-statement-displayer>` component.
+      * Inject the `<question-statement-displayer>` component with the question you want to display and its ID.
       *
       * `<question-statement-displayer 
       *   question=[[question.question]] 
@@ -52,9 +53,10 @@
       *
       * ## Styling
       *
-      * | Custom property          | Description                                              | Default |
-      * |--------------------------|----------------------------------------------------------|---------|
-      * |  |  |  |
+      * | Custom property            | Description                                              | Default |
+      * |----------------------------|----------------------------------------------------------|---------|
+      * | --question-statement-text  | Mixin applied to the text of the question                | {}      |
+      * | --question-statement-image | If the question has an image this mixin is applied to it | {}      |
       *
       * @customElement
       * @polymer
@@ -66,6 +68,7 @@
         return {
           /** Object containing the title of the question and an optional image */
           question: Object,
+          /** Id of the question being displayed */
           questionId: String
         }
       }
