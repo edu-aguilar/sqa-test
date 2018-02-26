@@ -25,7 +25,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <question-statement-displayer 
           question='{"title": "This is a question", "image": "https://goo.gl/sPDCof"}' 
-          question-id="1">
+          question-id="1"
+          placeholder-image="../../images/placeholder.gif"
+        >
         </question-statement-displayer>
       </template>
     </test-fixture>
@@ -58,6 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('Properties should be the right type', function() {
           assert.typeOf(questionStatementDisplayer.question, 'object');
           assert.typeOf(questionStatementDisplayer.questionId, 'string');
+          assert.typeOf(questionStatementDisplayer.placeholderImage, 'string');
         });
 
         test('Component should display question statement', function() {
