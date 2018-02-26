@@ -12,6 +12,7 @@
         <style include="shared-styles">
             answer-item {
                 margin-bottom: 20px;
+                 @apply --answer-container-props;      
             }
         </style>
         <template is="dom-if" if="[[_isSelector(answerType)]]">
@@ -19,7 +20,7 @@
                 id="optionSelector" 
                 role="navigation" 
                 attr-for-selected="id"
-                selected="{{singleAnswer}}"
+                selected="{{_singleAnswer}}"
                 selected-values="{{selectedAnswer}}"
                 multi="{{_isMultiple(answerType)}}">
                 <template is="dom-repeat" items="{{options}}" as="option">
@@ -28,7 +29,7 @@
             </iron-selector>
         </template>
         <template is="dom-if" if="[[!_isSelector(answerType)]]">
-            <paper-textarea label="Escribe aquí tu respuesta" value="{{singleAnswer}}"></paper-textarea>
+            <paper-textarea label="Escribe aquí tu respuesta" value="{{_singleAnswer}}"></paper-textarea>
         </template>
     </template>
     
@@ -38,31 +39,31 @@
 
             static get properties() {
                 return {
+                    _singleAnswer: {
+                        type: String,
+                        notify: true,
+                        observer: '_singleChanged'
+                    },
                     answerType: String,
                     options: Array,
                     selectedAnswer: {
                         type: Array,
                         notify: true,
                         observer: '_setSingleAnswer'
-                    },
-                    singleAnswer: {
-                        type: String,
-                        notify: true,
-                        observer: '_singleChanged'
                     }
                 };
             }
 
             constructor() {
                 super();
-                this.singleAnswer = this._getSingleAnswer();
+                this._singleAnswer = this._getSingleAnswer();
             }
             _singleChanged(singleAnswer) {
                 if (singleAnswer) this.selectedAnswer = [singleAnswer];
             }
             _setSingleAnswer(selectedAnswer) {
-                if (selectedAnswer.length === 1) this.singleAnswer = this._getSingleAnswer();
-                else this.singleAnswer = '';
+                if (selectedAnswer.length === 1) this._singleAnswer = this._getSingleAnswer();
+                else this._singleAnswer = '';
             }
             _getSingleAnswer() {
                 return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
