@@ -39,7 +39,7 @@
             static get properties() {
                 return {
                     answerType: String,
-                    options: Object,
+                    options: Array,
                     selectedAnswer: {
                         type: Array,
                         notify: true,
@@ -58,7 +58,7 @@
                 this.singleAnswer = this._getSingleAnswer();
             }
             _singleChanged(singleAnswer) {
-                this.selectedAnswer = [singleAnswer];
+                if (singleAnswer) this.selectedAnswer = [singleAnswer];
             }
             _setSingleAnswer(selectedAnswer) {
                 if (selectedAnswer.length === 1) this.singleAnswer = this._getSingleAnswer();
