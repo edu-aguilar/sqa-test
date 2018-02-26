@@ -34,18 +34,46 @@
     </template>
     
     <script>
+        /**
+        * `<answer-container>` show one of the different kind of questions (simple, multiple or text).
+        *
+        * ## Usage
+        * Just inject the `<answer-container>` component with and *id* to provide
+        *  easy access to its public functions and expose The variables `answerType`, `options` and 
+        *  `selectedAnswer`.
+        *
+        * `<answer-container 
+        *     id="answerContainer" 
+        *     answer-type="[[answerType]]" 
+        *     options="[[questionOptions]]" 
+        *     selected-answer="{{selectedAnswer}}">
+        * </answer-container>`
+        *
+        * ## Styling
+        *
+        * | Custom property            | Description                                          | Default |
+        * |----------------------------|------------------------------------------------------|---------|
+        * | `--answer-container-props` | Mixin applied to time displayed (margin, font, etc). | {}      |
+        *
+        * @customElement
+        * @polymer
+        */
         class AnswerContainer extends Polymer.Element {
             static get is() {return 'answer-container';}
 
             static get properties() {
                 return {
+                    /** Formatted answer for `one option` answer types */
                     _singleAnswer: {
                         type: String,
                         notify: true,
                         observer: '_singleChanged'
                     },
+                    /** Type of the question (simple, multiple, text) */
                     answerType: String,
+                    /** Available option choices */                    
                     options: Array,
+                    /** Array of Id's of selected answers */                                        
                     selectedAnswer: {
                         type: Array,
                         notify: true,
@@ -53,26 +81,46 @@
                     }
                 };
             }
-
+      
+            /** Gives initial value as String for single selectedAnswer when the component is constructed. */
             constructor() {
                 super();
                 this._singleAnswer = this._getSingleAnswer();
             }
+
+            /** Observer to set answer as array when singleAnswer change. */    
             _singleChanged(singleAnswer) {
                 if (singleAnswer) this.selectedAnswer = [singleAnswer];
             }
+
+            /** Observer to set singleAnswer when iron-selector returns an array of selected answers. */            
             _setSingleAnswer(selectedAnswer) {
                 if (selectedAnswer.length === 1) this._singleAnswer = this._getSingleAnswer();
                 else this._singleAnswer = '';
             }
+
+            /**
+              * Helper to recover singleAnswer as String when answerType is not multiple
+              * @return {this.selectedAnswer} Return first String in array as a flat String when
+              * answerType is not multiple.
+            */
             _getSingleAnswer() {
                 return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
                     this.selectedAnswer[0] : '';
             }
 
+            /** 
+              * Helper to evaluate if answerType is a selectType or textType. 
+              * @return Boolean.
+            */
             _isSelector(answerType) {
                 return (answerType === 'simple' || answerType === 'multiple');
             }
+
+            /** 
+              * Helper to evaluate if answerType is multiple for iron-selector behavior.
+              * @return Boolean.
+            */          
             _isMultiple(answerType) {
                 return (answerType === 'multiple');
             }
