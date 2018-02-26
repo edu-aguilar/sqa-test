@@ -90,10 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           _question: Object,
-          _selectedAnswer: {
-            type: Array,
-            observer: '_setAnsweredQuestion'
-          },
+          _selectedAnswer: Array,
           route: Object,
           quizData: Object,
           quizType: String,
@@ -108,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(_selectedAnswer)'
+          '_setAnsweredQuestion(_selectedAnswer.*)'
         ];
       }
 
@@ -122,15 +119,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.quizStatusData.updateTime(timePassed);
       }
 
-      _setAnsweredQuestion(answerId) {
-        console.log('_setAnsweredQuestion', this.routeData.id, answerId) 
-        if (answerId) {
+      _setAnsweredQuestion(answer) {
+        const answerArray = this._cleanAnswer(answer.base);
+        if (answerArray.length > 0) {
           let questionId = this.routeData.id;
-          this.set(`answeredQuestions.${questionId}`, answerId);
-          this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
+          this.set(`answeredQuestions.${questionId}`, answerArray);
+          this.$.quizStatusData.setAnsweredQuestion(questionId, answerArray);
         }
       }
-
+      _cleanAnswer(answer) {
+        const cleanedAnswer = [];
+        answer.map((value) => {
+          if (value.length > 0) cleanedAnswer.push(value);
+        })
+        return cleanedAnswer;
+      }
       _routeIdChanged(id) {
         let question = this.quizData.questions.find((q) => {
           return Number(q.id) === Number(id);

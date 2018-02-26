@@ -41,7 +41,7 @@
                     selectedAnswer: {
                         type: Array,
                         notify: true,
-                        observer: '_multipleChanged'                        
+                        observer: '_setSingleAnswer'                        
                     },
                     singleAnswer: {
                         type: String,
@@ -50,23 +50,23 @@
                     }
                 };
             }
+
             constructor() {
-                console.log('constructor');
                 super();
                 this.singleAnswer = this._getSingleAnswer();
             }
             _singleChanged(singleAnswer) {
-                console.log('_singleChanged', singleAnswer);
                 this.selectedAnswer = [singleAnswer];
             }
-            _multipleChanged(selectedAnswer) {
-                console.log('_multipleeChanged', selectedAnswer);
+            _setSingleAnswer(selectedAnswer) {
+                if (selectedAnswer.length === 1) this.singleAnswer = this._getSingleAnswer();
+                else this.singleAnswer = '';
             }
             _getSingleAnswer() {
-                console.log('_getSingleAnswer', this.selectedAnswer);
                 return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ? 
                     this.selectedAnswer[0] : '';
             }
+
             _isSelector(answerType) {
                 return (answerType === 'simple' || answerType === 'multiple');
             }
