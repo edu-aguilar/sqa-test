@@ -40,13 +40,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('Should have all required components', function(done) {
           const questionContainer = fixture('QuestionContainer');
           flush(function() {
-            const ironSelector = questionContainer.shadowRoot.querySelector('iron-selector');
-            const answerItem = questionContainer.shadowRoot.querySelectorAll('answer-item');
-      
+            const quizPaginator = questionContainer.shadowRoot.querySelector('quiz-paginator');
+            const answerContainer = questionContainer.shadowRoot.querySelector('answer-container');
+            assert(quizPaginator, 'quizPaginator is neither `null` nor `undefined`');
+            assert(answerContainer, 'answerContainer is neither `null` nor `undefined`');
             done();
-
-            assert(ironSelector, 'ironSelector is neither `null` nor `undefined`');
-            assert(answerItem, 'answerItem is neither `null` nor `undefined`');
           });
         });
 
@@ -55,31 +53,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           assert.typeOf(questionContainer.question, 'object');
           assert.typeOf(questionContainer.selectedAnswer, 'array');
-          assert.typeOf(questionContainer.answeredQuestionsCount, 'number');
-          assert.typeOf(questionContainer.quizData, 'object');
-          assert.typeOf(questionContainer.currentQuestionId, 'number');
-        });
-
-        test('Should mark answer as selected', function(done) {
-          const questionContainer = fixture('QuestionContainer');
-          flush(function() {
-            const answerItem = questionContainer.shadowRoot.querySelector('.iron-selected');
-      
-            done();
-
-            assert.equal(answerItem.id, '1');
-          });
-        });
-
-        test('Should only mark one item as selected', function(done) {
-          const questionContainer = fixture('QuestionContainer');
-          flush(function() {
-            const answerItem = questionContainer.shadowRoot.querySelectorAll('.iron-selected');
-
-            done();
-
-            assert.equal(answerItem.length, 1);
-          });
         });
       });
     </script>
