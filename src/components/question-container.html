@@ -45,21 +45,6 @@
         align-items: center;
       }
 
-      #sopra-scroll::-webkit-scrollbar-track {
-        border-radius: 0px;
-      }
-
-      #sopra-scroll::-webkit-scrollbar {
-        width: 7px;
-      }
-
-      #sopra-scroll::-webkit-scrollbar-thumb {
-        border-radius: 7px;
-        box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
-        background-color: var(--sopra-blue-500);
-      }
-
       question-statement-displayer {
         grid-area: statement;
       }
@@ -78,7 +63,7 @@
       }
     </style>
 
-    <div class="question-container responsive-container" id="sopra-scroll">
+    <div class="question-container responsive-container sopra-scroll">
       <question-statement-displayer 
         question=[[question.question]] 
         question-id=[[question.id]]>
