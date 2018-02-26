@@ -27,7 +27,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <question-container 
           question='{"id": "1", "question": "question", "options": [{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Karina"}]}' 
-          selected-answer="1">
+          selected-answer="1"
+          quiz-data="{}"
+          current-question-id="1"
+          answered-questions-count="10">
         </question-container>
       </template>
     </test-fixture>
@@ -51,7 +54,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           const questionContainer = fixture('QuestionContainer');
 
           assert.typeOf(questionContainer.question, 'object');
-          assert.typeOf(questionContainer.selectedAnswer, 'string');
+          assert.typeOf(questionContainer.selectedAnswer, 'array');
+          assert.typeOf(questionContainer.answeredQuestionsCount, 'number');
+          assert.typeOf(questionContainer.quizData, 'object');
+          assert.typeOf(questionContainer.currentQuestionId, 'number');
         });
 
         test('Should mark answer as selected', function(done) {
