@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <test-fixture id="formValidTest">
     <template>
-          <result-view result-message="welcome message"></result-view>
+          <result-view result-message="welcome message" ></result-view>
     </template>
   </test-fixture>
 
@@ -37,6 +37,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="presencialTest">
+    <template>
+      <result-view presencial></result-view>
+    </template>
+  </test-fixture>
+
+
   <script>
 
     suite('landing view tests', function() {
@@ -44,11 +51,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         const resultView = fixture('formValidTest');
         const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
         resultView.user = {
-                            name: 'asdasd',
-                            surname: 'Gonzalez',
-                            email: 'alvarogonzalez@pepephone.com',
+                            name: 'candidato1',
+                            surname: 'ape2',
+                            email: 'candidato@soprasteria.com',
                           };
+                          debugger;
+        assert.equal(resultView.$.resultForm.hidden, false);                    
         assert.equal(resultMessage.firstElementChild.innerText, "welcome message");                      
+        assert.equal(resultView.presencial, false);
         assert.equal(resultView.isValid, true);
       });
 
@@ -58,11 +68,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         resultView.user = {
                             name: '',
-                            surname: 'Gonzalez',
+                            surname: 'ape2',
                             phone: '999999999',
-                            email: 'alvarogonzalez@asdasd.com',
+                            email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultMessage.firstElementChild.innerText, "");                         
+        assert.equal(resultView.$.resultForm.hidden, false); 
+        assert.equal(resultMessage.firstElementChild.innerText, "");
+        assert.equal(resultView.presencial, false);                         
+        assert.equal(resultView.isValid, false);
+      });
+
+      test('when is presencial the form have to be hidden', function() {
+        let resultView = fixture('presencialTest'); 
+        debugger;
+        assert.equal(resultView.$.resultForm.hidden, true); 
+        assert.equal(resultView.presencial, true);                         
         assert.equal(resultView.isValid, false);
       });
     });
