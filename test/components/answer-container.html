@@ -1,0 +1,131 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/components/answer-container.html">
+</head>
+
+<body>
+    <test-fixture id="AnswerContainerSimple">
+        <template>
+            <answer-container 
+                answer-type="simple"
+                options='[{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Alvaro"}, { "id": "3", "value": "Edu"}]'
+                selected-answer='["1"]'>
+            </answer-container>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="AnswerContainerMultiple">
+        <template>
+            <answer-container 
+                answer-type="multiple" 
+                options='[{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Alvaro"}, { "id": "3", "value": "Edu"}]'
+                selected-answer='["1", "3"]'>
+            </answer-container>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="AnswerContainerText">
+        <template>
+            <answer-container 
+                answer-type="text" 
+                options='[]'
+                selected-answer='["Lorem ipsum..."]'>
+            </answer-container>
+        </template>
+    </test-fixture>
+
+    <script>
+        suite('answer-container tests', function () {
+            test('Should have all required components', function (done) {
+                const AnswerContainerSimple = fixture('AnswerContainerSimple');
+                flush(function () {
+                    const ironSelector = AnswerContainerSimple.shadowRoot.querySelector('iron-selector');
+                    const paperTextArea = AnswerContainerSimple.shadowRoot.querySelectorAll('paper-textarea');
+                    const answerItem = AnswerContainerSimple.shadowRoot.querySelectorAll('answer-item');
+                    assert(ironSelector, 'ironSelector is neither `null` nor `undefined`');
+                    assert(paperTextArea, 'paperTextArea is neither `null` nor `undefined`');
+                    assert(answerItem, 'answerItem is neither `null` nor `undefined`');
+                    done();
+                });
+            });
+
+            test('answerType should be an string, options an Object and selectedAnswer an Array', function () {
+                const AnswerContainerSimple = fixture('AnswerContainerSimple');
+                
+                assert.typeOf(AnswerContainerSimple.answerType, 'string');
+                assert.typeOf(AnswerContainerSimple.options, 'array');
+                assert.typeOf(AnswerContainerSimple.selectedAnswer, 'array');
+            });
+
+            test('Simple choice type should mark answer as selected', function (done) {
+                const AnswerContainerSimple = fixture('AnswerContainerSimple');
+                flush(function () {
+                    const answerItem = AnswerContainerSimple.shadowRoot.querySelector('.iron-selected');
+                    assert.equal(answerItem.id, '1');
+                    done();
+                });
+            });
+
+            test('Simple choice type should only mark one item as selected', function (done) {
+                const AnswerContainerSimple = fixture('AnswerContainerSimple');
+                flush(function () {
+                    const answerItem = AnswerContainerSimple.shadowRoot.querySelectorAll('.iron-selected');
+                    assert.equal(answerItem.length, 1);
+                    done();
+                });
+            });
+
+            test('Multiple choice type should mark answers as selected', function (done) {
+                const AnswerContainerMultiple = fixture('AnswerContainerMultiple');
+                flush(function () {
+                    const answerItem = AnswerContainerMultiple.shadowRoot.querySelectorAll('.iron-selected');
+                    assert.equal(answerItem[0].id, '1');
+                    assert.equal(answerItem[1].id, '3');
+                    done();
+                });
+            });
+
+            test('Multiple choice type should mark two items as selected', function (done) {
+                const AnswerContainerMultiple = fixture('AnswerContainerMultiple');
+                flush(function () {
+                    const answerItem = AnswerContainerMultiple.shadowRoot.querySelectorAll('.iron-selected');
+                    assert.equal(answerItem.length, 2);
+                    done();
+                });
+            });
+
+            test('Text type should show current answer "Lorem Ipsum..."', function (done) {
+                const AnswerContainerText = fixture('AnswerContainerText');
+                flush(function () {
+                    const answerText = AnswerContainerText.shadowRoot.querySelector('paper-textarea');
+                    assert.equal(answerText.value, 'Lorem ipsum...');
+                    done();
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>
