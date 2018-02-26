@@ -30,7 +30,7 @@
     <template is="dom-if" if="[[question.image]]">
       <iron-image 
         preload 
-        placeholder="../images/placeholder.gif" 
+        placeholder$="[[placeholderImage]]" 
         fade 
         sizing="contain" 
         src$="[[question.image]]">
@@ -45,6 +45,7 @@
       *
       * ## Usage
       * Inject the `<question-statement-displayer>` component with the question you want to display and its ID.
+      * Optionally you can add a `placeholderImage` property to indicate the url of the placeholder to show while images are being loaded. 
       *
       * `<question-statement-displayer 
       *   question=[[question.question]] 
@@ -69,7 +70,12 @@
           /** Object containing the title of the question and an optional image */
           question: Object,
           /** Id of the question being displayed */
-          questionId: String
+          questionId: String,
+          // URL of the image shown on iron-image placeholder
+          placeholderImage: {
+            type: String,
+            value: '../images/placeholder.gif'
+          }
         }
       }
     }
