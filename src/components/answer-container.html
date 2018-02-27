@@ -101,8 +101,11 @@
         * @param {Array} selectedAnswerArray
       */
       _setSingleAnswerAsString(selectedAnswerArray) {
-        if (selectedAnswerArray.length === 1) this._selectedAnswerSingle = this.selectedAnswerArray.join();
-        else this._selectedAnswerSingle = '';
+        if (selectedAnswerArray.length === 1) {
+          this._selectedAnswerSingle = this.selectedAnswerArray.join();
+        } else {
+          this._selectedAnswerSingle = '';
+        }
       }
 
       /**
