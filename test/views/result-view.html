@@ -29,49 +29,45 @@
 
   <test-fixture id="presencialTest">
     <template>
-      <result-view presencial></result-view>
+      <result-view on-site></result-view>
     </template>
   </test-fixture>
 
   <script>
     suite('landing view tests', function() {
-
       test('form with valid field', function() {
         const resultView = fixture('formValidTest');
-        const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
+        const resultMessage = resultView.shadowRoot.querySelector('.text-result');
         resultView.user = {
                             name: 'candidato1',
                             surname: 'ape2',
                             email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultView.$.resultForm.hidden, false);                    
-        assert.equal(resultMessage.firstElementChild.innerText, "welcome message");                      
-        assert.equal(resultView.presencial, false);
+        assert.equal(resultView.$.formContainer.hidden, false);                   
+        assert.equal(resultMessage.innerText, "welcome message");                      
+        assert.equal(resultView.onSite, false);
         assert.equal(resultView.isValid, true);
       });
-
       test('form with invalid field', function() {
         let resultView = fixture('formInValidTest');
-        const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
+        const resultMessage = resultView.shadowRoot.querySelector('.text-result');
         resultView.user = {
                             name: '',
                             surname: 'ape2',
                             phone: '999999999',
                             email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultView.$.resultForm.hidden, false); 
-        assert.equal(resultMessage.firstElementChild.innerText, "");
-        assert.equal(resultView.presencial, false);                         
+        assert.equal(resultView.$.formContainer.hidden, false); 
+        assert.equal(resultMessage.innerText, ""); 
+        assert.equal(resultView.onSite, false);                         
         assert.equal(resultView.isValid, false);
       });
-
       test('when is presencial the form have to be hidden', function() {
         let resultView = fixture('presencialTest'); 
-        assert.equal(resultView.$.resultForm.hidden, true); 
-        assert.equal(resultView.presencial, true);                         
+        assert.equal(resultView.$.formContainer.hidden, true); 
+        assert.equal(resultView.onSite, true);                         
         assert.equal(resultView.isValid, false);
       });
-
     });
   </script>
 </body>
