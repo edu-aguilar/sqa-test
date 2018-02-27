@@ -21,7 +21,7 @@ install:
 before_script:
   - npm run validate-branch
 script:
-  - npm run build
+  - xvfb-run npm run build
 branches:
   only:
     - "master"
