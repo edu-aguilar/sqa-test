@@ -11,7 +11,7 @@
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html",
     "test": "polymer test -l chrome",
-    "test:integration": "polymer build # test that psk builds without error with the CLI",
+    "build": "polymer build",
     "validate-branch": "npm run lint && npm run test"
   }
 }

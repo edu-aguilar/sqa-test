@@ -22,7 +22,8 @@
   "builds": [
     {
       "preset": "es5-bundled",
-      "basePath": "/sopra-quiz-app/"
+      "basePath": "/sopra-quiz-app/",
+      "name": "sopra-quiz-app"
     },
     {
       "preset": "es6-bundled",
