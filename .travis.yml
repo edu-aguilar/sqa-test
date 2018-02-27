@@ -19,9 +19,10 @@ install:
   - npm install
   - polymer install
 before_script:
-  - npm run validate-branch
+  - npm run lint
 script:
-  - xvfb-run npm run build
+  - xvfb-run npm run test
+  - xvfb-run npm run test:integration
 branches:
   only:
     - "master"
