@@ -100,7 +100,8 @@
       }
 
       /**
-        * Observer to set _singleAnswer when iron-selector returns an array of selected answers.
+        * Observer to set _singleAnswer as a flat String, only if the question type is simple.
+        * This is because when iron-selector is not multiple read a `String` property
         * @param {Array} selectedAnswer
       */
       _setSingleAnswer(selectedAnswer) {
@@ -109,7 +110,7 @@
       }
 
       /**
-        * Helper to recover singleAnswer as String when answerType is not multiple
+        * Helper to recover singleAnswer as `String` when answerType is not multiple
         * @return {selectedAnswer}  Return first String in array as a flat String when answerType is not multiple.
       */
       _getSingleAnswer() {
