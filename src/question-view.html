@@ -120,20 +120,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _setAnsweredQuestion(answer) {
-        const answerArray = this._cleanAnswer(answer.base);
+        const answerArray = answer.base;
         if (answerArray.length > 0) {
           let questionId = this.routeData.id;
           this.set(`answeredQuestions.${questionId}`, answerArray);
           this.$.quizStatusData.setAnsweredQuestion(questionId, answerArray);
         }
       }
-      _cleanAnswer(answer) {
-        const cleanedAnswer = [];
-        answer.map((value) => {
-          if (value.length > 0) cleanedAnswer.push(value);
-        });
-        return cleanedAnswer;
-      }
+
       _routeIdChanged(id) {
         let question = this.quizData.questions.find((q) => {
           return Number(q.id) === Number(id);
