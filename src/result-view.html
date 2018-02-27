@@ -85,16 +85,12 @@
       * `<result-view>`view where we redirect after answering all the questions
       *
       * ## Usage
-      * The `presencial` parameter is to indicate if it is necessary the candidate's data to send them through a form
-      * The `result-message` is a dynamic ending message depending on the type of test
-      *
+      * 
       * `<result-view name="result" presencial="[[quizData.presencial]]" result-message="[[quizData.resultMessage]]">`
-      *
       *
       * @customElement
       * @polymer
     */
-
     class ResultView extends Polymer.Element {
       static get is() {return 'result-view';}
       static get observers() {
@@ -104,17 +100,21 @@
       }
       static get properties() {
         return {
+          /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
+         /** It is to indicate if it is necessary the candidate's data to send them through a form */
           presencial: {
             type: Boolean,
             value: false,
             notify: true
           },
+          /** candidate information */
           user: {
             type: Object,
             value: { },
             notify: true
           },
+          /** value to check the validity of the form */
           isValid: {
             type: Boolean,
             value: false,
