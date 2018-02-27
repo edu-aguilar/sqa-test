@@ -26,17 +26,16 @@
         color: #333333;
       }
 
-      #resultForm {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-      }
-
       .input-container {
         width: 100%;
         display: flex;
         flex-direction: column;
         height: 80px;
+      }
+      
+      .button-container{
+        display: flex;
+        justify-content: center;
       }
 
       @media screen and (min-width: 768px) {
@@ -49,10 +48,10 @@
       }
     </style>
       <div class="box-wrapper">
-        <p>[[resultMessage]]</p>
+        <p class="text-result">[[resultMessage]]</p>
       </div>
-
-        <form id="resultForm" hidden$="[[presencial]]">
+     <div class="box-wrapper" hidden$="[[onSite]]" id="formContainer">
+        <form id="resultForm">
           <div class="input-container">
             <label>Nombre*</label>
             <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
@@ -73,10 +72,12 @@
             <input class="input-quiz"   name="email" value="{{user.email::input}}" type="email" required>
           </div>
         </form>
-
-        <button class="button-quiz" disabled$="{{!isValid}}">
-          <span>Enviar</span>
-        </button>
+          <div class="button-container">
+              <button class="button-quiz" disabled$="{{!isValid}}">
+                  <span>Enviar</span>
+              </button>
+          </div>
+      </div>  
 
   </template>
 
@@ -103,7 +104,7 @@
           /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
          /** It is to indicate if it is necessary the candidate's data to send them through a form */
-          presencial: {
+         onSite: {
             type: Boolean,
             value: false,
             notify: true
