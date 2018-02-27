@@ -4,6 +4,7 @@
 <dom-module id="result-view">
   <template>
     <style include="shared-styles">
+      
       :host {
         display: flex;
         flex-direction: column;
@@ -69,7 +70,7 @@
 
           <div class="input-container">
             <label>Email*</label>
-            <input class="input-quiz"   name="email" value="{{user.email::input}}" type="email" required>
+            <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
           </div>
         </form>
           <div class="button-container">
@@ -86,13 +87,13 @@
       * `<result-view>`view where we redirect after answering all the questions
       *
       * ## Usage
-      * 
+      *
       * `<result-view name="result" presencial="[[quizData.presencial]]" result-message="[[quizData.resultMessage]]">`
       *
       * @customElement
       * @polymer
     */
-    class ResultView extends Polymer.Element {
+    class ResultView extends (class extends Polymer.Element {}) {
       static get is() {return 'result-view';}
       static get observers() {
         return [
@@ -103,7 +104,7 @@
         return {
           /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
-         /** It is to indicate if it is necessary the candidate's data to send them through a form */
+         /** Property to indicate if sending the candidate's data is necessary*/
          onSite: {
             type: Boolean,
             value: false,
@@ -125,7 +126,7 @@
       }
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
-           this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
+        this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
       }
     }
     window.customElements.define(ResultView.is, ResultView);
