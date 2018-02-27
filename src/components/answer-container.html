@@ -58,8 +58,10 @@
     * @customElement
     * @polymer
     */
-    class AnswerContainer extends Polymer.Element {
-      static get is() { return 'answer-container'; }
+    class AnswerContainer extends (class extends Polymer.Element {}) {
+      static get is() {
+        return 'answer-container';
+      }
 
       static get properties() {
         return {
