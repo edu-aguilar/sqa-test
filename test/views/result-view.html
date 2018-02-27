@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <!doctype html>
 <html lang="en">
 
@@ -43,10 +33,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-
   <script>
-
     suite('landing view tests', function() {
+
       test('form with valid field', function() {
         const resultView = fixture('formValidTest');
         const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
@@ -55,7 +44,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             surname: 'ape2',
                             email: 'candidato@soprasteria.com',
                           };
-                          debugger;
         assert.equal(resultView.$.resultForm.hidden, false);                    
         assert.equal(resultMessage.firstElementChild.innerText, "welcome message");                      
         assert.equal(resultView.presencial, false);
@@ -65,7 +53,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('form with invalid field', function() {
         let resultView = fixture('formInValidTest');
         const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
-
         resultView.user = {
                             name: '',
                             surname: 'ape2',
@@ -80,13 +67,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('when is presencial the form have to be hidden', function() {
         let resultView = fixture('presencialTest'); 
-        debugger;
         assert.equal(resultView.$.resultForm.hidden, true); 
         assert.equal(resultView.presencial, true);                         
         assert.equal(resultView.isValid, false);
       });
+
     });
   </script>
 </body>
-
 </html>
