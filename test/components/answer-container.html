@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <answer-container 
         answer-type="simple" 
         options='[{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Alvaro"}, { "id": "3", "value": "Edu"}]'
-        selected-answer='["1"]'>
+        selected-answer-array='["1"]'>
       </answer-container>
     </template>
   </test-fixture>
@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <answer-container 
         answer-type="multiple" 
         options='[{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Alvaro"}, { "id": "3", "value": "Edu"}]'
-        selected-answer='["1", "3"]'>
+        selected-answer-array='["1", "3"]'>
       </answer-container>
     </template>
   </test-fixture>
@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template>
       <answer-container 
         answer-type="text" 
-        selected-answer='["Lorem ipsum..."]'>
+        selected-answer-array='["Lorem ipsum..."]'>
       </answer-container>
     </template>
   </test-fixture>
@@ -69,12 +69,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      test('answerType should be an string, options an Object and selectedAnswer an Array', function () {
+      test('answerType should be an string, options an Object and selectedAnswerArray an Array', function () {
         const AnswerContainerSimple = fixture('AnswerContainerSimple');
 
         assert.typeOf(AnswerContainerSimple.answerType, 'string');
         assert.typeOf(AnswerContainerSimple.options, 'array');
-        assert.typeOf(AnswerContainerSimple.selectedAnswer, 'array');
+        assert.typeOf(AnswerContainerSimple.selectedAnswerArray, 'array');
       });
 
       test('Simple choice type should mark answer as selected', function (done) {

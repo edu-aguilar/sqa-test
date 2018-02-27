@@ -21,7 +21,7 @@
         role="navigation" 
         attr-for-selected="id" 
         selected="{{_selectedAnswerSingle}}" 
-        selected-values="{{selectedAnswer}}"
+        selected-values="{{selectedAnswerArray}}"
         multi="{{_isMultiple(answerType)}}">
         <template is="dom-repeat" items="{{options}}" as="option">
           <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
@@ -47,7 +47,7 @@
     *     id="answerContainer"
     *     answer-type="[[answerType]]"
     *     options="[[questionOptions]]"
-    *     selected-answer="{{selectedAnswer}}">
+    *     selected-answer-array="{{selectedAnswerArray}}">
     * </answer-container>`
     *
     * ## Styling
@@ -66,56 +66,43 @@
 
       static get properties() {
         return {
-          /** Formatted answer for `one option` answer types */
+          /** Formatted answer for `simple` and `text` answer types */
           _selectedAnswerSingle: {
             type: String,
             notify: true,
-            observer: '_selectedAnswerSingleChange'
+            value: '',
+            observer: '_setSingleAnswerAsArray'
           },
           /** Type of the question (simple, multiple, text) */
           answerType: String,
           /** Available option choices, this is only for questions of type simple and multiple. */
           options: Array,
           /** Array of Id's of selected answers */
-          selectedAnswer: {
+          selectedAnswerArray: {
             type: Array,
+            value: [],
             notify: true,
-            observer: '_setSingleAnswer'
+            observer: '_setSingleAnswerAsString'
           }
         };
-      }
-
-      /** Gives initial value as String for single selectedAnswer when the component is constructed. */
-      constructor() {
-        super();
-        this._selectedAnswerSingle = this._getSingleAnswer();
       }
 
       /**
         * Observer to set answer as array when _selectedAnswerSingle changes.
         * @param {String} selectedAnswerSingle
       */
-      _selectedAnswerSingleChange(selectedAnswerSingle) {
-        if (selectedAnswerSingle) this.selectedAnswer = [selectedAnswerSingle];
+      _setSingleAnswerAsArray(selectedAnswerSingle) {
+        if (selectedAnswerSingle) this.selectedAnswerArray = [selectedAnswerSingle];
       }
 
       /**
         * Observer to set _selectedAnswerSingle as a flat String, only if the question type is simple.
         * This is because when iron-selector is not multiple read a `String` property
-        * @param {Array} selectedAnswer
+        * @param {Array} selectedAnswerArray
       */
-      _setSingleAnswer(selectedAnswer) {
-        if (selectedAnswer.length === 1) this._selectedAnswerSingle = this._getSingleAnswer();
+      _setSingleAnswerAsString(selectedAnswerArray) {
+        if (selectedAnswerArray.length === 1) this._selectedAnswerSingle = this.selectedAnswerArray.join();
         else this._selectedAnswerSingle = '';
-      }
-
-      /**
-        * Helper to recover singleAnswer as `String` when answerType is not multiple
-        * @return {selectedAnswer}  Return first String in array as a flat String when answerType is not multiple.
-      */
-      _getSingleAnswer() {
-        return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
-          this.selectedAnswer[0] : '';
       }
 
       /**

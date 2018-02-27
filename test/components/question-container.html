@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <question-container 
           question='{"id": "1", "question": "question", "options": [{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Karina"}]}' 
-          selected-answer='["1"]'>
+          selected-answer-array='["1"]'>
         </question-container>
       </template>
     </test-fixture>
@@ -45,10 +45,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
         });
 
-        test('Question should be an Object and selectedAnswer an Array', function() {
+        test('Question should be an Object and selectedAnswerArray an Array', function() {
           const questionContainer = fixture('QuestionContainer');
           assert.typeOf(questionContainer.question, 'object');
-          assert.typeOf(questionContainer.selectedAnswer, 'array');
+          assert.typeOf(questionContainer.selectedAnswerArray, 'array');
         });
       });
     </script>

@@ -46,7 +46,7 @@
       <answer-container 
         answer-type="[[question.type]]"
         options="[[question.options]]"
-        selected-answer="{{selectedAnswer}}">
+        selected-answer-array="{{selectedAnswerArray}}">
       </answer-container>
     </div>
 
@@ -69,7 +69,7 @@
             type: Object,
             value: () => {}
           },
-          selectedAnswer: {
+          selectedAnswerArray: {
             type: Array,
             value: [],
             notify: true
