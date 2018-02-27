@@ -8,131 +8,131 @@
 
 
 <dom-module id="answer-container">
-    <template>
-        <style include="shared-styles">
-            answer-item {
-                margin-bottom: 20px;
-                 @apply --answer-container-props;      
-            }
-        </style>
-        <template is="dom-if" if="[[_isSelector(answerType)]]">
-            <iron-selector 
-                id="optionSelector" 
-                role="navigation" 
-                attr-for-selected="id"
-                selected="{{_singleAnswer}}"
-                selected-values="{{selectedAnswer}}"
-                multi="{{_isMultiple(answerType)}}">
-                <template is="dom-repeat" items="{{options}}" as="option">
-                    <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
-                </template>
-            </iron-selector>
+  <template>
+    <style include="shared-styles">
+      answer-item {
+        margin-bottom: 20px;
+        @apply --answer-container-props;
+      }
+    </style>
+    <template is="dom-if" if="[[_isSelector(answerType)]]">
+      <iron-selector 
+        id="optionSelector" 
+        role="navigation" 
+        attr-for-selected="id" 
+        selected="{{_singleAnswer}}" 
+        selected-values="{{selectedAnswer}}"
+        multi="{{_isMultiple(answerType)}}">
+        <template is="dom-repeat" items="{{options}}" as="option">
+          <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
         </template>
-        <template is="dom-if" if="[[!_isSelector(answerType)]]">
-            <paper-textarea label="Escribe aquí tu respuesta" value="{{_singleAnswer}}"></paper-textarea>
-        </template>
+      </iron-selector>
     </template>
-    
-    <script>
-        /**
-        * `<answer-container>` show one of the different kind of questions (simple, multiple or text).
-        *
-        * ## Usage
-        * Just inject the `<answer-container>` component with and *id* to provide
-        *  easy access to its public functions and expose The variables `answerType`, `options` and
-        *  `selectedAnswer`.
-        *
-        * `<answer-container
-        *     id="answerContainer"
-        *     answer-type="[[answerType]]"
-        *     options="[[questionOptions]]"
-        *     selected-answer="{{selectedAnswer}}">
-        * </answer-container>`
-        *
-        * ## Styling
-        *
-        * | Custom property            | Description                                          | Default |
-        * |----------------------------|------------------------------------------------------|---------|
-        * | `--answer-container-props` | Mixin applied to time displayed (margin, font, etc). | {}      |
-        *
-        * @customElement
-        * @polymer
-        */
-        class AnswerContainer extends Polymer.Element {
-            static get is() {return 'answer-container';}
+    <template is="dom-if" if="[[!_isSelector(answerType)]]">
+      <paper-textarea label="Escribe aquí tu respuesta" value="{{_singleAnswer}}"></paper-textarea>
+    </template>
+  </template>
 
-            static get properties() {
-                return {
-                    /** Formatted answer for `one option` answer types */
-                    _singleAnswer: {
-                        type: String,
-                        notify: true,
-                        observer: '_singleChanged'
-                    },
-                    /** Type of the question (simple, multiple, text) */
-                    answerType: String,
-                    /** Available option choices */
-                    options: Array,
-                    /** Array of Id's of selected answers */
-                    selectedAnswer: {
-                        type: Array,
-                        notify: true,
-                        observer: '_setSingleAnswer'
-                    }
-                };
-            }
+  <script>
+    /**
+    * `<answer-container>` show one of the different kind of questions (simple, multiple or text).
+    *
+    * ## Usage
+    * Just inject the `<answer-container>` component with and *id* to provide
+    *  easy access to its public functions and expose The variables `answerType`, `options` and
+    *  `selectedAnswer`.
+    *
+    * `<answer-container
+    *     id="answerContainer"
+    *     answer-type="[[answerType]]"
+    *     options="[[questionOptions]]"
+    *     selected-answer="{{selectedAnswer}}">
+    * </answer-container>`
+    *
+    * ## Styling
+    *
+    * | Custom property            | Description                                          | Default |
+    * |----------------------------|------------------------------------------------------|---------|
+    * | `--answer-container-props` | Mixin applied to time displayed (margin, font, etc). | {}      |
+    *
+    * @customElement
+    * @polymer
+    */
+    class AnswerContainer extends Polymer.Element {
+      static get is() { return 'answer-container'; }
 
-            /** Gives initial value as String for single selectedAnswer when the component is constructed. */
-            constructor() {
-                super();
-                this._singleAnswer = this._getSingleAnswer();
-            }
+      static get properties() {
+        return {
+          /** Formatted answer for `one option` answer types */
+          _singleAnswer: {
+            type: String,
+            notify: true,
+            observer: '_singleChanged'
+          },
+          /** Type of the question (simple, multiple, text) */
+          answerType: String,
+          /** Available option choices */
+          options: Array,
+          /** Array of Id's of selected answers */
+          selectedAnswer: {
+            type: Array,
+            notify: true,
+            observer: '_setSingleAnswer'
+          }
+        };
+      }
 
-            /**
-              * Observer to set answer as array when _singleAnswer change.
-              * @param {String} singleAnswer
-            */
-            _singleChanged(singleAnswer) {
-                if (singleAnswer) this.selectedAnswer = [singleAnswer];
-            }
+      /** Gives initial value as String for single selectedAnswer when the component is constructed. */
+      constructor() {
+        super();
+        this._singleAnswer = this._getSingleAnswer();
+      }
 
-            /**
-              * Observer to set _singleAnswer when iron-selector returns an array of selected answers.
-              * @param {Array} selectedAnswer
-            */
-            _setSingleAnswer(selectedAnswer) {
-                if (selectedAnswer.length === 1) this._singleAnswer = this._getSingleAnswer();
-                else this._singleAnswer = '';
-            }
+      /**
+        * Observer to set answer as array when _singleAnswer change.
+        * @param {String} singleAnswer
+      */
+      _singleChanged(singleAnswer) {
+        if (singleAnswer) this.selectedAnswer = [singleAnswer];
+      }
 
-            /**
-              * Helper to recover singleAnswer as String when answerType is not multiple
-              * @return {selectedAnswer}  Return first String in array as a flat String when answerType is not multiple.
-            */
-            _getSingleAnswer() {
-                return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
-                    this.selectedAnswer[0] : '';
-            }
+      /**
+        * Observer to set _singleAnswer when iron-selector returns an array of selected answers.
+        * @param {Array} selectedAnswer
+      */
+      _setSingleAnswer(selectedAnswer) {
+        if (selectedAnswer.length === 1) this._singleAnswer = this._getSingleAnswer();
+        else this._singleAnswer = '';
+      }
 
-            /**
-              * Helper to evaluate if answerType is a selectType or textType.
-              * @param {String} answerType
-              * @return {Boolean}.
-            */
-            _isSelector(answerType) {
-                return (answerType === 'simple' || answerType === 'multiple');
-            }
+      /**
+        * Helper to recover singleAnswer as String when answerType is not multiple
+        * @return {selectedAnswer}  Return first String in array as a flat String when answerType is not multiple.
+      */
+      _getSingleAnswer() {
+        return (this.answerType !== 'multiple' && this.selectedAnswer && this.selectedAnswer[0]) ?
+          this.selectedAnswer[0] : '';
+      }
 
-            /**
-              * Helper to evaluate if answerType is multiple for iron-selector behavior.
-              * @param {String} answerType
-              * @return {Boolean}.
-            */
-            _isMultiple(answerType) {
-                return (answerType === 'multiple');
-            }
-        }
+      /**
+        * Helper to evaluate if answerType is a selectType or textType.
+        * @param {String} answerType
+        * @return {Boolean}.
+      */
+      _isSelector(answerType) {
+        return (answerType === 'simple' || answerType === 'multiple');
+      }
 
-        window.customElements.define(AnswerContainer.is, AnswerContainer);
-    </script>
+      /**
+        * Helper to evaluate if answerType is multiple for iron-selector behavior.
+        * @param {String} answerType
+        * @return {Boolean}.
+      */
+      _isMultiple(answerType) {
+        return (answerType === 'multiple');
+      }
+    }
+
+    window.customElements.define(AnswerContainer.is, AnswerContainer);
+  </script>
 </dom-module>
