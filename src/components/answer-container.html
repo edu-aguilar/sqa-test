@@ -20,7 +20,7 @@
         id="optionSelector" 
         role="navigation" 
         attr-for-selected="id" 
-        selected="{{_singleAnswer}}" 
+        selected="{{_selectedAnswerSingle}}" 
         selected-values="{{selectedAnswer}}"
         multi="{{_isMultiple(answerType)}}">
         <template is="dom-repeat" items="{{options}}" as="option">
@@ -29,7 +29,7 @@
       </iron-selector>
     </template>
     <template is="dom-if" if="[[!_isSelector(answerType)]]">
-      <paper-textarea label="Escribe aquí tu respuesta" value="{{_singleAnswer}}"></paper-textarea>
+      <paper-textarea label="Escribe aquí tu respuesta" value="{{_selectedAnswerSingle}}"></paper-textarea>
     </template>
   </template>
 
@@ -67,10 +67,10 @@
       static get properties() {
         return {
           /** Formatted answer for `one option` answer types */
-          _singleAnswer: {
+          _selectedAnswerSingle: {
             type: String,
             notify: true,
-            observer: '_singleChanged'
+            observer: '_selectedAnswerSingleChange'
           },
           /** Type of the question (simple, multiple, text) */
           answerType: String,
@@ -88,25 +88,25 @@
       /** Gives initial value as String for single selectedAnswer when the component is constructed. */
       constructor() {
         super();
-        this._singleAnswer = this._getSingleAnswer();
+        this._selectedAnswerSingle = this._getSingleAnswer();
       }
 
       /**
-        * Observer to set answer as array when _singleAnswer change.
-        * @param {String} singleAnswer
+        * Observer to set answer as array when _selectedAnswerSingle change.
+        * @param {String} selectedAnswerSingle
       */
-      _singleChanged(singleAnswer) {
-        if (singleAnswer) this.selectedAnswer = [singleAnswer];
+      _selectedAnswerSingleChange(selectedAnswerSingle) {
+        if (selectedAnswerSingle) this.selectedAnswer = [selectedAnswerSingle];
       }
 
       /**
-        * Observer to set _singleAnswer as a flat String, only if the question type is simple.
+        * Observer to set _selectedAnswerSingle as a flat String, only if the question type is simple.
         * This is because when iron-selector is not multiple read a `String` property
         * @param {Array} selectedAnswer
       */
       _setSingleAnswer(selectedAnswer) {
-        if (selectedAnswer.length === 1) this._singleAnswer = this._getSingleAnswer();
-        else this._singleAnswer = '';
+        if (selectedAnswer.length === 1) this._selectedAnswerSingle = this._getSingleAnswer();
+        else this._selectedAnswerSingle = '';
       }
 
       /**
