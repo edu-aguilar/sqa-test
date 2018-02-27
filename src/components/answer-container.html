@@ -35,7 +35,8 @@
 
   <script>
     /**
-    * `<answer-container>` show one of the different kind of questions (simple, multiple or text).
+    * `<answer-container>` show possible answers for the questions depending on the questionType 
+    * (simple, multiple or text).
     *
     * ## Usage
     * Just inject the `<answer-container>` component with and *id* to provide
@@ -51,9 +52,9 @@
     *
     * ## Styling
     *
-    * | Custom property            | Description                                          | Default |
-    * |----------------------------|------------------------------------------------------|---------|
-    * | `--answer-container-props` | Mixin applied to time displayed (margin, font, etc). | {}      |
+    * | Custom property            | Description                                            | Default |
+    * |----------------------------|--------------------------------------------------------|---------|
+    * | `--answer-container-props` | Mixin applied to answer container (margin, font, etc). | {}      |
     *
     * @customElement
     * @polymer
@@ -73,7 +74,7 @@
           },
           /** Type of the question (simple, multiple, text) */
           answerType: String,
-          /** Available option choices */
+          /** Available option choices, this is only for questions of type simple and multiple. */
           options: Array,
           /** Array of Id's of selected answers */
           selectedAnswer: {
