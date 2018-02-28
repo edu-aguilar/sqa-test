@@ -38,9 +38,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           const questionContainer = fixture('QuestionContainer');
           flush(function() {
             const quizPaginator = questionContainer.shadowRoot.querySelector('quiz-paginator');
+            const questionStatementDisplayer = questionContainer.shadowRoot.querySelector('question-statement-displayer');
             const answerContainer = questionContainer.shadowRoot.querySelector('answer-container');
+
             assert(quizPaginator, 'quizPaginator is neither `null` nor `undefined`');
+            assert(questionStatementDisplayer, 'question-statement-displayer is neither `null` nor `undefined`');
             assert(answerContainer, 'answerContainer is neither `null` nor `undefined`');
+            
             done();
           });
         });
