@@ -1,0 +1,132 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<link rel="import" href="answer-item.html">
+
+
+<dom-module id="answer-container">
+  <template>
+    <style include="shared-styles">
+      answer-item {
+        margin-bottom: 20px;
+        @apply --answer-container-props;
+      }
+    </style>
+    <template is="dom-if" if="[[_isSelector(answerType)]]">
+      <iron-selector 
+        id="optionSelector" 
+        role="navigation" 
+        attr-for-selected="id" 
+        selected="{{_selectedAnswerSingle}}" 
+        selected-values="{{selectedAnswerArray}}"
+        multi="{{_isMultiple(answerType)}}">
+        <template is="dom-repeat" items="{{options}}" as="option">
+          <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
+        </template>
+      </iron-selector>
+    </template>
+    <template is="dom-if" if="[[!_isSelector(answerType)]]">
+      <paper-textarea label="Escribe aquí tu respuesta" value="{{_selectedAnswerSingle}}"></paper-textarea>
+    </template>
+  </template>
+
+  <script>
+    /**
+    * `<answer-container>` show possible answers for the questions depending on the questionType
+    * (simple, multiple or text).
+    *
+    * ## Usage
+    * Just inject the `<answer-container>` component with and *id* to provide
+    *  easy access to its public functions and expose The variables `answerType`, `options` and
+    *  `selectedAnswer`.
+    *
+    * `<answer-container
+    *     id="answerContainer"
+    *     answer-type="[[answerType]]"
+    *     options="[[questionOptions]]"
+    *     selected-answer-array="{{selectedAnswerArray}}">
+    * </answer-container>`
+    *
+    * ## Styling
+    *
+    * | Custom property            | Description                                            | Default |
+    * |----------------------------|--------------------------------------------------------|---------|
+    * | `--answer-container-props` | Mixin applied to answer container (margin, font, etc). | {}      |
+    *
+    * @customElement
+    * @polymer
+    */
+    class AnswerContainer extends (class extends Polymer.Element {}) {
+      static get is() {
+        return 'answer-container';
+      }
+
+      static get properties() {
+        return {
+          /** Formatted answer for `simple` and `text` answer types */
+          _selectedAnswerSingle: {
+            type: String,
+            notify: true,
+            value: '',
+            observer: '_setSingleAnswerAsArray'
+          },
+          /** Type of the question (simple, multiple, text) */
+          answerType: String,
+          /** Available option choices, this is only for questions of type simple and multiple. */
+          options: Array,
+          /** Array of Id's of selected answers */
+          selectedAnswerArray: {
+            type: Array,
+            value: [],
+            notify: true,
+            observer: '_setSingleAnswerAsString'
+          }
+        };
+      }
+
+      /**
+        * Observer to set answer as array when _selectedAnswerSingle changes.
+        * @param {String} selectedAnswerSingle
+      */
+      _setSingleAnswerAsArray(selectedAnswerSingle) {
+        if (selectedAnswerSingle) this.selectedAnswerArray = [selectedAnswerSingle];
+      }
+
+      /**
+        * Observer to set _selectedAnswerSingle as a flat String, only if the question type is simple.
+        * This is because when iron-selector is not multiple read a `String` property
+        * @param {Array} selectedAnswerArray
+      */
+      _setSingleAnswerAsString(selectedAnswerArray) {
+        if (selectedAnswerArray.length === 1) {
+          this._selectedAnswerSingle = this.selectedAnswerArray.join();
+        } else {
+          this._selectedAnswerSingle = '';
+        }
+      }
+
+      /**
+        * Helper to evaluate if answerType is a selectType or textType.
+        * @param {String} answerType
+        * @return {Boolean}.
+      */
+      _isSelector(answerType) {
+        return (answerType === 'simple' || answerType === 'multiple');
+      }
+
+      /**
+        * Helper to evaluate if answerType is multiple for iron-selector behavior.
+        * @param {String} answerType
+        * @return {Boolean}.
+      */
+      _isMultiple(answerType) {
+        return (answerType === 'multiple');
+      }
+    }
+
+    window.customElements.define(AnswerContainer.is, AnswerContainer);
+  </script>
+</dom-module>

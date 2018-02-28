@@ -1,13 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
 <link rel="import" href="../data-providers/quiz-status-data.html">
-<link rel="import" href="quiz-paginator.html">
-<link rel="import" href="answer-item.html">
 <link rel="import" href="question-statement-displayer.html">
+<link rel="import" href="quiz-paginator.html">
+<link rel="import" href="answer-container.html">
+<link rel="import" href="answer-item.html">
 
 <dom-module id="question-container">
   <template>
@@ -49,7 +49,7 @@
         grid-area: statement;
       }
 
-      iron-selector {
+      answer-container {
         grid-area: options;
         min-width: 50%;
         padding-left: 20px;
@@ -68,13 +68,12 @@
         question=[[question.question]] 
         question-id=[[question.id]]>
       </question-statement-displayer>
-
-      <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
-          attr-for-selected="id">
-        <template is="dom-repeat" items="{{question.options}}" as="option">
-          <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
-        </template>
-      </iron-selector>
+      
+      <answer-container 
+        answer-type="[[question.type]]"
+        options="[[question.options]]"
+        selected-answer-array="{{selectedAnswerArray}}">
+      </answer-container>
     </div>
 
     <quiz-paginator
@@ -96,9 +95,9 @@
             type: Object,
             value: () => {}
           },
-          selectedAnswer: {
-            type: String,
-            value: '',
+          selectedAnswerArray: {
+            type: Array,
+            value: [],
             notify: true
           },
           answeredQuestionsCount: Number,

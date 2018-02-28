@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <!doctype html>
 <html lang="en">
 
@@ -27,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <test-fixture id="formValidTest">
     <template>
-          <result-view result-message="welcome message"></result-view>
+          <result-view result-message="welcome message" ></result-view>
     </template>
   </test-fixture>
 
@@ -37,36 +27,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <script>
+  <test-fixture id="presencialTest">
+    <template>
+      <result-view on-site></result-view>
+    </template>
+  </test-fixture>
 
+  <script>
     suite('landing view tests', function() {
       test('form with valid field', function() {
         const resultView = fixture('formValidTest');
-        const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
+        const resultMessage = resultView.shadowRoot.querySelector('.text-result');
         resultView.user = {
-                            name: 'asdasd',
-                            surname: 'Gonzalez',
-                            email: 'alvarogonzalez@pepephone.com',
+                            name: 'candidato1',
+                            surname: 'ape2',
+                            email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultMessage.firstElementChild.innerText, "welcome message");                      
+        assert.equal(resultView.$.formContainer.hidden, false);                   
+        assert.equal(resultMessage.innerText, "welcome message");                      
+        assert.equal(resultView.onSite, false);
         assert.equal(resultView.isValid, true);
       });
-
       test('form with invalid field', function() {
         let resultView = fixture('formInValidTest');
-        const resultMessage = resultView.shadowRoot.querySelector('.box-wrapper');
-
+        const resultMessage = resultView.shadowRoot.querySelector('.text-result');
         resultView.user = {
                             name: '',
-                            surname: 'Gonzalez',
+                            surname: 'ape2',
                             phone: '999999999',
-                            email: 'alvarogonzalez@asdasd.com',
+                            email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultMessage.firstElementChild.innerText, "");                         
+        assert.equal(resultView.$.formContainer.hidden, false); 
+        assert.equal(resultMessage.innerText, ""); 
+        assert.equal(resultView.onSite, false);                         
+        assert.equal(resultView.isValid, false);
+      });
+      test('when is presencial the form have to be hidden', function() {
+        let resultView = fixture('presencialTest'); 
+        assert.equal(resultView.$.formContainer.hidden, true); 
+        assert.equal(resultView.onSite, true);                         
         assert.equal(resultView.isValid, false);
       });
     });
   </script>
 </body>
-
 </html>
