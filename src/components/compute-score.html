@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="compute-score">
+  <template>
+
+  </template>
+  <script>
+    class ComputeScore extends Polymer.Element {
+      static get is() { return 'compute-score'; }
+      static get properties() {
+        return {
+          userData: Object,
+          statusData: Object,
+          correctQuestions: Object,
+          scoreData: {
+            type: Object,
+            value: () => { }
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        debugger;
+        this._builtTemplate();
+      }
+
+      _builtTemplate(){
+        
+        let scoreData = {};
+        let correctCount = 0
+
+        scoreData.testName = this.statusData.quizData.testName;
+        scoreData.timePassed = this.statusData.quizData.timePassed
+
+        scoreData.name = this.userData.name;
+        scoreData.surname = this.userData.surname;
+        scoreData.email = this.userData.email;
+        scoreData.phone = this.userData.phone;
+        scoreData.questions =  [];
+
+        for (var i = 0; i < this.statusData.quizData.questions.length; i++) {
+          let question = {}
+          question.id = this.statusData.quizData.questions[i].id;
+          question.statement = this.statusData.quizData.questions[i].question;
+
+          const correctOptionAswered = this.correctQuestions[question.id];
+          const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
+          
+          question.correctAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === correctOptionAswered);
+          question.userAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === selectedOptionAswered);
+          question.correct = selectedOptionAswered===correctOptionAswered;
+          correctCount
+          scoreData.questions.push(question);
+        }
+
+        console.log(scoreData);
+        this.set('scoreData', scoreData);
+      }
+    }
+
+    customElements.define(ComputeScore.is, ComputeScore);
+  </script>
+
+</dom-module>
