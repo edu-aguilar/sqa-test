@@ -1,0 +1,354 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="email-builder">
+  <script>
+    /**
+      * @customElement
+      * @polymer
+    */
+    class EmailBuilder extends (class extends Polymer.Element {}) {
+      static get is() {return 'email-builder';}
+
+      static get properties() {
+        return {
+          scoreData: {
+            type: Object,
+            value: () => {
+              return {  
+                'correctCount':2,
+                'totalCount':3,
+                'testName':'testExample',
+                'timePassed':'1532',
+                'name':'candidato1',
+                'surname':'ape2',
+                'email':'candidato@soprasteria.com',
+                'questions':[  
+                  {  
+                      'id':'1',
+                      'statement':'¿Qué significan las iniciales CSS?',
+                      'type':'simple',
+                      'correct':false,
+                      'correctAnswer':{  
+                        'id':'1',
+                        'value':'Cascading Style Sheets'
+                      },
+                      'userAnswer':{  
+                        'id':'3',
+                        'value':'Creative Style Sheets'
+                      }
+                  },
+                  {  
+                      'id':'2',
+                      'statement':'¿Qué significan las iniciales CSS?',
+                      'type':'simple',
+                      'correct':true,
+                      'correctAnswer':{  
+                        'id':'1',
+                        'value':'Cascading Style Sheets'
+                      },
+                      'userAnswer':{  
+                        'id':'1',
+                        'value':'Cascading Style Sheets'
+                      }
+                  },
+                  {  
+                      'id':'3',
+                      'statement':'¿Qué significan las iniciales CSS?',
+                      'type':'simple',
+                      'correct':true,
+                      'correctAnswer':{  
+                        'id':'2',
+                        'value':'Colorful Style Sheets'
+                      },
+                      'userAnswer':{  
+                        'id':'2',
+                        'value':'Colorful Style Sheets'
+                      }
+                  },
+                  {  
+                      'id':'4',
+                      'statement':'¿Qué significan las iniciales CSS?',
+                      'type':'text',
+                      'userAnswer':'estilos en cascada'
+                  },
+                  {  
+                      'id':'5',
+                      'statement':'¿Qué significan las iniciales CSS?',
+                      'type':'multiple',
+                      'correctAnswer':[  
+                        {  
+                            'id':'2',
+                            'value':'Colorful Style Sheets'
+                        },
+                        {  
+                            'id':'3',
+                            'value':'Creative Style Sheets'
+                        }
+                      ],
+                      'userAnswer':[  
+                        {  
+                            'id':'2',
+                            'value':'Colorful Style Sheets'
+                        },
+                        {  
+                            'id':'3',
+                            'value':'Creative Style Sheets'
+                        }
+                      ]
+                  }
+                ],
+                'correctPercentage': 67
+              };
+            } 
+          },
+          htmlString: String,
+          headerImage: {
+            type: String,
+            value: 'https://blog.soprasteria.com/wp-content/uploads/2015/09/cropped-cropped-cropped-logosoprasteria.png'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        //Polymer.dom(this).node.shadowRoot.querySelector('#email-container').style.display = 'none';
+        //this.htmlString = Polymer.dom(this).node.shadowRoot.innerHTML;
+
+        this.buildHTMLString();
+
+        console.log(this.htmlString);
+      }
+
+      buildHTMLString() {
+        const head = `<head> ${this._getStyles()} </head>`;
+        const body = `<body> 
+          ${this._getBodyHeader()} 
+          ${this._getEmailContainer()} 
+        </body>`;
+        
+        this.htmlString = `<!DOCTYPE html> 
+        <html>
+          ${head}
+          ${body}
+        </html>`;
+      }
+
+      _getEmailContainer() {
+        return `<div id="email-container">  
+          ${this._getCandidateInfoHtml()}
+          ${this._getAnswersInfoHtml()}
+        </div>`;
+      }
+
+      _getAnswersInfoHtml() {
+        let answersHtml = '';
+        this.scoreData.questions.forEach(question => {
+          answersHtml += `<tr> 
+            <td>
+              <h3> ${question.id} - ${question.statement} </h3>
+              ${this._processAnswers(question.type, question.userAnswer, question.correctAnswer, question.correct)}
+            </td>
+          </tr>`;
+        });
+
+        return `<table class="answers-info">;
+          ${answersHtml}
+        </table>`;
+      }
+
+      _processAnswers(questionType, userAnswer, correctAnswer, correct) {
+        let answers = '';
+        
+        switch (questionType) {
+          case 'text':
+            return `<div class="text-answer">
+              ${userAnswer}
+            </div>`;
+            break;
+          case 'simple':
+            if (correct) {
+              answers = `<div class="correct-selected-answer"> ${userAnswer.value} </div> </td>`;
+            } else {
+              answers = `<td> <div class="incorrect-selected-answer"> ${userAnswer.value} </div> </td>
+                <td> <div class="correct-selected-answer"> ${correctAnswer.value} </div> </td>`;
+            }
+
+            return `<table class="selected-answer">
+              <tr>
+                ${answers}
+              </tr>
+            </table>`;
+            break;
+          case 'multiple':
+            if (correct) {
+              answers = `<div class="correct-selected-answer"> ${userAnswer.value} </div> </td>`;
+            } else {
+              answers = `<td> <div class="incorrect-selected-answer"> ${userAnswer.value} </div> </td>
+                <td> <div class="correct-selected-answer"> ${correctAnswer.value} </div> </td>`;
+            }
+
+            return `<table class="selected-answer">
+              <tr>
+                ${answers}
+              </tr>
+            </table>`;
+            break;
+          default:
+            break;
+        }
+
+        //       <table class="selected-answer">
+        //         <tr>
+        //           <td> <div class="incorrect-selected-answer"> This is the selected answer 1 </div> </td>
+        //           <td> <div class="correct-selected-answer"> This is the correct answer 1 </div> </td>
+        //         </tr>
+        //         <tr>
+        //           <td> <div class="incorrect-selected-answer"> This is the selected answer 2 </div> </td>
+        //           <td> <div class="correct-selected-answer"> This is the correct answer 2 </div> </td>
+        //         </tr>
+        //         <tr>
+        //           <td> <div class="incorrect-selected-answer"> This is the selected answer 3 </div> </td>
+        //           <td> <div class="correct-selected-answer"> This is the correct answer 3 </div> </td>
+        //         </tr>
+        //       </table>
+
+        //       <table class="selected-answer">
+        //         <tr> <td> <div class="correct-selected-answer"> This is the correct answer 1 </div> </td> </tr>
+        //         <tr> <td> <div class="correct-selected-answer"> This is the selected answer 2 </div> </td> </tr>
+        //         <tr> <td> <div class="correct-selected-answer"> This is the selected answer 3 </div> </td> </tr>
+        //       </table>
+      }
+
+      _getCandidateInfoHtml() {
+        return `<table class="candidate-info">
+          <tr>
+            <td colspan="2">
+              <h3 class="test-title"> ${this.scoreData.testName} </h3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4> Nombre: <span> ${this.scoreData.name} ${this.scoreData.surname} </span> </h4>
+              <h4> Tel&eacute;fono: <span> ${this.scoreData.telefono} </span> </h4>
+              <h4> Correo electr&oacute;nico: <span> ${this.scoreData.email} </span> </h4>
+              <h4> Tiempo: <span> ${this.scoreData.timePassed} seg </span> </h4>
+            </td>
+            <td>
+              <h4 class="correct"> Respuestas correctas: <span> ${this.scoreData.correctCount} </span> </h4>
+              <h4 class="incorrect"> Respuestas Incorrectas: <span> ${this.scoreData.totalCount} </span> </h4>
+              <h3 class="final-result"> Resultado final: ${this.scoreData.correctPercentage}% </h3>
+            </td>
+          </tr>
+        </table>`;
+      }
+
+      _getBodyHeader() {
+        return `<div class="header">
+          <img src="${this.headerImage}">
+        </div>`;
+      }
+
+      _formatTime(time) {
+        //
+      }
+
+      _getStyles() {
+        return `<style>
+          :host {
+            width: 100%;
+            height: 100%;
+          }
+    
+          #email-container {
+            width: 100%;
+            height: 100%;
+            background-color: #fafafa;
+            font-family: "Varela Round",sans-serif;
+          }
+    
+          .header {
+            background-color: #ffffff;
+            height: 30%;
+          }
+    
+          img {
+            height: 100px;
+            display: block;
+            margin: auto;
+          }
+    
+          .candidate-info {
+            margin: 0px auto 0px auto;
+            padding-top: 30px;
+          }
+    
+          td {
+            padding: 0px 20px 0px 20px;
+          }
+       
+          .test-title {
+            text-align: center;
+          }
+    
+          h4 {
+            margin: 10px;
+            color: #F37B2C;
+          }
+    
+          span {
+            color: #000000;
+            font-weight: 300;
+          }
+    
+          .correct {
+            color: #43d20d;
+          }
+    
+          .incorrect {
+            color: #ff0000;
+          }
+    
+          .final-result {
+            margin: 10px;
+            text-align: center;
+          }
+    
+          .answers-info {
+            margin: 20px auto 0px auto;
+            padding-bottom: 30px;
+          }
+    
+          .selected-answer {
+            margin: 20px auto 20px auto;
+          }
+    
+          .incorrect-selected-answer {
+            color: #ff0000;
+            text-align: center;
+            font-size: 16px;
+          }
+    
+          .correct-selected-answer {
+            color: #43d20d;
+            text-align: center;
+            font-size: 16px;
+          }
+    
+          .text-answer {
+            background-color: #ffffff;
+            font-size: 14px;
+            width: 80%;
+            max-height: 50px;
+            overflow-y: scroll;
+            padding: 20px;
+            margin: 20px auto;
+            text-align: justify;
+          }
+        </style>`
+      }
+    }
+
+    window.customElements.define(EmailBuilder.is, EmailBuilder);
+  </script>
+</dom-module>

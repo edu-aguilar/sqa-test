@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="styles/shared-styles.html">
 
+<link rel="import" href="components/email-builder.html">
+
 <dom-module id="result-view">
   <template>
     <style include="shared-styles">
@@ -48,6 +50,8 @@
         }
       }
     </style>
+      <email-builder score-data="{{scoreData}}" html-string="[[htmlString]]"></email-builder>
+
       <div class="box-wrapper">
         <p class="text-result">[[resultMessage]]</p>
       </div>
@@ -121,7 +125,8 @@
             type: Boolean,
             value: false,
             notify: true
-          }
+          },
+          scoreData: Object
         };
       }
       /** Method to observe if the form is valid or not */
