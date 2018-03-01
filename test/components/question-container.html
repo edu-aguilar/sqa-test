@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <question-container 
           question='{"id": "1", "question": "question", "options": [{ "id": "1", "value": "Karina"}, { "id": "2", "value": "Karina"}]}' 
-          selected-answer="1">
+          selected-answer-array='["1"]'>
         </question-container>
       </template>
     </test-fixture>
@@ -37,43 +37,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('Should have all required components', function(done) {
           const questionContainer = fixture('QuestionContainer');
           flush(function() {
-            const ironSelector = questionContainer.shadowRoot.querySelector('iron-selector');
-            const answerItem = questionContainer.shadowRoot.querySelectorAll('answer-item');
-      
-            done();
+            const quizPaginator = questionContainer.shadowRoot.querySelector('quiz-paginator');
+            const questionStatementDisplayer = questionContainer.shadowRoot.querySelector('question-statement-displayer');
+            const answerContainer = questionContainer.shadowRoot.querySelector('answer-container');
 
-            assert(ironSelector, 'ironSelector is neither `null` nor `undefined`');
-            assert(answerItem, 'answerItem is neither `null` nor `undefined`');
+            assert(quizPaginator, 'quizPaginator is neither `null` nor `undefined`');
+            assert(questionStatementDisplayer, 'question-statement-displayer is neither `null` nor `undefined`');
+            assert(answerContainer, 'answerContainer is neither `null` nor `undefined`');
+            
+            done();
           });
         });
 
-        test('Question should be and Object and selectedAnswer a String', function() {
+        test('Question should be an Object and selectedAnswerArray an Array', function() {
           const questionContainer = fixture('QuestionContainer');
-
           assert.typeOf(questionContainer.question, 'object');
-          assert.typeOf(questionContainer.selectedAnswer, 'string');
-        });
-
-        test('Should mark answer as selected', function(done) {
-          const questionContainer = fixture('QuestionContainer');
-          flush(function() {
-            const answerItem = questionContainer.shadowRoot.querySelector('.iron-selected');
-      
-            done();
-
-            assert.equal(answerItem.id, '1');
-          });
-        });
-
-        test('Should only mark one item as selected', function(done) {
-          const questionContainer = fixture('QuestionContainer');
-          flush(function() {
-            const answerItem = questionContainer.shadowRoot.querySelectorAll('.iron-selected');
-
-            done();
-
-            assert.equal(answerItem.length, 1);
-          });
+          assert.typeOf(questionContainer.selectedAnswerArray, 'array');
         });
       });
     </script>

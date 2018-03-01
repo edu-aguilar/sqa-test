@@ -1,0 +1,85 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="question-statement-displayer">
+  <template>
+    <style include="shared-styles">
+      p {
+        font-size: calc(var(--sopra-font-xxl) + 2px);
+        font-weight: bold;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        @apply --question-statement-text;
+      }
+
+      iron-image{
+        height: 200px;
+        width: 100%;
+        margin-bottom: 20px;
+        --iron-image-width: 100%;
+        --iron-image-height: 100%;
+
+        @apply --question-statement-image;
+      }
+    </style>
+    
+    <p>[[questionId]] - [[question.title]]</p>
+    <template is="dom-if" if="[[question.image]]">
+      <iron-image 
+        preload 
+        placeholder$="[[placeholderImage]]" 
+        fade 
+        sizing="contain" 
+        src$="[[question.image]]">
+      </iron-image>
+    </template>
+
+  </template>
+
+  <script>
+    /**
+      * `<question-statement-displayer>` displays the question statement and adapts to questions with or without images.
+      *
+      * ## Usage
+      * Inject the `<question-statement-displayer>` component with the question you want to display and its ID.
+      * Optionally you can add a `placeholderImage` property to indicate the url of the placeholder to show while images are being loaded.
+      *
+      * `<question-statement-displayer
+      *   question=[[question.question]]
+      *   question-id=[[question.id]]>
+      *  </question-statement-displayer>`
+      *
+      * ## Styling
+      *
+      * | Custom property            | Description                                              | Default |
+      * |----------------------------|----------------------------------------------------------|---------|
+      * | --question-statement-text  | Mixin applied to the text of the question                | {}      |
+      * | --question-statement-image | If the question has an image this mixin is applied to it | {}      |
+      *
+      * @customElement
+      * @polymer
+    */
+    class QuestionStatementDisplayer extends (class extends Polymer.Element {}) {
+      static get is() { return 'question-statement-displayer'; }
+
+      static get properties() {
+        return {
+          /** Object containing the title of the question and an optional image */
+          question: Object,
+          /** Id of the question being displayed */
+          questionId: String,
+          // URL of the image shown on iron-image placeholder
+          placeholderImage: {
+            type: String,
+            value: `${this.importPath}../../images/placeholder.gif`
+          }
+        };
+      }
+    }
+
+    window.customElements.define(QuestionStatementDisplayer.is, QuestionStatementDisplayer);
+  </script>
+</dom-module>

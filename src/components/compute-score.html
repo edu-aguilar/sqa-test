@@ -31,7 +31,7 @@
         let correctCount = 0
 
         scoreData.testName = this.statusData.quizData.testName;
-        scoreData.timePassed = this.statusData.quizData.timePassed
+        scoreData.timePassed = this.statusData.timePassed
 
         scoreData.name = this.userData.name;
         scoreData.surname = this.userData.surname;
@@ -49,6 +49,8 @@
           
           question.correctAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === correctOptionAswered);
           question.userAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === selectedOptionAswered);
+
+          
           question.correct = selectedOptionAswered===correctOptionAswered;
           correctCount
           scoreData.questions.push(question);

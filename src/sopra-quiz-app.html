@@ -90,7 +90,7 @@
 
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
-            <img class="quiz-logo" src="../../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
+            <img class="quiz-logo" src="[[importPath]]../images/soprasteria-quiz.png" alt="sopra-quiz-logo">
           </app-toolbar>
         </app-header>
 
@@ -145,7 +145,7 @@
 
       _routePageChanged(page) {
         if (!page) {
-          this.set('route.path', 'frontend');
+          this.set('route.path', `${this.rootPath}frontend`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
@@ -166,8 +166,8 @@
       _onRouteChange(e) {
         const newRoute = e.detail.newRoute;
         let path = newRoute === 'not-found'
-          ? `test/${newRoute}`
-          : `${this.routeData.type}/${newRoute}`;
+          ? `${this.rootPath}test/${newRoute}`
+          : `${this.rootPath}${this.routeData.type}/${newRoute}`;
 
         this.set('route.path', path);
       }

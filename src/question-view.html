@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      current-question-id="[[routeData.id]]"
      answered-questions-count="{{answeredQuestionsCount}}"
      question="[[_question]]" 
-     selected-answer="{{_selectedAnswer}}">
+     selected-answer-array="{{_selectedAnswerArray}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           _question: Object,
-          _selectedAnswer: String,
+          _selectedAnswerArray: Array,
           route: Object,
           quizData: Object,
           quizType: String,
@@ -105,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(_selectedAnswer)'
+          '_setAnsweredQuestion(_selectedAnswerArray.*)'
         ];
       }
 
@@ -119,11 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.quizStatusData.updateTime(timePassed);
       }
 
-      _setAnsweredQuestion(answerId) {
-        if (answerId) {
+      _setAnsweredQuestion(answer) {
+        const answerArray = answer.base;
+        if (answerArray.length > 0) {
           let questionId = this.routeData.id;
-          this.set(`answeredQuestions.${questionId}`, answerId);
-          this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
+          this.set(`answeredQuestions.${questionId}`, answerArray);
+          this.$.quizStatusData.setAnsweredQuestion(questionId, answerArray);
         }
       }
 
@@ -134,8 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
-          this._selectedAnswer =
-            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this._selectedAnswerArray =
+            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : [];
         }
       }
 
