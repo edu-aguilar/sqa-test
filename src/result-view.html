@@ -87,21 +87,13 @@
       * `<result-view>`view where we redirect after answering all the questions
       *
       * ## Usage
-<<<<<<< HEAD
-      * 
-=======
       *
->>>>>>> 6e09d9f7b80f75c412fa307f8ebd894383a62ce8
       * `<result-view name="result" presencial="[[quizData.presencial]]" result-message="[[quizData.resultMessage]]">`
       *
       * @customElement
       * @polymer
     */
-<<<<<<< HEAD
-    class ResultView extends Polymer.Element {
-=======
     class ResultView extends (class extends Polymer.Element {}) {
->>>>>>> 6e09d9f7b80f75c412fa307f8ebd894383a62ce8
       static get is() {return 'result-view';}
       static get observers() {
         return [
@@ -112,11 +104,7 @@
         return {
           /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
-<<<<<<< HEAD
-         /** It is to indicate if it is necessary the candidate's data to send them through a form */
-=======
          /** Property to indicate if sending the candidate's data is necessary*/
->>>>>>> 6e09d9f7b80f75c412fa307f8ebd894383a62ce8
          onSite: {
             type: Boolean,
             value: false,
@@ -138,11 +126,7 @@
       }
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
-<<<<<<< HEAD
-           this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
-=======
         this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
->>>>>>> 6e09d9f7b80f75c412fa307f8ebd894383a62ce8
       }
     }
     window.customElements.define(ResultView.is, ResultView);
