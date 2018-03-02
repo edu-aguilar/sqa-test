@@ -149,9 +149,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('Option should be and Object', function () {
         let computeScore = fixture('computeScoreTest');
+        computeScore._builtTemplate();
         assert.equal(computeScore.scoreData.totalCount, 5);
         assert.equal(computeScore.scoreData.correctCount, 3);
         assert.equal(computeScore.scoreData.questions.length, 6);
+        assert.equal(computeScore.scoreData.correctPercentage, 60);
       });
 
     });
