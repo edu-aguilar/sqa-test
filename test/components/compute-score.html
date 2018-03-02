@@ -30,14 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template>
       <compute-score
        user-data='{ "name": "candidato1", "surname": "ape2", "email": "candidato@soprasteria.com"}'
-       correct-questions='{"1": "1", "2": "1" , "3": "2"}'
-       status-data='{ "answeredQuestions": {"1": "3", "2": "1" , "3": "2"},
+       correct-questions='{"1": "1", "2": "1" , "3": "2", "5" : ["2","3"], "6" : ["2","3"]}'
+       status-data='{ "answeredQuestions": {"1": "3", "2": "1" , "3": "2", "4": "estilos en cascada", "5" : ["2","3"], "6" : ["1","3"] },
                       "timePassed": "1532" , 
                       "quizData": {"id": "1", "testName": "testExample", "description": "bienvenido al test",
                          "questions":[ {  
                           "id":"1",
                           "question":"¿Qué significan las iniciales CSS?",
                           "level":"1",
+                          "type": "simple",
                           "options":[  
                              {  
                                 "id":"1",
@@ -56,6 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             "id":"2",
                             "question":"¿Qué significan las iniciales CSS?",
                             "level":"1",
+                            "type": "simple",
                             "options":[  
                                {  
                                   "id":"1",
@@ -74,6 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               "id":"3",
                               "question":"¿Qué significan las iniciales CSS?",
                               "level":"1",
+                              "type": "simple",
                               "options":[  
                                  {  
                                     "id":"1",
@@ -87,7 +90,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     "id":"3",
                                     "value":"Creative Style Sheets"
                                  }
-                              ]}
+                            ]},
+                            {  
+                              "id":"4",
+                              "question":"¿Qué significan las iniciales CSS?",
+                              "level":"1",
+                              "type": "text",
+                              "options":[]
+                            },
+                            {  
+                              "id":"5",
+                              "question":"¿Qué significan las iniciales CSS?",
+                              "level":"1",
+                              "type": "multiple",
+                              "options":[  
+                                 {  
+                                    "id":"1",
+                                    "value":"Cascading Style Sheets"
+                                 },
+                                 {  
+                                    "id":"2",
+                                    "value":"Colorful Style Sheets"
+                                 },
+                                 {  
+                                    "id":"3",
+                                    "value":"Creative Style Sheets"
+                                 }
+                            ]},
+                            {  
+                              "id":"6",
+                              "question":"¿Qué significan las iniciales CSS?",
+                              "level":"1",
+                              "type": "multiple",
+                              "options":[  
+                                 {  
+                                    "id":"1",
+                                    "value":"Cascading Style Sheets"
+                                 },
+                                 {  
+                                    "id":"2",
+                                    "value":"Colorful Style Sheets"
+                                 },
+                                 {  
+                                    "id":"3",
+                                    "value":"Creative Style Sheets"
+                                 }
+                            ]}
+
                           ]}
                         }'>
       </compute-score>
@@ -99,8 +148,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('compute-score tests', function () {
 
       test('Option should be and Object', function () {
-        let answerItem = fixture('computeScoreTest');
-        assert.typeOf(answerItem, 'object');
+        let computeScore = fixture('computeScoreTest');
+        assert.equal(computeScore.scoreData.totalCount, 5);
+        assert.equal(computeScore.scoreData.correctCount, 3);
+        assert.equal(computeScore.scoreData.questions.length, 6);
       });
 
     });

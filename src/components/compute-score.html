@@ -5,13 +5,28 @@
 
   </template>
   <script>
-    class ComputeScore extends Polymer.Element {
+
+        /**
+      * `<compute-score>` component to calculate the test result and generate the object of the template
+      *
+      * ## Usage
+      *
+      * `<compute-score user-data='userData' correct-questions='correctQuestions' status-data='statusData' score-data='scoreData'></compute-score>`
+      *
+      * @customElement
+      * @polymer
+    */
+    class ComputeScore extends (class extends Polymer.Element {}) {
       static get is() { return 'compute-score'; }
       static get properties() {
         return {
+          /** candidate information */
           userData: Object,
+          /** input object where store the test information  */
           statusData: Object,
+          /** input object that stores the answers */
           correctQuestions: Object,
+          /** output object to generate the mail template */
           scoreData: {
             type: Object,
             value: () => { }
@@ -19,20 +34,14 @@
         };
       }
 
-      ready() {
-        super.ready();
-        debugger;
-        this._builtTemplate();
-      }
-
       _builtTemplate(){
         
         let scoreData = {};
-        let correctCount = 0
-
+        scoreData.correctCount = 0;
+        scoreData.totalCount = 0;
+        
         scoreData.testName = this.statusData.quizData.testName;
         scoreData.timePassed = this.statusData.timePassed
-
         scoreData.name = this.userData.name;
         scoreData.surname = this.userData.surname;
         scoreData.email = this.userData.email;
@@ -43,23 +52,52 @@
           let question = {}
           question.id = this.statusData.quizData.questions[i].id;
           question.statement = this.statusData.quizData.questions[i].question;
-
+          question.type = this.statusData.quizData.questions[i].type;
+          question.correct = false;  
           const correctOptionAswered = this.correctQuestions[question.id];
           const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
-          
-          question.correctAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === correctOptionAswered);
-          question.userAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === selectedOptionAswered);
 
-          
-          question.correct = selectedOptionAswered===correctOptionAswered;
-          correctCount
-          scoreData.questions.push(question);
+            switch (this.statusData.quizData.questions[i].type) {
+              case "simple":
+                  question.correctAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === correctOptionAswered);
+                  question.userAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === selectedOptionAswered);
+                  if(selectedOptionAswered === correctOptionAswered){
+                    question.correct = true;
+                    scoreData.correctCount++;
+                  } 
+                  scoreData.totalCount++;
+                  break;
+              case "multiple":
+                  question.correctAnswer = selectedOptionAswered.map(id => {
+                    return this.statusData.quizData.questions[i].options.find(element => element.id === id);
+                  });
+                  question.userAnswer = correctOptionAswered.map(id => {
+                    return this.statusData.quizData.questions[i].options.find(element => element.id === id);
+                  });
+                  if(this._checkMultipleQuestions(correctOptionAswered,selectedOptionAswered)){
+                    question.correct = true;
+                    scoreData.correctCount++;
+                  } 
+                  scoreData.totalCount++;
+                break;  
+              case "text":
+                  question.userAnswer = selectedOptionAswered;
+                break;  
+              default:
+                break;
+            }   
+            scoreData.questions.push(question);
         }
-
-        console.log(scoreData);
+        scoreData.correctPercentage = Math.round((scoreData.correctCount * 100 ) / scoreData.totalCount);
         this.set('scoreData', scoreData);
       }
-    }
+
+    _checkMultipleQuestions(arrayA,arrayB) {
+      if(arrayA.length !== arrayB.length) return false;
+      return arrayA.every((a) => a === arrayB.find((b) => a === b))
+      }
+
+  }
 
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
