@@ -6,8 +6,8 @@
 
   <script>
     (function() {
-
-      const _url = 'https://api.mailgun.net/v3/sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org/messages';
+      const _url = `https://api.mailgun.net/v3/
+                    sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org/messages`;
       const _from = 'mailgun@sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org';
 
       /**
@@ -23,7 +23,6 @@
       * @polymer
       */
       class EmailSender extends Polymer.Element {
-
         static get is() { return 'email-sender'; }
         static get properties() {
           return {
@@ -41,7 +40,7 @@
         static get observers() {
           return [
             '_sendEmail(config.*)'
-          ]
+          ];
         }
 
         _sendEmail() {
@@ -55,9 +54,10 @@
             this._configFormData = data;
 
             let myHeaders = new Headers();
-            myHeaders.append('Authorization', 'Basic YXBpOmtleS0xZmI3YzFkZTk0YThhMzNkNmJlMDU5NWNkYWQzN2M4OA==');
+            myHeaders.append('Authorization',
+              'Basic YXBpOmtleS0xZmI3YzFkZTk0YThhMzNkNmJlMDU5NWNkYWQzN2M4OA==');
 
-            fetch(_url ,{
+            fetch(_url, {
               mode: 'no-cors',
               method: 'POST',
               credentials: 'include',
@@ -70,13 +70,12 @@
         }
 
         _handleResponse(res) {
-          console.log('handleResponse', res);
-          let event = new CustomEvent('onEmailSentSuccesfully', { detail: { response: res }, composed: true });
+          let event = new CustomEvent('onEmailSentSuccesfully',
+            { detail: { response: res }, composed: true });
           this.dispatchEvent(event);
         }
 
         _handleError(error) {
-          console.log('handleError', error);
           let event = new CustomEvent('onEmailError', { detail: { error: error }, composed: true });
           this.dispatchEvent(event);
         }

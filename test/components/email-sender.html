@@ -6,44 +6,34 @@
 
     <title>email-sender test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../email-sender.html">
+    <link rel="import" href="../../src/components/email-sender.html">
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
+    <test-fixture id="emailSender">
       <template>
         <email-sender></email-sender>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <email-sender prop1="new-prop1"></email-sender>
       </template>
     </test-fixture>
 
     <script>
       suite('email-sender', () => {
 
-        test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'email-sender');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello email-sender!');
+        suite('Validating default component API', function () {
+          const emailSender = fixture('emailSender');
+
+          test('Needed properties', function () {
+            assert.typeOf(emailSender.config, 'object');
+          });
+
+          test('Needed observer', function () {
+            assert.typeOf(emailSender._sendEmail, 'function');
+          });
         });
 
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
 
       });
     </script>

@@ -108,7 +108,7 @@
       _changeRoute() {
         var event = new CustomEvent(
           'onRouteChange',
-          {detail: {newRoute: `question/${this.quizData.id}`}, composed: true}
+          { detail: { newRoute: `question/${this.quizData.id}` }, composed: true }
         );
 
         this.dispatchEvent(event);
