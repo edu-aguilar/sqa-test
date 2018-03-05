@@ -4,14 +4,55 @@
 <dom-module id="email-builder">
   <script>
     /**
-      * @customElement
-      * @polymer
+    * `<email-builder>` generates a custom formatted html report ready to send by email.
+    *
+    * ## Usage
+    * Just inject the `<email-builder>` component with and *id* to provide
+    *  easy access to its public functions and expose The variable `scoreData` that is a computed object
+    *  with questions, answers and scores.
+    *
+    * `<email-builder score-data="{{scoreData}}"></email-builder>`
+    *
+    *
+    * ## scoreData object
+    *
+    * `{
+    *  'correctCount':2,
+    *  'totalCount':3,
+    *  'testName':'testExample',
+    *  'timePassed':'1532',
+    *  'name':'candidato1',
+    *  'surname':'ape2',
+    *  'email':'candidato@soprasteria.com',
+    *  'questions':[
+    *    {
+    *      'id':'1',
+    *      'statement':'¿Qué significan las iniciales CSS?',
+    *      'type':'simple',
+    *      'correct':false,
+    *      'correctAnswer':{
+    *        'id':'1',
+    *        'value':'Cascading Style Sheets'
+    *      },
+    *      'userAnswer':{
+    *        'id':'3',
+    *        'value':'Creative Style Sheets'
+    *      }
+    *    },
+    *    ...
+    *  ],
+    *  'correctPercentage': 67
+    *  };
+    *
+    * @customElement
+    * @polymer
     */
     class EmailBuilder extends (class extends Polymer.Element {}) {
-      static get is() {return 'email-builder';}
+      static get is() { return 'email-builder'; }
 
       static get properties() {
         return {
+          /** scoreData with questions, answers and scores */         
           scoreData: {
             type: Object,
             value: () => {
@@ -23,7 +64,7 @@
                 'name':'candidato1',
                 'surname':'ape2',
                 'email':'candidato@soprasteria.com',
-                'questions':[  
+                'questions':[
                   {  
                     'id':'1',
                     'statement':'¿Qué significan las iniciales CSS?',
@@ -141,7 +182,10 @@
               };
             } 
           },
+          /** formatted HTMLSctring ready to send by email */          
           htmlString: String,
+
+          /** String with url with the header image to print on formatted HTML */          
           headerImage: {
             type: String,
             value: 'https://blog.soprasteria.com/wp-content/uploads/2015/09/cropped-cropped-cropped-logosoprasteria.png'
@@ -154,6 +198,9 @@
         this.buildHTMLString();
       }
 
+      /**
+        * Function that build a HTML ready to send via email.
+      */
       buildHTMLString() {
         const head = `<head> ${this._getStyles()} </head>`;
         const body = `<body> 
@@ -168,6 +215,10 @@
         </html>`;
       }
 
+      /**
+        * Function that build a body section of the HTML.
+        * @return {String}.
+      */
       _getEmailContainer() {
         return `<div id="email-container">  
           ${this._getCandidateInfoHtml()}
@@ -175,6 +226,10 @@
         </div>`;
       }
 
+      /**
+        * Function that generate an HTML string with answers.
+        * @return {String}.
+      */
       _getAnswersInfoHtml() {
         let answersHtml = '';
         this.scoreData.questions.forEach(question => {
@@ -191,6 +246,14 @@
         </table>`;
       }
 
+      /**
+        * Function generate a piece of HTML code for each answer.
+        * @param {String} questionType
+        * @param {Object} userAnswer
+        * @param {Object} correctAnswer
+        * @param {Boolean} correct
+        * @return {String}
+      */
       _processAnswers(questionType, userAnswer, correctAnswer, correct) {
         switch (questionType) {
           case 'text':
@@ -254,6 +317,10 @@
         }
       }
 
+      /**
+        * Function generate a piece of HTML related with candidate information.
+        * @return {String}
+      */
       _getCandidateInfoHtml() {
         return `<table class="candidate-info">
           <tr>
@@ -277,12 +344,21 @@
         </table>`;
       }
 
+      /**
+        * Function generate a piece of HTML related with header with the image.
+        * @return {String}
+      */
       _getBodyHeader() {
         return `<div class="header">
           <img src="${this.headerImage}">
         </div>`;
       }
 
+      /**
+        * Function that convert time in seconds to human format.
+        * @param {Number} time
+        * @return {String}
+      */
       _formatTime(time) {
         const hours = Math.floor(time / 3600);
         const minutes = Math.floor((time % 3600) / 60);
@@ -296,6 +372,10 @@
         return timeString;
       }
 
+      /**
+        * Function getter of template styles.
+        * @return {String}
+      */
       _getStyles() {
         return `<style>
           :host {
