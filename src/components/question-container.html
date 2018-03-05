@@ -1,12 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-
-<link rel="import" href="../data-providers/quiz-status-data.html">
-<link rel="import" href="quiz-paginator.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
+<link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="question-statement-displayer.html">
+<link rel="import" href="quiz-paginator.html">
+<link rel="import" href="answer-container.html">
 <link rel="import" href="answer-item.html">
 
 <dom-module id="question-container">
@@ -15,10 +15,10 @@
       :host {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         text-align: center;
         background-color: var(--sopra-grey-100);
+        overflow: hidden;
       }
 
       p {
@@ -26,17 +26,34 @@
         font-weight: bold;
       }
 
-      answer-item {
+      answer-item:not(:last-of-type) {
         margin-bottom: 20px;
       }
 
       .question-container {
-        margin: 0px 20px;
-        display: flex;
-        flex-direction: column;
+        padding: 3% 0px;
+        width: 100%;
         flex-grow: 1;
-        align-self: center;
-        justify-content: center;
+        height: calc(100% - 70px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas: "statement" "options";
+        justify-items: center;
+        align-items: center;
+      }
+
+      question-statement-displayer {
+        grid-area: statement;
+      }
+
+      answer-container {
+        grid-area: options;
+        min-width: 50%;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       @media screen and (min-width: 1024px) {
@@ -46,15 +63,17 @@
       }
     </style>
 
-    <div class="question-container responsive-container">
-      <p> [[question.id]] - [[question.question]] </p>
-
-      <iron-selector id="optionSelector" role="navigation" selected="{{selectedAnswer}}" 
-          attr-for-selected="id">
-        <template is="dom-repeat" items="{{question.options}}" as="option">
-          <answer-item id="[[option.id]]" option="[[option]]"></answer-item>
-        </template>
-      </iron-selector>
+    <div class="question-container responsive-container sopra-scroll">
+      <question-statement-displayer 
+        question=[[question.question]] 
+        question-id=[[question.id]]>
+      </question-statement-displayer>
+      
+      <answer-container 
+        answer-type="[[question.type]]"
+        options="[[question.options]]"
+        selected-answer-array="{{selectedAnswerArray}}">
+      </answer-container>
     </div>
 
     <quiz-paginator
@@ -68,7 +87,7 @@
 
   <script>
     class QuestionContainer extends Polymer.Element {
-      static get is() { return 'question-container'; }
+      static get is() {return 'question-container';}
 
       static get properties() {
         return {
@@ -76,15 +95,15 @@
             type: Object,
             value: () => {}
           },
-          selectedAnswer: {
-            type: String,
-            value: '',
+          selectedAnswerArray: {
+            type: Array,
+            value: [],
             notify: true
           },
           answeredQuestionsCount: Number,
           quizData: Object,
           currentQuestionId: Number
-        }
+        };
       }
     }
 

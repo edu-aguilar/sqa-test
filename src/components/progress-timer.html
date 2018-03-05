@@ -22,7 +22,8 @@
       * `<progress-timer>` counts the seconds passed since the timer starts.
       *
       * ## Usage
-      * Just inject the `<progress-timer>` component with and *id* to provide easy access to its public functions and expose a variable of type `Number`
+      * Just inject the `<progress-timer>` component with and *id* to provide
+      *  easy access to its public functions and expose a variable of type `Number`
       *
       * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
       *
@@ -36,11 +37,11 @@
       * @polymer
     */
     class ProgressTimer extends (class extends Polymer.Element {}) {
-      static get is() { return 'progress-timer'; }
+      static get is() {return 'progress-timer';}
 
       static get properties() {
         return {
-          //** Formatted time to show */
+          //* * Formatted time to show */
           _formattedTime: String,
           /** Seconds passed since the *start()* method is called. */
           timePassed: {
@@ -49,7 +50,7 @@
             notify: true,
             observer: '_timeChange'
           }
-        }
+        };
       }
 
       /** Gives initial format to `timePassed` when the component is instantiated. */
@@ -64,7 +65,7 @@
 
       /** Starts timer. */
       start() {
-        this.timeInterval = setInterval(() => { this._updateTime() }, 1000);
+        this.timeInterval = setInterval(() => {this._updateTime();}, 1000);
       }
 
       /** Pauses timer. */

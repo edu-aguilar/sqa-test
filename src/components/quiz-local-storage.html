@@ -10,8 +10,7 @@
   <script>
 
     class quizLocalStorage extends Polymer.Element {
-
-      static get is() { return 'quiz-local-storage'; }
+      static get is() {return 'quiz-local-storage';}
 
       static get properties() {
         return {
@@ -22,7 +21,7 @@
             },
             notify: true
           }
-        }
+        };
       }
 
       updateStorage(quizType, key, data) {

@@ -79,18 +79,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class LandingView extends Polymer.Element {
-      static get is() { return 'landing-view'; }
+      static get is() {return 'landing-view';}
 
       static get properties() {
         return {
           quizData: Object
-        }
+        };
       }
 
       _changeRoute() {
         var event = new CustomEvent(
           'onRouteChange',
-          { detail: { newRoute: `question/${this.quizData.id}` }, composed: true }
+          {detail: {newRoute: `question/${this.quizData.id}`}, composed: true}
         );
 
         this.dispatchEvent(event);

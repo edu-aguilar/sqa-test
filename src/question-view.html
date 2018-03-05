@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      current-question-id="[[routeData.id]]"
      answered-questions-count="{{answeredQuestionsCount}}"
      question="[[_question]]" 
-     selected-answer="{{_selectedAnswer}}">
+     selected-answer-array="{{_selectedAnswerArray}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -85,12 +85,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class QuestionView extends Polymer.Element {
-      static get is() { return 'question-view'; }
+      static get is() {return 'question-view';}
 
       static get properties() {
         return {
           _question: Object,
-          _selectedAnswer: String,
+          _selectedAnswerArray: Array,
           route: Object,
           quizData: Object,
           quizType: String,
@@ -105,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get observers() {
         return [
           '_routeIdChanged(routeData.id, answeredQuestions)',
-          '_setAnsweredQuestion(_selectedAnswer)'
+          '_setAnsweredQuestion(_selectedAnswerArray.*)'
         ];
       }
 
@@ -119,11 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.quizStatusData.updateTime(timePassed);
       }
 
-      _setAnsweredQuestion(answerId) {
-        if (answerId) {
+      _setAnsweredQuestion(answer) {
+        const answerArray = answer.base;
+        if (answerArray.length > 0) {
           let questionId = this.routeData.id;
-          this.set(`answeredQuestions.${questionId}`, answerId);
-          this.$.quizStatusData.setAnsweredQuestion(questionId, answerId);
+          this.set(`answeredQuestions.${questionId}`, answerArray);
+          this.$.quizStatusData.setAnsweredQuestion(questionId, answerArray);
         }
       }
 
@@ -134,15 +135,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
-          this._selectedAnswer = this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : '';
+          this._selectedAnswerArray =
+            this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : [];
         }
       }
 
-      _pageChange(event) {
-
-        let data = event.detail.operation;
-        let index = this.quizData.questions.findIndex(i => i.id === this.question.id);
-
+      _pageChange(e) {
+        let data = e.detail.operation;
+        let index = this.quizData.questions.findIndex((i) => i.id === this._question.id);
+        let event;
         switch (data) {
           case 'next':
             index++;
@@ -151,15 +152,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             index--;
             break;
           case 'finish':
-            var event = new CustomEvent('onRouteChange', { detail: { newRoute: 'result' }, composed: true });
+            event = new CustomEvent('onRouteChange', {
+              detail: {
+                newRoute: 'result'
+              },
+              composed: true
+            });
             this.dispatchEvent(event);
             break;
           default:
             break;
-        }  
-        this.set('routeData.id', this.quizData.questions[index].id);            
+        }
+        this.set('routeData.id', this.quizData.questions[index].id);
       }
-
     }
 
     window.customElements.define(QuestionView.is, QuestionView);
