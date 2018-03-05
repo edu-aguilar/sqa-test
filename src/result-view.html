@@ -1,7 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="styles/shared-styles.html">
 
+<link rel="import" href="data-providers/quiz-status-data.html">
+
+<link rel="import" href="components/compute-score.html">
 <link rel="import" href="components/email-builder.html">
+<link rel="import" href="components/email-sender.html">
 
 <dom-module id="result-view">
   <template>
@@ -50,7 +54,34 @@
         }
       }
     </style>
-    <email-builder score-data="{{scoreData}}"></email-builder>
+
+    <!-- 1 - Get data from statusData -->
+    <quiz-status-data 
+      id="quizStatusData"
+      quiz-type="[[quizType]]"
+      storage-data="{{storageData}}">
+    </quiz-status-data>
+
+    <!-- 2 - Compute score after send form -->    
+    <compute-score
+      id="computeScore"
+      user-data="[[user]]"
+      correct-questions="[[correctQuestions]]"
+      status-data="[[statusData]]"
+      score-data="{{scoreData}}">
+    </compute-score>
+
+    <!-- 3 - Build email with computedData -->
+    <email-builder
+      id="emailBuilder"
+      score-data="[[scoreData]]"
+      html-string="{{htmlString}}">
+    </email-builder>
+
+    <!-- 4 - Send email with -->
+    <email-sender
+      id="emailSender">
+    </email-sender>
 
     <div class="box-wrapper">
       <p class="text-result">[[resultMessage]]</p>
@@ -78,7 +109,7 @@
         </div>
       </form>
         <div class="button-container">
-          <button class="button-quiz" disabled$="{{!isValid}}">
+          <button class="button-quiz" on-click="_sendForm"> <!-- disabled$="{{!isValid}}" -->
             <span>Enviar</span>
           </button>
         </div>
@@ -106,10 +137,19 @@
       }
       static get properties() {
         return {
+          /** Type of quiz */
+          quizType: String,
           /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
-         /** Property to indicate if sending the candidate's data is necessary*/
-         onSite: {
+          /** Object with correct answers to the questions */          
+          correctQuestions: {
+            type: Object,
+            value: { 1: ["1"], 2: ["1"], 3: ["2"], 5: ["2", "3"], 6: ["2", "3"] }
+          },
+          /** Data from storage */
+          storageData: Object,
+          /** Property to indicate if sending the candidate's data is necessary*/
+          onSite: {
             type: Boolean,
             value: false,
             notify: true
@@ -126,12 +166,26 @@
             value: false,
             notify: true
           },
-          scoreData: Object
+          scoreData: Object,
+          statusData: Object,
+          htmlString: String
         };
       }
+
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
         this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
+      }
+      /** Send form actions -> computeScore -> buildEmail -> sendEmail */
+      _sendForm() {
+        console.log('_sendForm');
+        console.log('storageData is: ', this.storageData[this.quizType]);
+        this.set('statusData', this.storageData[this.quizType] )
+        
+        this.$.computeScore.builtTemplate();
+        console.log('scoreData', this.scoreData);
+        this.$.emailBuilder.buildHTMLString();
+        console.log('htmlString', this.htmlString);
       }
     }
     window.customElements.define(ResultView.is, ResultView);
