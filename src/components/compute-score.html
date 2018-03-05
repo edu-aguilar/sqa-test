@@ -36,17 +36,7 @@
 
       _builtTemplate(){
         
-        let scoreData = {};
-        scoreData.correctCount = 0;
-        scoreData.totalCount = 0;
-        
-        scoreData.testName = this.statusData.quizData.testName;
-        scoreData.timePassed = this.statusData.timePassed
-        scoreData.name = this.userData.name;
-        scoreData.surname = this.userData.surname;
-        scoreData.email = this.userData.email;
-        scoreData.phone = this.userData.phone;
-        scoreData.questions =  [];
+       let scoreData = this._inizializeScoreData();
 
         for (var i = 0; i < this.statusData.quizData.questions.length; i++) {
           let question = {}
@@ -68,13 +58,13 @@
                   scoreData.totalCount++;
                   break;
               case "multiple":
-                  question.correctAnswer = selectedOptionAswered.map(id => {
-                    return this.statusData.quizData.questions[i].options.find(element => element.id === id);
-                  });
+                question.correctAnswer = selectedOptionAswered.map(id => {
+                  return this.statusData.quizData.questions[i].options.find(element => element.id === id);
+                });
                   question.userAnswer = correctOptionAswered.map(id => {
                     return this.statusData.quizData.questions[i].options.find(element => element.id === id);
                   });
-                  if(this._checkMultipleQuestions(correctOptionAswered,selectedOptionAswered)){
+                  if( this._checkMultipleQuestions(correctOptionAswered,selectedOptionAswered)) {
                     question.correct = true;
                     scoreData.correctCount++;
                   } 
@@ -97,6 +87,21 @@
       return arrayA.every((a) => a === arrayB.find((b) => a === b))
       }
 
+      _inizializeScoreData() {
+        return {
+          correctCount : 0,
+          totalCount : 0,
+          testName : this.statusData.quizData.testName,
+          timePassed : this.statusData.timePassed,
+          name : this.userData.name,
+          surname : this.userData.surname,
+          email : this.userData.email,
+          phone : this.userData.phone,
+          questions : []
+      }
+    }
+
+    
   }
 
     customElements.define(ComputeScore.is, ComputeScore);
