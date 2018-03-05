@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="styles/shared-styles.html">
 
@@ -30,10 +20,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-size: cover;
       }
 
+      .company-logo {
+        bottom: 6rem;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        animation: animationFrames ease-out 1.8s;
+        animation-iteration-count: 1;
+      }
+
+      @keyframes animationFrames {
+        0% {
+          opacity:0;
+          transform: translate(0px, -400px);
+        }
+        100% {
+          opacity:1;
+          transform: translate(0px, 0px);
+        }
+      }
+
       .description-wrapper {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.8);
         width: 80%;
         position: absolute;
+        top: 20%;
       }
 
       .description-wrapper > p {
@@ -55,6 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         .description-wrapper {
           width: 60%;
+          top: 40%;
         }
         .description-wrapper > p {
           font-size: var(--sopra-font-xxl);
@@ -68,18 +80,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
+    
     <div class="landing-img"></div>
+    
     <div class="description-wrapper">
       <p>[[quizData.description]] </p>
     </div>
+
+    <img class="company-logo" src="[[importPath]]../images/soprasteria-logo.png" alt="">
+
     <button class="button-quiz" on-click="_changeRoute">
       <span>Empezar</span>
     </button>
+
   </template>
 
   <script>
     class LandingView extends Polymer.Element {
-      static get is() {return 'landing-view';}
+      static get is() { return 'landing-view'; }
 
       static get properties() {
         return {
@@ -90,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _changeRoute() {
         var event = new CustomEvent(
           'onRouteChange',
-          {detail: {newRoute: `question/${this.quizData.id}`}, composed: true}
+          { detail: { newRoute: `question/${this.quizData.id}` }, composed: true }
         );
 
         this.dispatchEvent(event);

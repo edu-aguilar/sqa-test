@@ -69,7 +69,7 @@
         const data = e.target.getAttribute('data');
         const event = new CustomEvent('onPageQuestionChange',
           {
-            detail: {operation: data},
+            detail: { operation: data },
             composed: true
           });
         this.dispatchEvent(event);
