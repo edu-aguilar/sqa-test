@@ -107,7 +107,7 @@
         this.scoreData.questions.forEach((question) => {
           answersHtml += `<tr> 
             <td>
-              <h3> ${question.id} - ${question.statement} </h3>
+              <h3> ${question.id} - ${this._escapeHtml(question.statement.title)} </h3>
               ${this._processAnswers(
                 question.type,
                 question.userAnswer,
@@ -135,16 +135,22 @@
         let HTMLCode;
         switch (questionType) {
           case 'text': {
-            HTMLCode = `<div class="text-answer">${userAnswer}</div>`;
+            HTMLCode = `<div class="text-answer">${this._escapeHtml(userAnswer)}</div>`;
             break;
           }
           case 'simple': {
             let answers = '';
             if (correct) {
-              answers = `<div class="correct-selected-answer"> ${userAnswer.value} </div> </td>`;
+              answers = `<div class="correct-selected-answer">
+                ${this._escapeHtml(userAnswer.value)}
+                </div> </td>`;
             } else {
-              answers = `<td> <div class="incorrect-selected-answer"> ${userAnswer.value} </div> </td>
-                <td> <div class="correct-selected-answer"> ${correctAnswer.value} </div> </td>`;
+              answers = `<td> <div class="incorrect-selected-answer">
+                ${this._escapeHtml(userAnswer.value)}
+                </div> </td>
+                <td> <div class="correct-selected-answer">
+                  ${this._escapeHtml(correctAnswer.value)}
+                  </div> </td>`;
             }
             HTMLCode = `<table class="selected-answer"><tr>${answers}</tr></table>`;
             break;
@@ -154,7 +160,9 @@
             if (correct) {
               userAnswer.forEach((answer) => {
                 multipleAnswers += `<tr>
-                  <td> <div class="correct-selected-answer"> ${answer.value} </div> </td>
+                  <td> <div class="correct-selected-answer">
+                    ${this._escapeHtml(answer.value)}
+                  </div> </td>
                 </tr>`;
               });
             } else {
@@ -168,7 +176,7 @@
                   incorrectOption = `
                     <td>
                       <div class="incorrect-selected-answer">
-                        ${userAnswer[i].value}
+                        ${this._escapeHtml(userAnswer[i].value)}
                       </div>
                     </td>`;
                 } else {
@@ -179,7 +187,7 @@
                   correctOption =
                   `<td>
                     <div class="correct-selected-answer">
-                      ${correctAnswer[i].value}
+                      ${this._escapeHtml(correctAnswer[i].value)}
                     </div>
                   </td>`;
                 } else {
@@ -256,6 +264,27 @@
         timeString += `${seconds} segundos`;
 
         return timeString;
+      }
+
+      /**
+        * Helper to scape HTML strings.
+        * @param {String} str
+        * @return {String}
+      */
+      _escapeHtml(str) {
+        const entityMap = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;',
+          '`': '&#x60;',
+          '=': '&#x3D;'
+        };
+        return String(str).replace(/[&<>"'`=\/]/g, function (s) {
+          return entityMap[s];
+        });
       }
 
       /**
