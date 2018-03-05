@@ -34,79 +34,78 @@
         };
       }
 
-      _builtTemplate(){
-        
+      _builtTemplate() {
        let scoreData = this._inizializeScoreData();
 
-       this.statusData.quizData.questions.map(questionMap=> {
-
+       this.statusData.quizData.questions.map( (questionMap) => {
           const question = {
-            id : questionMap.id,
-            statement : questionMap.question,
-            type : questionMap.type,
-            correct : false,  
-           } 
+            id: questionMap.id,
+            statement: questionMap.question,
+            type: questionMap.type,
+            correct: false
+          };
 
           const correctOptionAswered = this.correctQuestions[question.id];
           const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
 
             switch (question.type) {
-              case "simple":
-                  question.correctAnswer = questionMap.options.find(element => element.id === correctOptionAswered);
-                  question.userAnswer = questionMap.options.find(element => element.id === selectedOptionAswered);
-                  if(selectedOptionAswered === correctOptionAswered){
+              case 'simple':
+                  question.correctAnswer = questionMap.options.find(
+                    (element) => element.id === correctOptionAswered);
+                  question.userAnswer = questionMap.options.find(
+                    (element) => element.id === selectedOptionAswered);
+                  if( selectedOptionAswered === correctOptionAswered ) {
                     question.correct = true;
                     scoreData.correctCount++;
-                  } 
+                  }
                   scoreData.totalCount++;
                   break;
-              case "multiple":
-                question.correctAnswer = selectedOptionAswered.map(id => {
-                  return questionMap.options.find(element => element.id === id);
+              case 'multiple':
+                question.correctAnswer = selectedOptionAswered.map( (id) => {
+                  return questionMap.options.find( (element) => element.id === id);
                 });
-                  question.userAnswer = correctOptionAswered.map(id => {
-                    return questionMap.options.find(element => element.id === id);
+                  question.userAnswer = correctOptionAswered.map( (id) => {
+                    return questionMap.options.find( (element) => element.id === id);
                   });
-                  if( this._checkMultipleQuestions(correctOptionAswered,selectedOptionAswered)) {
+                  if( this._checkMultipleQuestions( correctOptionAswered, selectedOptionAswered ) ) {
                     question.correct = true;
                     scoreData.correctCount++;
-                  } 
+                  }
                   scoreData.totalCount++;
-                break;  
-              case "text":
+                break;
+              case 'text':
                   question.userAnswer = selectedOptionAswered;
-                break;  
+                break;
               default:
                 break;
-            }   
+            }
             scoreData.questions.push(question);
         });
-      scoreData.correctPercentage = Math.round((scoreData.correctCount * 100 ) / scoreData.totalCount);
+      scoreData.correctPercentage = Math.round(
+        (scoreData.correctCount * 100 ) / scoreData.totalCount);
       this.set('scoreData', scoreData);
       }
 
-    _checkMultipleQuestions(arrayA,arrayB) {
+    _checkMultipleQuestions(arrayA, arrayB) {
       if(arrayA.length !== arrayB.length) return false;
-      return arrayA.every((a) => a === arrayB.find((b) => a === b))
+      return arrayA.every((a) => a === arrayB.find((b) => a === b));
       }
 
       _inizializeScoreData() {
         return {
-          correctCount : 0,
-          totalCount : 0,
-          testName : this.statusData.quizData.testName,
-          timePassed : this.statusData.timePassed,
-          name : this.userData.name,
-          surname : this.userData.surname,
-          email : this.userData.email,
-          phone : this.userData.phone,
-          questions : []
-      }
+          correctCount: 0,
+          totalCount: 0,
+          testName: this.statusData.quizData.testName,
+          timePassed: this.statusData.timePassed,
+          name: this.userData.name,
+          surname: this.userData.surname,
+          email: this.userData.email,
+          phone: this.userData.phone,
+          questions: []
+      };
     }
 
-    
   }
-
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
 
