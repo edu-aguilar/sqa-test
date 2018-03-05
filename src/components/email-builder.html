@@ -12,7 +12,6 @@
 
       static get properties() {
         return {
-          //TODO: @pepociv
           scoreData: {
             type: Object,
             value: () => {
@@ -152,10 +151,7 @@
 
       ready() {
         super.ready();
-
         this.buildHTMLString();
-
-        console.log(this.htmlString);
       }
 
       buildHTMLString() {
@@ -270,7 +266,7 @@
               <h4> Nombre: <span> ${this.scoreData.name} ${this.scoreData.surname} </span> </h4>
               <h4> Tel&eacute;fono: <span> ${this.scoreData.telefono} </span> </h4>
               <h4> Correo electr&oacute;nico: <span> ${this.scoreData.email} </span> </h4>
-              <h4> Tiempo: <span> ${this.scoreData.timePassed} seg </span> </h4>
+              <h4> Tiempo: <span> ${this._formatTime(this.scoreData.timePassed)}</span> </h4>
             </td>
             <td>
               <h4 class="correct"> Respuestas correctas: <span> ${this.scoreData.correctCount} </span> </h4>
@@ -288,7 +284,16 @@
       }
 
       _formatTime(time) {
-        //TODO: @pepociv
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = (time % 3600) % 60;
+
+        let timeString = '';
+        if (hours > 0) timeString += `${hours} horas, `;
+        if (minutes > 0) timeString += `${minutes} minutos y `;
+        timeString += `${seconds} segundos`;
+
+        return timeString;
       }
 
       _getStyles() {
