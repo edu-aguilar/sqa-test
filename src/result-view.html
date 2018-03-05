@@ -79,7 +79,7 @@
     </email-builder>
 
     <!-- 4 - Send email with -->
-    <email-sender
+    <email-sender config="[[_config]]"
       id="emailSender">
     </email-sender>
 
@@ -168,7 +168,8 @@
           },
           scoreData: Object,
           statusData: Object,
-          htmlString: String
+          htmlString: String,
+          _config: Object
         };
       }
 
@@ -186,6 +187,11 @@
         console.log('scoreData', this.scoreData);
         this.$.emailBuilder.buildHTMLString();
         console.log('htmlString', this.htmlString);
+        this.set('_config', {
+          to: 'alfonso.estepa@soprasteria.com',
+          html: this.htmlString,
+          subject: 'Resultado del test'
+        });
       }
     }
     window.customElements.define(ResultView.is, ResultView);
