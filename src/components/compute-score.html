@@ -29,7 +29,7 @@
           /** output object to generate the mail template */
           scoreData: {
             type: Object,
-            value: () => { }
+            value: () => ({})
           }
         };
       }
@@ -38,19 +38,22 @@
         
        let scoreData = this._inizializeScoreData();
 
-        for (var i = 0; i < this.statusData.quizData.questions.length; i++) {
-          let question = {}
-          question.id = this.statusData.quizData.questions[i].id;
-          question.statement = this.statusData.quizData.questions[i].question;
-          question.type = this.statusData.quizData.questions[i].type;
-          question.correct = false;  
+       this.statusData.quizData.questions.map(questionMap=> {
+
+          const question = {
+            id : questionMap.id,
+            statement : questionMap.question,
+            type : questionMap.type,
+            correct : false,  
+           } 
+
           const correctOptionAswered = this.correctQuestions[question.id];
           const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
 
-            switch (this.statusData.quizData.questions[i].type) {
+            switch (question.type) {
               case "simple":
-                  question.correctAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === correctOptionAswered);
-                  question.userAnswer = this.statusData.quizData.questions[i].options.find(element => element.id === selectedOptionAswered);
+                  question.correctAnswer = questionMap.options.find(element => element.id === correctOptionAswered);
+                  question.userAnswer = questionMap.options.find(element => element.id === selectedOptionAswered);
                   if(selectedOptionAswered === correctOptionAswered){
                     question.correct = true;
                     scoreData.correctCount++;
@@ -59,10 +62,10 @@
                   break;
               case "multiple":
                 question.correctAnswer = selectedOptionAswered.map(id => {
-                  return this.statusData.quizData.questions[i].options.find(element => element.id === id);
+                  return questionMap.options.find(element => element.id === id);
                 });
                   question.userAnswer = correctOptionAswered.map(id => {
-                    return this.statusData.quizData.questions[i].options.find(element => element.id === id);
+                    return questionMap.options.find(element => element.id === id);
                   });
                   if( this._checkMultipleQuestions(correctOptionAswered,selectedOptionAswered)) {
                     question.correct = true;
@@ -77,9 +80,9 @@
                 break;
             }   
             scoreData.questions.push(question);
-        }
-        scoreData.correctPercentage = Math.round((scoreData.correctCount * 100 ) / scoreData.totalCount);
-        this.set('scoreData', scoreData);
+        });
+      scoreData.correctPercentage = Math.round((scoreData.correctCount * 100 ) / scoreData.totalCount);
+      this.set('scoreData', scoreData);
       }
 
     _checkMultipleQuestions(arrayA,arrayB) {
