@@ -57,7 +57,8 @@
                             phone: '999999999',
                             email: 'candidato@soprasteria.com',
                           };
-        assert.equal(resultView.$.formContainer.hidden, false); 
+        assert.equal(resultView.$.formContainer.hidden, false);
+        assert.equal(resultView.user.phone, '999999999');  
         assert.equal(resultMessage.innerText, ""); 
         assert.equal(resultView.onSite, false);                         
         assert.equal(resultView.isValid, false);
