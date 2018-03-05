@@ -54,7 +54,7 @@
                     (element) => element.id === correctOptionAswered);
                   question.userAnswer = questionMap.options.find(
                     (element) => element.id === selectedOptionAswered);
-                  if( selectedOptionAswered === correctOptionAswered ) {
+                  if ( selectedOptionAswered === correctOptionAswered ) {
                     question.correct = true;
                     scoreData.correctCount++;
                   }
@@ -67,7 +67,7 @@
                   question.userAnswer = correctOptionAswered.map( (id) => {
                     return questionMap.options.find( (element) => element.id === id);
                   });
-                  if( this._checkMultipleQuestions( correctOptionAswered, selectedOptionAswered ) ) {
+                  if ( this._checkMultipleQuestions( correctOptionAswered, selectedOptionAswered ) ) {
                     question.correct = true;
                     scoreData.correctCount++;
                   }
@@ -87,7 +87,7 @@
       }
 
     _checkMultipleQuestions(arrayA, arrayB) {
-      if(arrayA.length !== arrayB.length) return false;
+      if (arrayA.length !== arrayB.length) return false;
       return arrayA.every((a) => a === arrayB.find((b) => a === b));
       }
 
@@ -104,7 +104,6 @@
           questions: []
       };
     }
-
   }
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
