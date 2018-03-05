@@ -6,39 +6,41 @@
   </template>
   <script>
 
-        /**
-      * `<compute-score>` component to calculate the test result and generate the object of the template
-      *
-      * ## Usage
-      *
-      * `<compute-score user-data='userData' correct-questions='correctQuestions' status-data='statusData' score-data='scoreData'></compute-score>`
-      *
-      * @customElement
-      * @polymer
-    */
-    class ComputeScore extends (class extends Polymer.Element {}) {
+    /**
+  * `<compute-score>` component to calculate the test result and generate the object of the template
+  *
+  * ## Usage
+  *
+  * `<compute-score user-data='userData' correct-questions='correctQuestions' status-data='statusData' score-data='scoreData'></compute-score>`
+  *
+  * @customElement
+  * @polymer
+*/
+    class ComputeScore extends (class extends Polymer.Element { }) {
       static get is() { return 'compute-score'; }
       static get properties() {
         return {
           /** candidate information */
           userData: Object,
           /** input object where store the test information  */
-          statusData: Object,
+          statusData: {
+            type: Object
+          },
           /** input object that stores the answers */
           correctQuestions: Object,
           /** output object to generate the mail template */
           scoreData: {
             type: Object,
-            value: () => ({}),
-            notify: true
+            notify: true,
+            value: () => ({})
           }
         };
       }
 
       builtTemplate() {
-       let scoreData = this._inizializeScoreData();
+        let scoreData = this._inizializeScoreData();
 
-       this.statusData.quizData.questions.map( (questionMap) => {
+        this.statusData.quizData.questions.map((questionMap) => {
           const question = {
             id: questionMap.id,
             statement: questionMap.question,
@@ -49,47 +51,49 @@
           const correctOptionAswered = this.correctQuestions[question.id];
           const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
 
-            switch (question.type) {
-              case 'simple':
-                  question.correctAnswer = questionMap.options.find(
-                    (element) => element.id === correctOptionAswered);
-                  question.userAnswer = questionMap.options.find(
-                    (element) => element.id === selectedOptionAswered);
-                  if ( selectedOptionAswered === correctOptionAswered ) {
-                    question.correct = true;
-                    scoreData.correctCount++;
-                  }
-                  scoreData.totalCount++;
-                  break;
-              case 'multiple':
-                question.correctAnswer = selectedOptionAswered.map( (id) => {
-                  return questionMap.options.find( (element) => element.id === id);
-                });
-                  question.userAnswer = correctOptionAswered.map( (id) => {
-                    return questionMap.options.find( (element) => element.id === id);
-                  });
-                  if ( this._checkMultipleQuestions( correctOptionAswered, selectedOptionAswered ) ) {
-                    question.correct = true;
-                    scoreData.correctCount++;
-                  }
-                  scoreData.totalCount++;
-                break;
-              case 'text':
-                  question.userAnswer = selectedOptionAswered;
-                break;
-              default:
-                break;
-            }
-            scoreData.questions.push(question);
+          switch (question.type) {
+            case 'simple':
+              question.correctAnswer = questionMap.options.find(
+                (element) => element.id === correctOptionAswered);
+              question.userAnswer = questionMap.options.find(
+                (element) => element.id === selectedOptionAswered[0]);
+              if (selectedOptionAswered[0] === correctOptionAswered) {
+                question.correct = true;
+                scoreData.correctCount++;
+              }
+              scoreData.totalCount++;
+              break;
+            case 'multiple':
+              question.correctAnswer = selectedOptionAswered.map((id) => {
+                return questionMap.options.find((element) => element.id === id);
+              });
+              question.userAnswer = correctOptionAswered.map((id) => {
+                return questionMap.options.find(
+                  (element) => element.id === id);
+              });
+              if (this._checkMultipleQuestions(correctOptionAswered, selectedOptionAswered)) {
+                question.correct = true;
+                scoreData.correctCount++;
+              }
+              scoreData.totalCount++;
+              break;
+            case 'text':
+              question.userAnswer = selectedOptionAswered;
+              break;
+            default:
+              break;
+          }
+          scoreData.questions.push(question);
         });
-      scoreData.correctPercentage = Math.round(
-        (scoreData.correctCount * 100 ) / scoreData.totalCount);
-      this.set('scoreData', scoreData);
+        scoreData.correctPercentage = Math.round(
+          (scoreData.correctCount * 100) / scoreData.totalCount);
+        this.set('scoreData', scoreData);
+        console.log('score data calculado');
       }
 
-    _checkMultipleQuestions(arrayA, arrayB) {
-      if (arrayA.length !== arrayB.length) return false;
-      return arrayA.every((a) => a === arrayB.find((b) => a === b));
+      _checkMultipleQuestions(arrayA, arrayB) {
+        if (arrayA.length !== arrayB.length) return false;
+        return arrayA.every((a) => a === arrayB.find((b) => a === b));
       }
 
       _inizializeScoreData() {
@@ -103,9 +107,9 @@
           email: this.userData.email,
           phone: this.userData.phone,
           questions: []
-      };
+        };
+      }
     }
-  }
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
 
