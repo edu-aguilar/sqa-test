@@ -15,8 +15,8 @@
     *
     *
     * ## scoreData object
-    *
-    * `{
+    * ```json
+    *  {
     *  'correctCount':2,
     *  'totalCount':3,
     *  'testName':'testExample',
@@ -43,7 +43,7 @@
     *  ],
     *  'correctPercentage': 67
     *  };
-    *
+    * ```
     * @customElement
     * @polymer
     */
@@ -196,7 +196,6 @@
       ready() {
         super.ready();
         this.buildHTMLString();
-        console.log(this.htmlString);
       }
 
       /**
@@ -263,10 +262,11 @@
       _processAnswers(questionType, userAnswer, correctAnswer, correct) {
         let HTMLCode;
         switch (questionType) {
-          case 'text':
+          case 'text': {
             HTMLCode = `<div class="text-answer">${userAnswer}</div>`;
             break;
-          case 'simple':
+          }
+          case 'simple': {
             let answers = '';
             if (correct) {
               answers = `<div class="correct-selected-answer"> ${userAnswer.value} </div> </td>`;
@@ -276,7 +276,8 @@
             }
             HTMLCode = `<table class="selected-answer"><tr>${answers}</tr></table>`;
             break;
-          case 'multiple':
+          }
+          case 'multiple': {
             let multipleAnswers = '';
             if (correct) {
               userAnswer.forEach((answer) => {
@@ -321,8 +322,10 @@
             }
             HTMLCode = `<table class="selected-answer">${multipleAnswers}</table>`;
             break;
-          default:
+          }
+          default: {
             break;
+          }
         }
         return HTMLCode;
       }
