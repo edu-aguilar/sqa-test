@@ -1,7 +1,7 @@
 {
   "name": "sopra-quiz",
   "license": "BSD-3-Clause",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "devDependencies": {
     "bower": "^1.7.0",
     "css-slam": "^2.0.2",
