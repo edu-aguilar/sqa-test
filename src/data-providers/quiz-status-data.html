@@ -101,6 +101,10 @@
       __updateSubscribers(path) {
         subscribers.forEach((subscriber) => {subscriber.notifyPath(path);});
       }
+
+      clearLocalStorage() {
+        this.$.quizLocalStorage.clearStorage(this.quizType);
+      }
     }
 
     customElements.define(QuizStatusData.is, QuizStatusData);
