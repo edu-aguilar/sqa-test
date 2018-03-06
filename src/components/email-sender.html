@@ -6,8 +6,8 @@
 
   <script>
     (function() {
-      const _url = `https://api.mailgun.net/v3/
-                    sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org/messages`;
+      const _url =
+      'https://api.mailgun.net/v3/sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org/messages';
       const _from = 'mailgun@sandboxdcd7f8bf7d224a48bfe468df7e0cfece.mailgun.org';
 
       /**
@@ -64,8 +64,8 @@
               headers: myHeaders,
               body: this._configFormData
             })
-            .then(this._handleResponse)
-            .catch(this._handleError);
+            .then((res) => this._handleResponse(res))
+            .catch((err) => this._handleError(err));
           }
         }
 
