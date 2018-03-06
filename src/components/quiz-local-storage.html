@@ -35,7 +35,8 @@
         this.set(`storageData.${quizType}.${key}`, data);
       }
 
-      clearStorage() {
+      /* TODO delete by quizType*/
+      clearStorage(quizType) {
         this.set('storageData', {});
       }
     }
