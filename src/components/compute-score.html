@@ -37,7 +37,7 @@
         };
       }
 
-      builtTemplate() {
+      buildTemplate() {
         let scoreData = this._inizializeScoreData();
 
         this.statusData.quizData.questions.map((questionMap) => {
@@ -88,7 +88,6 @@
         scoreData.correctPercentage = Math.round(
           (scoreData.correctCount * 100) / scoreData.totalCount);
         this.set('scoreData', scoreData);
-        console.log('score data calculado');
       }
 
       _checkMultipleQuestions(arrayA, arrayB) {

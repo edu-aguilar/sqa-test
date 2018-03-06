@@ -277,12 +277,12 @@
           '<': '&lt;',
           '>': '&gt;',
           '"': '&quot;',
-          "'": '&#39;',
+          '\'': '&#39;',
           '/': '&#x2F;',
           '`': '&#x60;',
           '=': '&#x3D;'
         };
-        return String(str).replace(/[&<>"'`=\/]/g, function (s) {
+        return String(str).replace(/[&<>"'`=\/]/g, function(s) { // eslint-disable-line no-useless-escape
           return entityMap[s];
         });
       }

@@ -141,10 +141,12 @@
           quizType: String,
           /** Message after completing the test, is a dynamic ending message depending on the type of test */
           resultMessage: String,
-          /** Object with correct answers to the questions */          
+          /** Object with correct answers to the questions */
           correctQuestions: {
             type: Object,
-            value: { "1": "1", "2": ["2", "3"], "4": "2", "5": "2", "6": "2", "7": "2", "8": "2", "9": "2", "10": "2", "11": "2", "12": "2", "13": "2", "14": "2", "15": "2", "16": "2" }
+            value: { '1': '1', '2': ['2', '3'], '4': '2', '5': '2', '6': '2', '7': '2',
+              '8': '2', '9': '2', '10': '2', '11': '2', '12': '2', '13': '2',
+              '14': '2', '15': '2', '16': '2' }
           },
           /** Data from storage */
           storageData: Object,
@@ -179,16 +181,11 @@
       }
       /** Send form actions -> computeScore -> buildEmail -> sendEmail */
       _sendForm() {
-        console.log('_sendForm');
-        console.log('storageData is: ', this.storageData[this.quizType]);
-        this.set('statusData', this.storageData[this.quizType] )
-        
-        this.$.computeScore.builtTemplate();
-        console.log('scoreData', this.scoreData);
+        this.set('statusData', this.storageData[this.quizType] );
+        this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
-        console.log('htmlString', this.htmlString);
         this.set('_config', {
-          to: 'alfonso.estepa@soprasteria.com',
+          to: 'eduardo.aguilar@soprasteria.com',
           html: this.htmlString,
           subject: 'Resultado del test'
         });
