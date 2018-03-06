@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>email-sender test</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/components/email-sender.html">
+  </head>
+  <body>
+
+    <test-fixture id="emailSender">
+      <template>
+        <email-sender></email-sender>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('email-sender', () => {
+
+        suite('Validating default component API', function () {
+          const emailSender = fixture('emailSender');
+
+          test('Needed properties', function () {
+            assert.typeOf(emailSender.config, 'object');
+          });
+
+          test('Needed observer', function () {
+            assert.typeOf(emailSender._sendEmail, 'function');
+          });
+        });
+
+
+      });
+    </script>
+
+  </body>
+</html>

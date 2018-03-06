@@ -1,0 +1,392 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="email-builder">
+  <script>
+    /**
+    * `<email-builder>` generates a custom formatted html report ready to send by email.
+    *
+    * ## Usage
+    * Just inject the `<email-builder>` component with and *id* to provide
+    *  easy access to its public functions and expose The variable `scoreData` that is a computed object
+    *  with questions, answers and scores.
+    *
+    * `<email-builder score-data="{{scoreData}}"></email-builder>`
+    *
+    *
+    * ## scoreData object
+    * ```json
+    *  {
+    *  'correctCount':2,
+    *  'totalCount':3,
+    *  'testName':'testExample',
+    *  'timePassed':'1532',
+    *  'name':'candidato1',
+    *  'surname':'ape2',
+    *  'email':'candidato@soprasteria.com',
+    *  'questions':[
+    *    {
+    *      'id':'1',
+    *      'statement':'¿Qué significan las iniciales CSS?',
+    *      'type':'simple',
+    *      'correct':false,
+    *      'correctAnswer':{
+    *        'id':'1',
+    *        'value':'Cascading Style Sheets'
+    *      },
+    *      'userAnswer':{
+    *        'id':'3',
+    *        'value':'Creative Style Sheets'
+    *      }
+    *    },
+    *    ...
+    *  ],
+    *  'correctPercentage': 67
+    *  };
+    * ```
+    * @customElement
+    * @polymer
+    */
+    class EmailBuilder extends (class extends Polymer.Element {}) {
+      static get is() { return 'email-builder'; }
+
+      static get properties() {
+        return {
+          /** scoreData with questions, answers and scores */
+          scoreData: {
+            type: Object,
+            value: {}
+          },
+          /** formatted HTMLSctring ready to send by email */
+          htmlString: {
+            type: String,
+            notify: true
+          },
+          /** String with url with the header image to print on formatted HTML */
+          headerImage: {
+            type: String,
+            value: `https://blog.soprasteria.com/wp-content/uploads/2015/09/cropped-cropped-cropped-logosoprasteria.png` // eslint-disable-line
+          }
+        };
+      }
+
+      /**
+        * Function that build a HTML ready to send via email.
+      */
+      buildHTMLString() {
+        const head = `<head> ${this._getStyles()} </head>`;
+        const body = `<body> 
+          ${this._getBodyHeader()} 
+          ${this._getEmailContainer()} 
+        </body>`;
+    
+        this.htmlString = `<!DOCTYPE html> 
+        <html>
+          ${head}
+          ${body}
+        </html>`;
+      }
+
+      /**
+        * Function that build a body section of the HTML.
+        * @return {String}.
+      */
+      _getEmailContainer() {
+        return `<div id="email-container">  
+          ${this._getCandidateInfoHtml()}
+          ${this._getAnswersInfoHtml()}
+        </div>`;
+      }
+
+      /**
+        * Function that generate an HTML string with answers.
+        * @return {String}.
+      */
+      _getAnswersInfoHtml() {
+        let answersHtml = '';
+        this.scoreData.questions.forEach((question) => {
+          answersHtml += `<tr> 
+            <td>
+              <h3> ${question.id} - ${this._escapeHtml(question.statement.title)} </h3>
+              ${this._processAnswers(
+                question.type,
+                question.userAnswer,
+                question.correctAnswer,
+                question.correct
+              )}
+            </td>
+          </tr>`;
+        });
+
+        return `<table class="answers-info">
+          ${answersHtml}
+        </table>`;
+      }
+
+      /**
+        * Function generate a piece of HTML code for each answer.
+        * @param {String} questionType
+        * @param {Object} userAnswer
+        * @param {Object} correctAnswer
+        * @param {Boolean} correct
+        * @return {String}
+      */
+      _processAnswers(questionType, userAnswer, correctAnswer, correct) {
+        let HTMLCode;
+        switch (questionType) {
+          case 'text': {
+            HTMLCode = `<div class="text-answer">${this._escapeHtml(userAnswer)}</div>`;
+            break;
+          }
+          case 'simple': {
+            let answers = '';
+            if (correct) {
+              answers = `<div class="correct-selected-answer">
+                ${this._escapeHtml(userAnswer.value)}
+                </div> </td>`;
+            } else {
+              answers = `<td> <div class="incorrect-selected-answer">
+                ${this._escapeHtml(userAnswer.value)}
+                </div> </td>
+                <td> <div class="correct-selected-answer">
+                  ${this._escapeHtml(correctAnswer.value)}
+                  </div> </td>`;
+            }
+            HTMLCode = `<table class="selected-answer"><tr>${answers}</tr></table>`;
+            break;
+          }
+          case 'multiple': {
+            let multipleAnswers = '';
+            if (correct) {
+              userAnswer.forEach((answer) => {
+                multipleAnswers += `<tr>
+                  <td> <div class="correct-selected-answer">
+                    ${this._escapeHtml(answer.value)}
+                  </div> </td>
+                </tr>`;
+              });
+            } else {
+              let length = userAnswer.length > correctAnswer.length ?
+                            userAnswer.length :
+                            correctAnswer.length;
+              for (let i = 0; i < length; i++) {
+                let incorrectOption = '';
+                let correctOption = '';
+                if (i < userAnswer.length) {
+                  incorrectOption = `
+                    <td>
+                      <div class="incorrect-selected-answer">
+                        ${this._escapeHtml(userAnswer[i].value)}
+                      </div>
+                    </td>`;
+                } else {
+                  incorrectOption = `<td> </td>`;
+                }
+
+                if (i < correctAnswer.length) {
+                  correctOption =
+                  `<td>
+                    <div class="correct-selected-answer">
+                      ${this._escapeHtml(correctAnswer[i].value)}
+                    </div>
+                  </td>`;
+                } else {
+                  correctOption = `<td> </td>`;
+                }
+    
+                multipleAnswers += `<tr>
+                  ${incorrectOption}
+                  ${correctOption}
+                </tr>`;
+              }
+            }
+            HTMLCode = `<table class="selected-answer">${multipleAnswers}</table>`;
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+        return HTMLCode;
+      }
+
+      /**
+        * Function generate a piece of HTML related with candidate information.
+        * @return {String}
+      */
+      _getCandidateInfoHtml() {
+        const scoreData = this.scoreData;
+        return `<table class="candidate-info">
+          <tr>
+            <td colspan="2">
+              <h3 class="test-title"> ${scoreData.testName} </h3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>Nombre: <span>${scoreData.name} ${scoreData.surname}</span></h4>
+              <h4>Tel&eacute;fono: <span>${scoreData.telefono}</span></h4>
+              <h4>Correo electr&oacute;nico: <span>${scoreData.email}</span></h4>
+              <h4>Tiempo: <span>${this._formatTime(scoreData.timePassed)}</span></h4>
+            </td>
+            <td>
+              <h4 class="correct">Respuestas correctas: <span>${scoreData.correctCount}</span></h4>
+              <h4 class="incorrect">Respuestas Incorrectas: <span>${scoreData.totalCount}</span></h4>
+              <h3 class="final-result">Resultado final: ${scoreData.correctPercentage}% </h3>
+            </td>
+          </tr>
+        </table>`;
+      }
+
+      /**
+        * Function generate a piece of HTML related with header with the image.
+        * @return {String}
+      */
+      _getBodyHeader() {
+        return `<div class="header">
+          <img src="${this.headerImage}">
+        </div>`;
+      }
+
+      /**
+        * Function that convert time in seconds to human format.
+        * @param {Number} time
+        * @return {String}
+      */
+      _formatTime(time) {
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = (time % 3600) % 60;
+
+        let timeString = '';
+        if (hours > 0) timeString += `${hours} horas, `;
+        if (minutes > 0) timeString += `${minutes} minutos y `;
+        timeString += `${seconds} segundos`;
+
+        return timeString;
+      }
+
+      /**
+        * Helper to scape HTML strings.
+        * @param {String} str
+        * @return {String}
+      */
+      _escapeHtml(str) {
+        const entityMap = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          '\'': '&#39;',
+          '/': '&#x2F;',
+          '`': '&#x60;',
+          '=': '&#x3D;'
+        };
+        return String(str).replace(/[&<>"'`=\/]/g, function(s) { // eslint-disable-line no-useless-escape
+          return entityMap[s];
+        });
+      }
+
+      /**
+        * Function getter of template styles.
+        * @return {String}
+      */
+      _getStyles() {
+        return `<style>
+          :host {
+            width: 100%;
+            height: 100%;
+          }
+    
+          #email-container {
+            width: 100%;
+            height: 100%;
+            background-color: #fafafa;
+            font-family: "Varela Round",sans-serif;
+          }
+    
+          .header {
+            background-color: #ffffff;
+            height: 30%;
+          }
+    
+          img {
+            height: 100px;
+            display: block;
+            margin: auto;
+          }
+    
+          .candidate-info {
+            margin: 0px auto 0px auto;
+            padding-top: 30px;
+          }
+    
+          td {
+            padding: 0px 20px 0px 20px;
+          }
+       
+          .test-title {
+            text-align: center;
+          }
+    
+          h4 {
+            margin: 10px;
+            color: #F37B2C;
+          }
+    
+          span {
+            color: #000000;
+            font-weight: 300;
+          }
+    
+          .correct {
+            color: #43d20d;
+          }
+    
+          .incorrect {
+            color: #ff0000;
+          }
+    
+          .final-result {
+            margin: 10px;
+            text-align: center;
+          }
+    
+          .answers-info {
+            margin: 20px auto 0px auto;
+            padding-bottom: 30px;
+          }
+    
+          .selected-answer {
+            margin: 20px auto 20px auto;
+          }
+    
+          .incorrect-selected-answer {
+            color: #ff0000;
+            text-align: center;
+            font-size: 16px;
+          }
+    
+          .correct-selected-answer {
+            color: #43d20d;
+            text-align: center;
+            font-size: 16px;
+          }
+    
+          .text-answer {
+            background-color: #ffffff;
+            font-size: 14px;
+            width: 80%;
+            max-height: 50px;
+            overflow-y: scroll;
+            padding: 20px;
+            margin: 20px auto;
+            text-align: justify;
+          }
+        </style>`;
+      }
+    }
+
+    window.customElements.define(EmailBuilder.is, EmailBuilder);
+  </script>
+</dom-module>

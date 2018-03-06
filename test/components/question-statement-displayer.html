@@ -1,0 +1,83 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/components/question-statement-displayer.html">
+  </head>
+  <body>
+    <test-fixture id="QuestionStatementDisplayer">
+      <template>
+        <question-statement-displayer 
+          question='{"title": "This is a question", "image": "https://goo.gl/sPDCof"}' 
+          question-id="1"
+          placeholder-image="../../images/placeholder.gif"
+        >
+        </question-statement-displayer>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="QuestionStatementDisplayerNoImage">
+      <template>
+        <question-statement-displayer 
+          question='{"title": "This is a question", "image": ""}' 
+          question-id="1">
+        </question-statement-displayer>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('question-statement-displayer tests', function() {
+        let questionStatementDisplayer;
+
+        setup(function() {
+          questionStatementDisplayer = fixture('QuestionStatementDisplayer');
+        });
+
+        test('iron-image should exist if question has an image', function(done) {
+          flush(function() {
+            const ironImage = questionStatementDisplayer.shadowRoot.querySelector('iron-image');
+            assert(ironImage);
+            done();
+          });
+        });
+
+        test('Properties should be the right type', function() {
+          assert.typeOf(questionStatementDisplayer.question, 'object');
+          assert.typeOf(questionStatementDisplayer.questionId, 'string');
+          assert.typeOf(questionStatementDisplayer.placeholderImage, 'string');
+        });
+
+        test('Component should display question statement', function() {
+          const textContent = '1 - This is a question'
+          const pContainer = questionStatementDisplayer.shadowRoot.querySelector('p').textContent;
+
+          assert.equal(pContainer, textContent);
+        });
+
+        test('Image shouldn\'t display if question only has text', function() {
+          questionStatementDisplayer = fixture('QuestionStatementDisplayerNoImage');
+          
+          const ironImage = questionStatementDisplayer.shadowRoot.querySelector('iron-image');
+
+          assert.equal(ironImage, null);
+        });
+      });
+    </script>
+  </body>
+</html>

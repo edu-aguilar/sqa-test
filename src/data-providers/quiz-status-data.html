@@ -47,7 +47,8 @@
           },
           storageData: {
             type: Object,
-            observer: '_loadFromStorage'
+            observer: '_loadFromStorage',
+            notify: true
           }
         };
       }
@@ -99,6 +100,10 @@
 
       __updateSubscribers(path) {
         subscribers.forEach((subscriber) => {subscriber.notifyPath(path);});
+      }
+
+      clearLocalStorage() {
+        this.$.quizLocalStorage.clearStorage(this.quizType);
       }
     }
 
