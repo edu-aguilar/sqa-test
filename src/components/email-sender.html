@@ -64,8 +64,8 @@
               headers: myHeaders,
               body: this._configFormData
             })
-            .then(this._handleResponse)
-            .catch(this._handleError);
+            .then((res) => this._handleResponse(res))
+            .catch((err) => this._handleError(err));
           }
         }
 
