@@ -1,6 +1,7 @@
+/* eslint-disable */
 /**
  * https://github.com/PolymerElements/generator-polymer-init-custom-build/blob/master/generators/app/gulpfile.js
- * 
+ *
  * @license
  * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -19,7 +20,7 @@ const mergeStream = require('merge-stream');
 const polymerBuild = require('polymer-build');
 
 // Here we add tools that will be used to process our source files.
-//const imagemin = require('gulp-imagemin');
+// const imagemin = require('gulp-imagemin');
 
 // Additional plugins can be used to optimize your source files after splitting.
 // Before using each plugin, install with `npm i --save-dev <package-name>`
@@ -44,7 +45,6 @@ function waitFor(stream) {
 
 function build() {
   return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-
     // Lets create some inline code splitters in case you need them later in your build.
     let sourcesStreamSplitter = new polymerBuild.HtmlSplitter();
     let dependenciesStreamSplitter = new polymerBuild.HtmlSplitter();
@@ -53,7 +53,6 @@ function build() {
     console.log(`Deleting ${buildDirectory} directory...`);
     del([buildDirectory])
       .then(() => {
-
         // Let's start by getting your source files. These are all the files
         // in your `src/` directory, or those that match your polymer.json
         // "sources"  property if you provided one.
@@ -73,7 +72,7 @@ function build() {
           // Uncomment these lines to add a few more example optimizations to your
           // source files, but these are not included by default. For installation, see
           // the require statements at the beginning.
-          //.pipe(gulpif(/\.js$/, uglify())) // Install gulp-uglify to use
+          // .pipe(gulpif(/\.js$/, uglify())) // Install gulp-uglify to use
           .pipe(gulpif(/\.css$/, cssSlam())) // Install css-slam to use
           .pipe(gulpif(/\.html$/, htmlMinifier())) // Install gulp-html-minifier to use
 
@@ -128,3 +127,5 @@ function build() {
 }
 
 gulp.task('build', build);
+
+/* eslint-enable */
