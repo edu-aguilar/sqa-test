@@ -79,8 +79,8 @@
     </email-builder>
 
     <!-- 4 - Send email with -->
-    <email-sender config="[[_config]]"
-      id="emailSender">
+    <email-sender
+      config="[[_config]]">
     </email-sender>
 
     <div class="box-wrapper">
@@ -109,7 +109,7 @@
         </div>
       </form>
         <div class="button-container">
-          <button class="button-quiz" on-click="_sendForm"> <!-- disabled$="{{!isValid}}" -->
+          <button class="button-quiz" on-click="_sendForm" disabled$="{{!isValid}}">
             <span>Enviar</span>
           </button>
         </div>
@@ -132,7 +132,7 @@
       static get is() {return 'result-view';}
       static get observers() {
         return [
-           '_checkFormValid(user.*)'
+          '_checkFormValid(user.*)'
         ];
       }
       static get properties() {
@@ -175,6 +175,19 @@
         };
       }
 
+      ready() {
+        super.ready();
+        this.addEventListener('onEmailSentSuccesfully', () => {
+          alert('Muchas gracias por completar nuestro quiz. ヽ(´▽`)/');
+          this.$.quizStatusData.clearLocalStorage();
+          const event = new CustomEvent('onRouteChange',
+            {
+              detail: { newRoute: `landing` },
+              composed: true
+            });
+          this.dispatchEvent(event);
+        });
+      }
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
         this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
