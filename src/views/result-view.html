@@ -58,7 +58,7 @@
     <!-- 1 - Get data from statusData -->
     <quiz-status-data 
       id="quizStatusData"
-      quiz-type="[[quizType]]"
+      profile="[[profile]]"
       storage-data="{{storageData}}">
     </quiz-status-data>
 
@@ -137,9 +137,9 @@
       }
       static get properties() {
         return {
-          /** Type of quiz */
-          quizType: String,
-          /** Message after completing the test, is a dynamic ending message depending on the type of test */
+          /** Quiz profile (frontend, backend, fullstack, etc.) */
+          profile: String,
+          /** Message after completing the test, is a dynamic ending message depending on the test profile */
           resultMessage: String,
           /** Object with correct answers to the questions */
           correctQuestions: {
@@ -194,7 +194,7 @@
       }
       /** Send form actions -> computeScore -> buildEmail -> sendEmail */
       _sendForm() {
-        this.set('statusData', this.storageData[this.quizType] );
+        this.set('statusData', this.storageData[this.profile] );
         this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
         this.set('_config', {

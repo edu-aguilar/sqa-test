@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}"
       time-passed="{{timePassed}}"
-      quiz-type="[[quizType]]">
+      profile="[[profile]]">
     </quiz-status-data>
 
     <question-tabs
@@ -93,7 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           _selectedAnswerArray: Array,
           route: Object,
           quizData: Object,
-          quizType: String,
+          profile: String,
           timePassed: {
             type: Number,
             notify: true,

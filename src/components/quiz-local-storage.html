@@ -24,19 +24,19 @@
         };
       }
 
-      updateStorage(quizType, key, data) {
-        if (!quizType) return;
-        if (!this.storageData[quizType]) {
-          this.set(`storageData.${quizType}`, {
+      updateStorage(profile, key, data) {
+        if (!profile) return;
+        if (!this.storageData[profile]) {
+          this.set(`storageData.${profile}`, {
             'quizData': {},
             'answeredQuestions': {},
             'timePassed': 0 });
         }
-        this.set(`storageData.${quizType}.${key}`, data);
+        this.set(`storageData.${profile}.${key}`, data);
       }
 
-      /* TODO delete by quizType*/
-      clearStorage(quizType) {
+      /* TODO delete by profile*/
+      clearStorage(profile) {
         this.set('storageData', {});
       }
     }

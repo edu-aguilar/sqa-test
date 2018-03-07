@@ -7,11 +7,11 @@
 
   <title>my-view1</title>
 
-  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../bower_components/web-component-tester/browser.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
 
   <!-- Import the element to test -->
-  <link rel="import" href="../../src/sopra-quiz-app.html">
+  <link rel="import" href="../src/sopra-quiz-app.html">
 </head>
 
 <body>
@@ -26,13 +26,13 @@
       test('We should have main components', function() {
         const appShell = fixture('shell');
         const appLocation = appShell.shadowRoot.querySelector('#appLocation');
-        const appRouteType = appShell.shadowRoot.querySelector('#appRouteType');
+        const appRouteProfile = appShell.shadowRoot.querySelector('#appRouteProfile');
         const appRoutePage = appShell.shadowRoot.querySelector('#appRoutePage');
         const quizData = appShell.shadowRoot.querySelector('#quizData');
         const appDrawer = appShell.shadowRoot.querySelector('#appDrawer');
 
         assert(appLocation !== null);
-        assert(appRouteType !== null);
+        assert(appRouteProfile !== null);
         assert(appRoutePage !== null);
         assert(quizData !== null);
         assert(appDrawer !== null);

@@ -60,9 +60,9 @@
     </app-location>
 
     <app-route
-        id="appRouteType"
+        id="appRouteProfile"
         route="{{route}}"
-        pattern="[[rootPath]]:type"
+        pattern="[[rootPath]]:profile"
         data="{{routeData}}"
         tail="{{subroute}}">
     </app-route>
@@ -80,7 +80,7 @@
     </quiz-local-storage>
     <quiz-data
       id="quizData"
-      quiz-type="[[routeData.type]]"
+      profile="[[routeData.profile]]"
       data="{{quizData}}">
     </quiz-data>
 
@@ -104,13 +104,13 @@
             name="question"
             route="{{subrouteTail}}"
             quiz-data="[[quizData]]"
-            quiz-type="[[routeData.type]]">
+            profile="[[routeData.profile]]">
           </question-view>
           <result-view 
             name="result" 
             on-site="[[quizData.onSite]]" 
             result-message="[[quizData.resultMessage]]"
-            quiz-type="[[routeData.type]]">
+            profile="[[routeData.profile]]">
           </result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
@@ -172,7 +172,7 @@
         const newRoute = e.detail.newRoute;
         let path = newRoute === 'not-found'
           ? `${this.rootPath}test/${newRoute}`
-          : `${this.rootPath}${this.routeData.type}/${newRoute}`;
+          : `${this.rootPath}${this.routeData.profile}/${newRoute}`;
 
         this.set('route.path', path);
       }
