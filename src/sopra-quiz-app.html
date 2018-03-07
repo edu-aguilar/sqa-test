@@ -160,7 +160,7 @@
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        var resolvedPageUrl = this.resolveUrl(`views/${page}-view.html`);
         Polymer.importHref(
             resolvedPageUrl,
             null,
