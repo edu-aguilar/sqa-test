@@ -12,10 +12,10 @@
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
-<link rel="lazy-import" href="landing-view.html">
-<link rel="lazy-import" href="question-view.html">
-<link rel="lazy-import" href="result-view.html">
-<link rel="lazy-import" href="not-found-view.html">
+<link rel="lazy-import" href="views/landing-view.html">
+<link rel="lazy-import" href="views/question-view.html">
+<link rel="lazy-import" href="views/result-view.html">
+<link rel="lazy-import" href="views/not-found-view.html">
 
 
 <dom-module id="sopra-quiz-app">
@@ -160,7 +160,7 @@
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        var resolvedPageUrl = this.resolveUrl(`views/${page}-view.html`);
         Polymer.importHref(
             resolvedPageUrl,
             null,
