@@ -1,7 +1,7 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
-<link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="landing-view">
   <template>
@@ -17,7 +17,7 @@
       .landing-img {
         width: 100%;
         height: 50%;
-        background-image: url(../images/landing-background.jpeg);
+        background-image: url(../../images/landing-background.jpeg);
         background-repeat: no-repeat;
         background-size: cover;
       }
@@ -93,7 +93,7 @@
       <p> {{localize('test')}} </p>
     </div>
 
-    <img class="company-logo" src="[[importPath]]../images/soprasteria-logo.png" alt="">
+    <img class="company-logo" src="[[importPath]]../../images/soprasteria-logo.png" alt="">
 
     <button class="button-quiz" on-click="_changeRoute">
       <span>Empezar</span>
@@ -119,7 +119,7 @@
 
       connectedCallback() {
         super.connectedCallback();
-        this.loadResources(this.resolveUrl(`locales/${this.language}.json`));
+        this.loadResources(this.resolveUrl(`../locales/${this.language}.json`));
       }
 
       _changeRoute() {

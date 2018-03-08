@@ -2,10 +2,10 @@
   "entrypoint": "index.html",
   "shell": "src/sopra-quiz-app.html",
   "fragments": [
-    "src/landing-view.html",
-    "src/question-view.html",
-    "src/result-view.html",
-    "src/not-found-view.html"
+    "src/views/landing-view.html",
+    "src/views/question-view.html",
+    "src/views/result-view.html",
+    "src/views/not-found-view.html"
   ],
   "sources": [
     "src/**/*",

@@ -17,7 +17,7 @@
           value: () => {},
           notify: true
         },
-        quizType: {
+        profile: {
           type: String
         },
         storageData: {
@@ -27,8 +27,8 @@
       };}
 
       _loadData() {
-        if (!this.quizType) return;
-        if (this.storageData && this.storageData[this.quizType]) {
+        if (!this.profile) return;
+        if (this.storageData && this.storageData[this.profile]) {
           this.loadFromStorage();
         } else {
           this.loadFromJson();
@@ -36,18 +36,18 @@
       }
 
       loadFromStorage() {
-        const quizData = this.storageData[this.quizType].quizData;
+        const quizData = this.storageData[this.profile].quizData;
         if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
           this.set('data', quizData);
         }
       }
 
       loadFromJson() {
-        let url = `data/${this.quizType}.json`;
+        let url = `data/${this.profile}.json`;
         fetch(url)
         .then((resp) => resp.json())
         .then((data) => {
-          this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
+          this.$.quizLocalStorage.updateStorage(this.profile, 'quizData', data);
           this.set('data', data);
         })
         .catch(() => {this._notifyError();});

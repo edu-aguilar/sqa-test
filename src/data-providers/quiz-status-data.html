@@ -27,10 +27,10 @@
             notify: true,
             value: () => quizStatusData.answeredQuestions
           },
-          quizType: {
+          profile: {
             type: String,
-            value: () => quizStatusData.quizType,
-            observer: '_setQuizType'
+            value: () => quizStatusData.profile,
+            observer: '_setProfile'
           },
           progress: {
             type: Number,
@@ -64,19 +64,19 @@
       }
 
       updateTime(timePassed) {
-        if (this.quizType && this.$.quizLocalStorage.storageData[this.quizType]) {
-          this.$.quizLocalStorage.updateStorage(this.quizType, 'timePassed', timePassed);
+        if (this.profile && this.$.quizLocalStorage.storageData[this.profile]) {
+          this.$.quizLocalStorage.updateStorage(this.profile, 'timePassed', timePassed);
         }
       }
 
-      _setQuizType(quizType) {
-        if (quizType) this.quizType = quizType;
+      _setProfile(profile) {
+        if (profile) this.profile = profile;
       }
 
       _loadFromStorage(storageData) {
-        if (storageData[this.quizType]) {
-          this.timePassed = storageData[this.quizType].timePassed;
-          this.answeredQuestions = storageData[this.quizType].answeredQuestions || {};
+        if (storageData[this.profile]) {
+          this.timePassed = storageData[this.profile].timePassed;
+          this.answeredQuestions = storageData[this.profile].answeredQuestions || {};
         }
       }
       setAnsweredQuestion(questionId, answerId) {
@@ -86,7 +86,7 @@
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
         this.$.quizLocalStorage.updateStorage(
-          this.quizType,
+          this.profile,
           `answeredQuestions.${questionId}`,
           answerId
         );
@@ -103,7 +103,7 @@
       }
 
       clearLocalStorage() {
-        this.$.quizLocalStorage.clearStorage(this.quizType);
+        this.$.quizLocalStorage.clearStorage(this.profile);
       }
     }
 

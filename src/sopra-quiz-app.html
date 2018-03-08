@@ -12,10 +12,10 @@
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
-<link rel="lazy-import" href="landing-view.html">
-<link rel="lazy-import" href="question-view.html">
-<link rel="lazy-import" href="result-view.html">
-<link rel="lazy-import" href="not-found-view.html">
+<link rel="lazy-import" href="views/landing-view.html">
+<link rel="lazy-import" href="views/question-view.html">
+<link rel="lazy-import" href="views/result-view.html">
+<link rel="lazy-import" href="views/not-found-view.html">
 
 
 <dom-module id="sopra-quiz-app">
@@ -60,9 +60,9 @@
     </app-location>
 
     <app-route
-        id="appRouteType"
+        id="appRouteProfile"
         route="{{route}}"
-        pattern="[[rootPath]]:type"
+        pattern="[[rootPath]]:profile"
         data="{{routeData}}"
         tail="{{subroute}}">
     </app-route>
@@ -80,7 +80,7 @@
     </quiz-local-storage>
     <quiz-data
       id="quizData"
-      quiz-type="[[routeData.type]]"
+      profile="[[routeData.profile]]"
       data="{{quizData}}">
     </quiz-data>
 
@@ -104,13 +104,13 @@
             name="question"
             route="{{subrouteTail}}"
             quiz-data="[[quizData]]"
-            quiz-type="[[routeData.type]]">
+            profile="[[routeData.profile]]">
           </question-view>
           <result-view 
             name="result" 
             on-site="[[quizData.onSite]]" 
             result-message="[[quizData.resultMessage]]"
-            quiz-type="[[routeData.type]]">
+            profile="[[routeData.profile]]">
           </result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
@@ -160,7 +160,7 @@
 
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        var resolvedPageUrl = this.resolveUrl(`views/${page}-view.html`);
         Polymer.importHref(
             resolvedPageUrl,
             null,
@@ -172,7 +172,7 @@
         const newRoute = e.detail.newRoute;
         let path = newRoute === 'not-found'
           ? `${this.rootPath}test/${newRoute}`
-          : `${this.rootPath}${this.routeData.type}/${newRoute}`;
+          : `${this.rootPath}${this.routeData.profile}/${newRoute}`;
 
         this.set('route.path', path);
       }
