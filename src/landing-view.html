@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
+
 <link rel="import" href="styles/shared-styles.html">
 
 <dom-module id="landing-view">
@@ -87,6 +89,10 @@
       <p>[[quizData.description]] </p>
     </div>
 
+    <div class="translation-test">
+      <p> {{localize('test')}} </p>
+    </div>
+
     <img class="company-logo" src="[[importPath]]../images/soprasteria-logo.png" alt="">
 
     <button class="button-quiz" on-click="_changeRoute">
@@ -96,13 +102,24 @@
   </template>
 
   <script>
-    class LandingView extends Polymer.Element {
+    class LandingView extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
+
       static get is() { return 'landing-view'; }
 
       static get properties() {
         return {
-          quizData: Object
+          quizData: Object,
+
+          // set the current language—shared across all elements in the app that use AppLocalizeBehavior
+          language: {
+            value: 'es'
+          },
         };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.loadResources(this.resolveUrl(`locales/${this.language}.json`));
       }
 
       _changeRoute() {
