@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="quiz-paginator">
@@ -25,14 +27,15 @@
         @apply --button-styles;
       }
     </style>
+
     <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">
-      Finalizar
+      <i18n-msg msgid="finish" data="finish"> Finish </i18n-msg>
     </button>
     <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">
-      Anterior
+      <i18n-msg msgid="previous" data="back"> Previous </i18n-msg>
     </button>
     <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">
-      Siguiente
+      <i18n-msg msgid="next" data="next"> Next </i18n-msg>
     </button>
   </template>
 
@@ -67,6 +70,7 @@
 
       _changeRoute(e) {
         const data = e.target.getAttribute('data');
+
         const event = new CustomEvent('onPageQuestionChange',
           {
             detail: { operation: data },
