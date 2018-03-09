@@ -61,17 +61,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </quiz-status-data>
 
     <question-tabs
-     questions="[[quizData.questions]]"
-     answered-questions="[[answeredQuestions]]"
-     selected="{{routeData.id}}">
+      questions="[[quizData.questions]]"
+      answered-questions="[[answeredQuestions]]"
+      selected="{{routeData.id}}">
     </question-tabs>
 
     <question-container
-     quiz-data="[[quizData]]"
-     current-question-id="[[routeData.id]]"
-     answered-questions-count="{{answeredQuestionsCount}}"
-     question="[[_question]]" 
-     selected-answer-array="{{_selectedAnswerArray}}">
+      quiz-data="[[quizData]]"
+      current-question-id="[[routeData.id]]"
+      answered-questions-count="{{answeredQuestionsCount}}"
+      question="[[_question]]" 
+      selected-answer-array="{{_selectedAnswerArray}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
