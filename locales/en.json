@@ -1,0 +1,35 @@
+{
+  "page-not-found": {
+    "message": "Oops you hit a 404"
+  },
+  "go-back-home": {
+    "message": "Head back to home"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "finish": {
+    "message": "Finish"
+  },
+  "previous": {
+    "message": "Previous"
+  },
+  "next": {
+    "message": "Next"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "lastname": {
+    "message": "Lastname"
+  },
+  "email": {
+    "message": "Email"
+  },
+  "phone": {
+    "message": "Phone number"
+  },
+  "send": {
+    "message": "Send"
+  }
+}

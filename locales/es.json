@@ -1,0 +1,35 @@
+{
+  "page-not-found": {
+    "message": "Oops has obtenido un 404"
+  },
+  "go-back-home": {
+    "message": "Ve de vuelta al Inicio"
+  },
+  "start": {
+    "message": "Empezar"
+  },
+  "finish": {
+    "message": "Finalizar"
+  },
+  "previous": {
+    "message": "Anterior"
+  },
+  "next": {
+    "message": "Siguiente"
+  },
+  "name": {
+    "message": "Nombre"
+  },
+  "lastname": {
+    "message": "Apellido"
+  },
+  "email": {
+    "message": "Correo Electrónico"
+  },
+  "phone": {
+    "message": "Teléfono"
+  },
+  "send": {
+    "message": "Enviar"
+  }
+}
