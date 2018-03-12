@@ -120,19 +120,38 @@
   </template>
 
   <script>
+    /**
+    * `<sopra-quiz-app>` is the shell of the app
+    *
+    * ## Usage
+    * Just inject the `<sopra-quiz-app>` component.
+    *
+    * `<sopra-quiz-app></sopra-quiz-app>`
+    *
+    * @customElement
+    * @polymer
+    */
     class SopraQuizApp extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+    // class SopraQuizApp extends (class extends Polymer.Element { }) {
       static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
         return {
+          /** Contains data provided by <app-route> with attribute route setted with tail of the main route `subroute` */          
           _subrouteData: Object,
+          /** Data provided by localStorage, contains quizData, timePassed and answeredQuestions */          
+          _storageData: Object,
+          /** Current pageName ready to provide to to iron-pages */          
           page: {
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged'
           },
+          /** Contains data provided by <app-route> with attribute route setted the main route */                
           routeData: Object,
+          /** Contains the tail of the route */          
           subroute: Object,
+          /** Contains rootPath of the application and depends of the kind of deploy, usually is `/` or `sopra-quiz-app` */          
           rootPath: String,
           language: {
             type: String,
