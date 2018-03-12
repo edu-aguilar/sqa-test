@@ -1,8 +1,8 @@
 {
-  "page-not-found": {
+  "pageNotFound": {
     "message": "Oops has obtenido un 404"
   },
-  "go-back-home": {
+  "goBackHome": {
     "message": "Ve de vuelta al Inicio"
   },
   "start": {
@@ -31,5 +31,29 @@
   },
   "send": {
     "message": "Enviar"
+  },
+  "time": {
+    "message": "Tiempo"
+  },
+  "correctAnswers": {
+    "message": "Respuestas correctas"
+  },
+  "incorrectAnswers": {
+    "message": "Respuestas incorrectas"
+  },
+  "finalResult": {
+    "message": "Resultado final"
+  },
+  "hours": {
+    "message": "horas"
+  },
+  "minutes": {
+    "message": "minutos"
+  },
+  "seconds": {
+    "message": "segundos"
+  },
+  "and": {
+    "message": "y"
   }
 }

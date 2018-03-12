@@ -1,8 +1,8 @@
 {
-  "page-not-found": {
+  "pageNotFound": {
     "message": "Oops you hit a 404"
   },
-  "go-back-home": {
+  "goBackHome": {
     "message": "Head back to home"
   },
   "start": {
@@ -31,5 +31,29 @@
   },
   "send": {
     "message": "Send"
+  },
+  "time": {
+    "message": "Time"
+  },
+  "correctAnswers": {
+    "message": "Correct answers"
+  },
+  "incorrectAnswers": {
+    "message": "Incorrect answers"
+  },
+  "finalResult": {
+    "message": "Final Result"
+  },
+  "hours": {
+    "message": "hours"
+  },
+  "minutes": {
+    "message": "minutes"
+  },
+  "seconds": {
+    "message": "seconds"
+  },
+  "and": {
+    "message": "and"
   }
 }
