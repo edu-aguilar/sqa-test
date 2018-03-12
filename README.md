@@ -155,7 +155,7 @@ An example of a semantic commit of type `chore` could be
 
     git commit -m "chore: added semantic commit section to readme file" 
 
-##### Steps before creating a Pull Request - Definition of "ready" 
+##### Steps before creating a Pull Request - Definition of code ready 
 
 These are a few key points we defined to determined if our code is ready for a Pull Request,
 
@@ -167,4 +167,5 @@ These are a few key points we defined to determined if our code is ready for a P
     - Validate that the received properties have the right type.
     - Test your component functionalities. 
 - Run the task `npm run validate-branch`. This will make sure your branch is valid for deployments. 
+- Make sure our app diagram (_draw.io_) is up to date with the current state of the code. 
 - Finally, create your Pull Request with a short description to let reviewers briefly know what you did.
