@@ -121,22 +121,34 @@
 
   <script>
     /**
-      * `<result-view>`view where we redirect after answering all the questions
+      * `<result-view>` view where we redirect after answering all the questions
       *
       * ## Usage
       *
       * `<result-view name="result" presencial="[[quizData.presencial]]" result-message="[[quizData.resultMessage]]">`
+      *
+      * ## i18n fields
+      *
+      * | Field Name | Description                |
+      * |------------|----------------------------|
+      * | `name`     | Candidate's name label     |
+      * | `lastname` | Candidate's lastname label |
+      * | `phone`    | Candidate's phone label    |
+      * | `email`    | Candidate's email label    |
+      * | `send`     | Label for `send` button    |
       *
       * @customElement
       * @polymer
     */
     class ResultView extends (class extends Polymer.Element {}) {
       static get is() {return 'result-view';}
+
       static get observers() {
         return [
           '_checkFormValid(user.*)'
         ];
       }
+
       static get properties() {
         return {
           /** Quiz profile (frontend, backend, fullstack, etc.) */
@@ -170,13 +182,18 @@
             value: false,
             notify: true
           },
+          /** Object with computed test score data */
           scoreData: Object,
+          /** Object with profile from storage data */
           statusData: Object,
+          /** Email html to be send */
           htmlString: String,
+          /** Email sender configuration object */
           _config: Object
         };
       }
 
+      /** Ready function add eventListener for when email is sent sunccesfully */
       ready() {
         super.ready();
         this.addEventListener('onEmailSentSuccesfully', () => {
@@ -190,10 +207,12 @@
           this.dispatchEvent(event);
         });
       }
+
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
         this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
       }
+    
       /** Send form actions -> computeScore -> buildEmail -> sendEmail */
       _sendForm() {
         this.set('statusData', this.storageData[this.profile] );
@@ -206,6 +225,7 @@
         });
       }
     }
+
     window.customElements.define(ResultView.is, ResultView);
   </script>
 </dom-module>
