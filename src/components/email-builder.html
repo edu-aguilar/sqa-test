@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="email-builder">
@@ -8,13 +10,12 @@
     *
     * ## Usage
     * Just inject the `<email-builder>` component with and *id* to provide
-    *  easy access to its public functions and expose The variable `scoreData` that is a computed object
+    *  easy access to its public functions and add the `scoreData` property which is a computed object
     *  with questions, answers and scores.
     *
     * `<email-builder score-data="{{scoreData}}"></email-builder>`
     *
-    *
-    * ## scoreData object
+    * ## _scoreData_ object
     * ```json
     *  {
     *  'correctCount':2,
@@ -44,10 +45,25 @@
     *  'correctPercentage': 67
     *  };
     * ```
+    *
+    * ## i18n fields
+    *
+    * | Field Name                         | Description                                                    |
+    * |------------------------------------|----------------------------------------------------------------|
+    * | `name`                             | Candidate's name label                                         |
+    * | `phone`                            | Candidate's phone label                                        |
+    * | `email`                            | Candidate's email label                                        |
+    * | `time`                             | Label for time taken to finish test                            |
+    * | `correctAnswers`                   | Candidate's correct answers label                              |
+    * | `incorrectAnswers`                 | Candidate's incorrect answers label                            |
+    * | `finalResult`                      | Candidate's final result label                                 |
+    * | `hour`, `minutes`, `and`, `seconds` | Labels for time format, e.g. _2 hours 3 minutes and 4 seconds_ |
+    *
     * @customElement
     * @polymer
     */
-    class EmailBuilder extends (class extends Polymer.Element {}) {
+    class EmailBuilder extends Polymer.mixinBehaviors([i18nMsgBehavior], Polymer.Element) {
+      
       static get is() { return 'email-builder'; }
 
       static get properties() {
@@ -57,21 +73,47 @@
             type: Object,
             value: {}
           },
-          /** formatted HTMLSctring ready to send by email */
+          /** formatted HTMLSstring ready to send by email */
           htmlString: {
             type: String,
             notify: true
           },
-          /** String with url with the header image to print on formatted HTML */
+          /** String with the URL for the header image, to add on formatted HTML */
           headerImage: {
             type: String,
             value: `https://blog.soprasteria.com/wp-content/uploads/2015/09/cropped-cropped-cropped-logosoprasteria.png` // eslint-disable-line
-          }
+          },
+          /** Optional property to change or set email language */
+          currentLanguage: String
         };
       }
 
       /**
-        * Function that build a HTML ready to send via email.
+        * Ready function to check if i18n has been configured.
+      */
+      ready() {
+        super.ready();
+        // Check if i18n has already been initialize in app
+        if (!this.i18n || this.currentLanguage) {
+          this.init(window.I18nMsg);
+          this._initLanguage();
+        } else {
+          console.log('language is defined');
+        }
+      }
+
+      /**
+        * Helper function to initialize language on ready function.
+      */
+      _initLanguage() {
+        // Set current language
+        I18nMsg.lang = this.currentLanguage;
+        // This is required due to the removal of Object.observe() - More info on i18n-msg docs
+        Platform.performMicrotaskCheckpoint();
+      }
+
+      /**
+        * Function that builds a HTML ready to be send via email.
       */
       buildHTMLString() {
         const head = `<head> ${this._getStyles()} </head>`;
@@ -88,7 +130,7 @@
       }
 
       /**
-        * Function that build a body section of the HTML.
+        * Function that builds the body section of the HTML.
         * @return {String}.
       */
       _getEmailContainer() {
@@ -99,7 +141,7 @@
       }
 
       /**
-        * Function that generate an HTML string with answers.
+        * Function that generates an HTML string with answers.
         * @return {String}.
       */
       _getAnswersInfoHtml() {
@@ -124,7 +166,7 @@
       }
 
       /**
-        * Function generate a piece of HTML code for each answer.
+        * Function generates a piece of HTML code for each answer.
         * @param {String} questionType
         * @param {Object} userAnswer
         * @param {Object} correctAnswer
@@ -211,7 +253,7 @@
       }
 
       /**
-        * Function generate a piece of HTML related with candidate information.
+        * Function that generates a piece of HTML with the candidate's information.
         * @return {String}
       */
       _getCandidateInfoHtml() {
@@ -224,22 +266,22 @@
           </tr>
           <tr>
             <td>
-              <h4>Nombre: <span>${scoreData.name} ${scoreData.surname}</span></h4>
-              <h4>Tel&eacute;fono: <span>${scoreData.telefono}</span></h4>
-              <h4>Correo electr&oacute;nico: <span>${scoreData.email}</span></h4>
-              <h4>Tiempo: <span>${this._formatTime(scoreData.timePassed)}</span></h4>
+              <h4>${this.i18n.name}: <span>${scoreData.name} ${scoreData.surname}</span></h4>
+              <h4>${this.i18n.phone}: <span>${scoreData.telefono}</span></h4>
+              <h4>${this.i18n.email}: <span>${scoreData.email}</span></h4>
+              <h4>${this.i18n.time}: <span>${this._formatTime(scoreData.timePassed)}</span></h4>
             </td>
             <td>
-              <h4 class="correct">Respuestas correctas: <span>${scoreData.correctCount}</span></h4>
-              <h4 class="incorrect">Respuestas Incorrectas: <span>${scoreData.totalCount}</span></h4>
-              <h3 class="final-result">Resultado final: ${scoreData.correctPercentage}% </h3>
+              <h4 class="correct">${this.i18n.correctAnswers}: <span>${scoreData.correctCount}</span></h4>
+              <h4 class="incorrect">${this.i18n.incorrectAnswers}: <span>${scoreData.totalCount}</span></h4>
+              <h3 class="final-result">${this.i18n.finalResult}: ${scoreData.correctPercentage}% </h3>
             </td>
           </tr>
         </table>`;
       }
 
       /**
-        * Function generate a piece of HTML related with header with the image.
+        * Function that generates a piece of HTML with the header image.
         * @return {String}
       */
       _getBodyHeader() {
@@ -249,7 +291,7 @@
       }
 
       /**
-        * Function that convert time in seconds to human format.
+        * Function that converts time in seconds to human format.
         * @param {Number} time
         * @return {String}
       */
@@ -259,9 +301,9 @@
         const seconds = (time % 3600) % 60;
 
         let timeString = '';
-        if (hours > 0) timeString += `${hours} horas, `;
-        if (minutes > 0) timeString += `${minutes} minutos y `;
-        timeString += `${seconds} segundos`;
+        if (hours > 0) timeString += `${hours} ${this.i18n.hours}, `;
+        if (minutes > 0) timeString += `${minutes} ${this.i18n.minutes} ${this.i18n.and} `;
+        timeString += `${seconds} ${this.i18n.seconds}`;
 
         return timeString;
       }
@@ -288,7 +330,7 @@
       }
 
       /**
-        * Function getter of template styles.
+        * Getter of template styles.
         * @return {String}
       */
       _getStyles() {
