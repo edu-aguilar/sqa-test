@@ -55,5 +55,8 @@
   },
   "and": {
     "message": "y"
+  },
+  "writeAnswer": {
+    "message": "Escribe aquí tu respuesta"
   }
 }
