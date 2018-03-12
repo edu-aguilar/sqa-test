@@ -62,8 +62,8 @@
     * @customElement
     * @polymer
     */
-    class EmailBuilder extends Polymer.mixinBehaviors([i18nMsgBehavior], Polymer.Element) {
-      
+    class EmailBuilder extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+
       static get is() { return 'email-builder'; }
 
       static get properties() {
@@ -97,8 +97,6 @@
         if (!this.i18n || this.currentLanguage) {
           this.init(window.I18nMsg);
           this._initLanguage();
-        } else {
-          console.log('language is defined');
         }
       }
 
@@ -107,9 +105,9 @@
       */
       _initLanguage() {
         // Set current language
-        I18nMsg.lang = this.currentLanguage;
+        window.I18nMsg.lang = this.currentLanguage;
         // This is required due to the removal of Object.observe() - More info on i18n-msg docs
-        Platform.performMicrotaskCheckpoint();
+        window.Platform.performMicrotaskCheckpoint();
       }
 
       /**
@@ -272,9 +270,15 @@
               <h4>${this.i18n.time}: <span>${this._formatTime(scoreData.timePassed)}</span></h4>
             </td>
             <td>
-              <h4 class="correct">${this.i18n.correctAnswers}: <span>${scoreData.correctCount}</span></h4>
-              <h4 class="incorrect">${this.i18n.incorrectAnswers}: <span>${scoreData.totalCount}</span></h4>
-              <h3 class="final-result">${this.i18n.finalResult}: ${scoreData.correctPercentage}% </h3>
+              <h4 class="correct">
+                ${this.i18n.correctAnswers}: <span>${scoreData.correctCount}</span>
+              </h4>
+              <h4 class="incorrect">
+                ${this.i18n.incorrectAnswers}: <span>${scoreData.totalCount}</span>
+              </h4>
+              <h3 class="final-result">
+                ${this.i18n.finalResult}: ${scoreData.correctPercentage}% 
+              </h3>
             </td>
           </tr>
         </table>`;

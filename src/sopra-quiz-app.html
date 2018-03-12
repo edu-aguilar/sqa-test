@@ -121,8 +121,8 @@
   </template>
 
   <script>
-    class SopraQuizApp extends Polymer.mixinBehaviors([i18nMsgBehavior], Polymer.Element) {
-      
+    class SopraQuizApp extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+
       static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
@@ -140,7 +140,8 @@
           language: {
             type: String,
             value: 'es'
-          }
+          },
+          importPath: String
         };
       }
 
@@ -152,11 +153,11 @@
 
       ready() {
         super.ready();
-        
+
         // After overwriting the ready function, I18nMsg needs to be initialized again
         this.init(window.I18nMsg);
         this._initLanguage();
-        
+
         // Language initialization event under the polyfill for browsers that don't support HTML imports
         this.addEventListener('HTMLImportsLoaded', this._initLanguage);
 
@@ -194,9 +195,9 @@
 
       _initLanguage() {
         // Set current language
-        I18nMsg.lang = this.language;
+        window.I18nMsg.lang = this.language;
         // This is required due to the removal of Object.observe() - More info on i18n-msg docs
-        Platform.performMicrotaskCheckpoint();
+        window.Platform.performMicrotaskCheckpoint();
       }
 
       _showPage404() {
