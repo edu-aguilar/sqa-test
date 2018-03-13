@@ -73,7 +73,7 @@
         if (e.target.nodeName === 'BUTTON') {
           data = e.target.getAttribute('data');
         } else {
-          data = e.target.parentNode.getAttribute('data')
+          data = e.target.parentNode.getAttribute('data');
         }
 
         const event = new CustomEvent('onPageQuestionChange',
