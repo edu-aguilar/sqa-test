@@ -29,13 +29,13 @@
     </style>
 
     <button class="finish" on-click="_changeRoute" data="finish" disabled$="{{finishDisabled}}">
-      <i18n-msg msgid="finish" data="finish"> Finish </i18n-msg>
+      <i18n-msg msgid="finish"> Finish </i18n-msg>
     </button>
     <button class="back" on-click="_changeRoute" data="back" disabled$="{{backDisabled}}">
-      <i18n-msg msgid="previous" data="back"> Previous </i18n-msg>
+      <i18n-msg msgid="previous"> Previous </i18n-msg>
     </button>
     <button class="next" on-click="_changeRoute" data="next" disabled$="{{nextDisabled}}">
-      <i18n-msg msgid="next" data="next"> Next </i18n-msg>
+      <i18n-msg msgid="next"> Next </i18n-msg>
     </button>
   </template>
 
@@ -69,7 +69,12 @@
       }
 
       _changeRoute(e) {
-        const data = e.target.getAttribute('data');
+        let data;
+        if (e.target.nodeName === 'BUTTON') {
+          data = e.target.getAttribute('data');
+        } else {
+          data = e.target.parentNode.getAttribute('data')
+        }
 
         const event = new CustomEvent('onPageQuestionChange',
           {
