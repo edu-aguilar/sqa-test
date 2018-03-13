@@ -38,7 +38,6 @@
         assert(appDrawer !== null);
       });
 
-
       test('We have already defined needed component properties', function() {
         const appShell = fixture('shell');
         
@@ -56,6 +55,16 @@
         assert.typeOf(appShell._pageChanged, 'function');
         assert.typeOf(appShell._onRouteChange, 'function');
         assert.typeOf(appShell._showPage404, 'function');
+      });
+
+      test('Language should be initialized', function(done) {
+        const appShell = fixture('shell');
+        
+        flush(function() {
+          console.log(appShell.i18n);
+          assert(appShell.i18n !== null);
+          done();
+        });
       });
 
       test('_routePageChanged observer is fired when page changes and set the page property properly', function() {

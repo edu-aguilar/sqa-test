@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
 
 <dom-module id="not-found-view">
   <template>
@@ -20,7 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    Oops you hit a 404. <a href="[[rootPath]]">Head back to home.</a>
+    <i18n-msg msgid="pageNotFound">Oops you hit a 404</i18n-msg>.
+    <a href="[[rootPath]]"> <i18n-msg msgid="goBackHome">Head back to home</i18n-msg>. </a>
   </template>
 
   <script>
