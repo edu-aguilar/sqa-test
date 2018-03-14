@@ -1,0 +1,147 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+<dom-module id="sqa-dropdown">
+  <template>
+    
+    <style include="shared-styles">
+      :host {
+        --paper-input-container: {
+          min-height: initial;
+          @apply --sqa-dropdown-props;
+        }
+      }
+      paper-item {
+        display: flex;
+        margin: 10px;
+      }
+    </style>
+   
+  <iron-ajax 
+    auto 
+    url="[[endPoint]]" 
+    params="[[params]]"
+    handle-as="json" 
+    last-response="{{responseData}}" 
+    debounce-duration="300">
+  </iron-ajax>
+
+    <paper-dropdown-menu label="[[title]]">
+      <paper-listbox slot="dropdown-content">
+        <template is="dom-repeat" items="{{formattedData}}" as="option">
+          <paper-item id="[[option.id]]">[[option.value]]</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu>
+  </template>
+
+  <script>
+    /**
+    * `<sqa-dropdown>` provides a populated paper-dropdown-menu
+    *
+    * ## Usage
+    * Just inject the `<sqa-dropdown>` component with the variables `endpoint`, `params` and `options`.
+    *
+    * `<sqa-dropdown
+    *     id="sqaDropdown"
+    *     title="Profiles"
+    *     end-point="[[endPoint]]"
+    *     params="[[params]]"
+    *     options="[[dropdownOptions]]">
+    * </sqa-dropdown>`
+    * 
+    * ## Params
+    * ### title
+    * This is the title of the dropDown
+    * 
+    * ### endPoint
+    * This is the url to point the iron-ajax component
+    * 
+    * ### params
+    * This are the params to set on iron-ajax request
+    * 
+    * ### options
+    * This is an object to find the key and the value of the response with custon names
+    *
+    * ## Styling
+    *
+    * | Custom property            | Description                                            | Default |
+    * |----------------------------|--------------------------------------------------------|---------|
+    * | `--sqa-dropdown-props`     | Mixin applied to dropdown look and feel.               | {}      |
+    *
+    * @customElement
+    * @polymer
+    */
+    class sqaDropdown extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+
+      static get is() {
+        return 'sqa-dropdown';
+      }
+
+      static get properties() {
+        return {
+          /** Formatted answer for `simple` and `text` answer types */
+          endPoint: String,
+          /** Description title for drop-down */
+          title: String,
+          /** Params for endPoint */
+          params: Object,
+          /** Options to print data, object with keys: `id` and `value` */
+          options: Object,
+          responseData: {
+            type: Object,
+            observer: '_formatResponseData'
+          },
+          formattedData: Object,
+          /** Private variable to store the i18n component */
+          _i18n: Object
+        };
+      }
+
+      /**
+        * Ready function to check if i18n has been configured.
+      */
+      ready() {
+        super.ready();
+        this.set('_i18n', this.i18n);
+      }
+
+      /**
+        * Handle response of the iron-ajax.
+      */
+      _formatResponseData(responseData) {
+        const formattedData = responseData;
+        if (this.options && this.options.key) {
+          formattedData = responseData[this.options.key];
+        }
+        this.set('formattedData', this._setKeys(formattedData));          
+      }
+      /**
+        * Helper functions to set keys provided by options.
+      */
+      _setKeys(formattedData) {
+        if (typeof formattedData !== 'object' || !formattedData.length) return [];
+        if (!this.options || !this.options.id || !this.options.value) return formattedData;
+        const newFormattedData = [];
+        formattedData.map((element) => {
+          newFormattedData.push({
+            'id': element[this.options.id],
+            'value': element[this.options.value]
+          });
+        })
+        return newFormattedData;
+      }
+    }
+
+    window.customElements.define(sqaDropdown.is, sqaDropdown);
+  </script>
+</dom-module>
