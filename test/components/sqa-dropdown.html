@@ -33,6 +33,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         id="sqaDropdown"
         title="Mock title"
         end-point="../mock-data/dropdownArray.json"
+        params=""
+        selected-item=""
         loading-message="Loading!!!">
       </sqa-dropdown>
     </template>
@@ -44,6 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         id="sqaDropdown" 
         title="MockTitle" 
         end-point="../mock-data/dropdownComplexObject.json"
+        params=""
         options='{"id": "customId", "value": "customValue", "key": "dropdownContent"}' 
         loading-message="Loading!!!">
       </sqa-dropdown>
@@ -55,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <sqa-dropdown 
         id="sqaDropdown" 
         title="Mock title" 
-        end-point="../mock-data/badENDPOINT.json" 
+        end-point="badENDPOINT.json" 
         loading-message="Loading forever">
       </sqa-dropdown>
     </template>
@@ -76,36 +79,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      test('Should have a loadingMessage', function (done) {
+      test('Title should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.title, 'string');
+      });
+
+      test('Method should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.method, 'string');
+      });
+
+      test('endPoint should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.endPoint, 'string');
+      });
+
+      test('loadingMessage should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.loadingMessage, 'string');
+      });
+
+      test('Params should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.params, 'string');
+      });
+
+      test('Options should be a Object', function () {
+        let fullDropdown = fixture('fullComplexDropdown');
+        assert.typeOf(fullDropdown.options, 'object');
+      });
+      
+      test('selectedItem should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.selectedItem, 'string');
+      });
+
+      test('Should have a loadingMessage', function () {
         const fullDropdown = fixture('failDropdown');
-        flush(function () {
-          
-          done();
-        });
+        let loadingMessage = fullDropdown.shadowRoot.querySelector('.sqa-dropdown_loading-message');
+        assert.equal(loadingMessage, 'Loading forever');
       });
 
       test('Should load a custom title', function (done) {
         const fullDropdown = fixture('fullDropdown');
-        flush(function () {
-
-          done();
-        });
+        // TODO: this statement
       });
 
       test('Should load data to select', function (done) {
         const fullDropdown = fixture('fullDropdown');
-        flush(function () {
-
-          done();
-        });
+        // TODO: this statement
       });
 
       test('Should load complex data to select', function (done) {
         const fullDropdown = fixture('fullComplexDropdown');
-        flush(function () {
-
-          done();
-        });
+        // TODO: this statement
       });
 
       
