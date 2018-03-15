@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/neon-animation/web-animations.html">
 
@@ -12,21 +13,6 @@
   <template>
     
     <style include="shared-styles">
-      :host {
-        --paper-input-container: {
-          min-height: initial;
-          @apply --sqa-dropdown-props;
-        }
-        .floated-label-placeholder {
-          display: none;
-        };
-      }
-
-      paper-item {
-        display: flex;
-        padding: 10px;
-      }
-
       .sqa-dropdown_loading-message {
         min-height: 62px;
         text-align: center;
@@ -66,7 +52,7 @@
     * `<sqa-dropdown>` provides a populated paper-dropdown-menu via iron-ajax component
     *
     * ## Usage
-    * Just inject the `<sqa-dropdown>` component with the variables `title`, `method`, endpoint`, 
+    * Just inject the `<sqa-dropdown>` component with the variables `title`, `method`, endpoint`,
     * `params`, `options`, `selectedItem` and `loadingMessage`, we will use `selectedItem` variable to retrieve teh selected value.
     *
     * `<sqa-dropdown
@@ -79,9 +65,9 @@
     *     selected-item="{{selectedItem}}"
     *     loading-message="Loading...">
     * </sqa-dropdown>`
-    * 
+    *
     * Note: The params attribute must be double quoted JSON.
-    * 
+    *
     * ## Styling
     *
     * | Custom property            | Description                                            | Default |
@@ -112,7 +98,7 @@
           loadingMessage: String,
           /** Params for endPoint */
           params: String,
-          /** Options to print data, object with keys: `id`, `value` and `key` 
+          /** Options to print data, object with keys: `id`, `value` and `key`
             * ```json
             * {
             *   "id": "_id", // customKey to set in optionId
@@ -122,7 +108,7 @@
             * ```
           */
           options: Object,
-          /** Sets the selected option */          
+          /** Sets the selected option */
           selectedItem: {
             type: String,
             notify: true
@@ -139,6 +125,7 @@
 
       /**
         * Format response from iron-ajax.
+        * @param {Object} responseData
       */
       _formatResponseData(responseData) {
         if (!responseData) return;
@@ -147,11 +134,13 @@
           formattedData = responseData[this.options.key];
         }
         this.loadingMessage = '';
-        this.set('_formattedData', this._setKeys(formattedData));          
+        this.set('_formattedData', this._setKeys(formattedData));
       }
 
       /**
         * Helper function to set keys provided by options.
+        * @param {Object} formattedData
+        * @return {Object}.
       */
       _setKeys(formattedData) {
         if (typeof formattedData !== 'object' || !formattedData.length) return [];
@@ -162,7 +151,7 @@
             'id': element[this.options.id],
             'value': element[this.options.value]
           });
-        })
+        });
         return newFormattedData;
       }
     }
