@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "value": "Frontend"
+  },
+  {
+    "id": 2,
+    "value": "Backend"
+  },
+  {
+    "id": 3,
+    "value": "devOps"
+  },
+  {
+    "id": 4,
+    "value": "Scrum Master"
+  },
+  {
+    "id": 5,
+    "value": "Product Owner"
+  },
+  {
+    "id": 6,
+    "value": "Preparación de café"
+  }
+]

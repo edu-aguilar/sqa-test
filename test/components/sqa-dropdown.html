@@ -1,0 +1,117 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>my-view1</title>
+
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../../src/components/sqa-dropdown.html">
+  
+</head>
+
+<body>
+  
+  <test-fixture id="fullDropdown">
+    <template>
+      <sqa-dropdown 
+        id="sqaDropdown"
+        title="Mock title"
+        end-point="../mock-data/dropdownArray.json"
+        loading-message="Loading!!!">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="fullComplexDropdown">
+    <template>
+      <sqa-dropdown 
+        id="sqaDropdown" 
+        title="MockTitle" 
+        end-point="../mock-data/dropdownComplexObject.json"
+        options='{"id": "customId", "value": "customValue", "key": "dropdownContent"}' 
+        loading-message="Loading!!!">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="failDropdown">
+    <template>
+      <sqa-dropdown 
+        id="sqaDropdown" 
+        title="Mock title" 
+        end-point="../mock-data/badENDPOINT.json" 
+        loading-message="Loading forever">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('sqa-dropdown tests', function () {
+      test('Should have all required components', function (done) {
+        const fullDropdown = fixture('fullDropdown');
+        flush(function () {
+          const ironAjax = fullDropdown.shadowRoot.querySelector('iron-ajax');
+          const paperDropdownMenu = fullDropdown.shadowRoot.querySelectorAll('paper-dropdown-menu');
+          const paperItem = fullDropdown.shadowRoot.querySelectorAll('paper-item');
+          assert(ironAjax, 'ironAjax is neither `null` nor `undefined`');
+          assert(paperDropdownMenu, 'paperDropdownMenu is neither `null` nor `undefined`');
+          assert(paperItem, 'paperItem is neither `null` nor `undefined`');
+          done();
+        });
+      });
+
+      test('Should have a loadingMessage', function (done) {
+        const fullDropdown = fixture('failDropdown');
+        flush(function () {
+          
+          done();
+        });
+      });
+
+      test('Should load a custom title', function (done) {
+        const fullDropdown = fixture('fullDropdown');
+        flush(function () {
+
+          done();
+        });
+      });
+
+      test('Should load data to select', function (done) {
+        const fullDropdown = fixture('fullDropdown');
+        flush(function () {
+
+          done();
+        });
+      });
+
+      test('Should load complex data to select', function (done) {
+        const fullDropdown = fixture('fullComplexDropdown');
+        flush(function () {
+
+          done();
+        });
+      });
+
+      
+
+    });
+  </script>
+</body>
+
+</html>

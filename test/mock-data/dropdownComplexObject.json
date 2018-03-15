@@ -1,0 +1,28 @@
+{
+  "dropdownContent": [
+    {
+      "customId": 1,
+      "customValue": "Frontend"
+    },
+    {
+      "customId": 2,
+      "customValue": "Backend"
+    },
+    {
+      "customId": 3,
+      "customValue": "devOps"
+    },
+    {
+      "customId": 4,
+      "customValue": "Scrum Master"
+    },
+    {
+      "customId": 5,
+      "customValue": "Product Owner"
+    },
+    {
+      "customId": 6,
+      "customValue": "Preparación de café"
+    }
+  ]
+}
