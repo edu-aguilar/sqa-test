@@ -1,0 +1,105 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<!-- <link rel="import" href="../data-providers/quiz-status-data.html"> -->
+
+<dom-module id="config-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 20px 0px 20px 0px;
+      }
+
+      .box-wrapper {
+        width: 80%;
+        padding-bottom: 20px;
+      }
+
+      .box-wrapper > p {
+        margin: 1em;
+        text-align: center;
+        margin: 0px;
+        line-height: 1.7;
+        font-size: var(--sopra-font-xl);
+        color: #333333;
+      }
+
+      .input-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 80px;
+      }
+      
+      .button-container{
+        display: flex;
+        justify-content: center;
+      }
+
+      @media screen and (min-width: 768px) {
+        .box-wrapper {
+          width: 65%;
+        }
+        .box-wrapper > p {
+          font-size: var(--sopra-font-xxl);
+        }
+      }
+    </style>
+
+    <!-- Store User Data -->
+    <!-- <quiz-status-data 
+      id="quizStatusData"
+      profile="[[profile]]"
+      storage-data="{{storageData}}">
+    </quiz-status-data> -->
+
+    <div class="box-wrapper">
+      <p class="text-result">[[resultMessage]]</p>
+    </div>
+    <div class="box-wrapper" hidden$="[[onSite]]" id="formContainer">
+      <form id="resultForm">
+        <div class="input-container">
+          <label>Nombre*</label>
+          <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
+        </div>
+
+        <div class="input-container">
+          <label>Apellidos*</label>
+          <input class="input-quiz" name="name" value="{{user.surname::input}}" type="text" required>
+        </div>
+
+          <div class="input-container">
+            <label>Teléfono</label>
+            <input class="input-quiz" name="phone" value="{{user.phone::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+          </div>
+
+        <div class="input-container">
+          <label>Email*</label>
+          <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
+        </div>
+      </form>
+      <div class="button-container">
+        <button class="button-quiz" on-click="_sendForm" disabled$="{{!isValid}}">
+          <span>Enviar</span>
+        </button>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class ConfigView extends Polymer.Element {
+      static get is() { return 'config-view'; }
+
+      static get properties() {
+        return {
+        };
+      }
+    }
+    window.customElements.define(ConfigView.is, ConfigView);
+  </script>
+</dom-module>
