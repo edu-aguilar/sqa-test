@@ -52,10 +52,12 @@
     * `<sqa-dropdown>` provides a populated paper-dropdown-menu via iron-ajax component
     *
     * ## Usage
-    * Just inject the `<sqa-dropdown>` component with the variables `title`, `method`, endpoint`,
-    * `params`, `options`, `selectedItem` and `loadingMessage`, we will use `selectedItem` variable to retrieve teh selected value.
+    * Just inject the `<sqa-dropdown>` component with the variables `title`, `method`, `endpoint`,
+    * `params`, `options`, `selectedItem` and `loadingMessage`, we will use `selectedItem` variable
+    * to retrieve the selected value.
     *
-    * `<sqa-dropdown
+    * ```
+    * <sqa-dropdown
     *     id="sqaDropdown"
     *     title="Profiles"
     *     method="get"
@@ -64,7 +66,8 @@
     *     options="[[dropdownOptions]]"
     *     selected-item="{{selectedItem}}"
     *     loading-message="Loading...">
-    * </sqa-dropdown>`
+    * </sqa-dropdown>
+    * ```
     *
     * Note: The params attribute must be double quoted JSON.
     *
@@ -94,7 +97,7 @@
           },
           /** endPoint url */
           endPoint: String,
-          /** Loading message, message that shows during data is loading  */
+          /** This will be shown while data is loading  */
           loadingMessage: String,
           /** Params for endPoint */
           params: String,
