@@ -9,6 +9,8 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/i18n-msg/i18n-msg.html">
+
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
@@ -123,7 +125,8 @@
   </template>
 
   <script>
-    class SopraQuizApp extends Polymer.Element {
+    class SopraQuizApp extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+
       static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
@@ -137,7 +140,12 @@
           },
           routeData: Object,
           subroute: Object,
-          rootPath: String
+          rootPath: String,
+          language: {
+            type: String,
+            value: 'es'
+          },
+          importPath: String
         };
       }
 
@@ -149,6 +157,14 @@
 
       ready() {
         super.ready();
+
+        // After overwriting the ready function, I18nMsg needs to be initialized again
+        this.init(window.I18nMsg);
+        this._initLanguage();
+
+        // Language initialization event under the polyfill for browsers that don't support HTML imports
+        this.addEventListener('HTMLImportsLoaded', this._initLanguage);
+
         this.addEventListener('onRouteChange', this._onRouteChange);
       }
 
@@ -184,6 +200,13 @@
           : `${this.rootPath}${this.routeData.profile}/${newRoute}`;
 
         this.set('route.path', path);
+      }
+
+      _initLanguage() {
+        // Set current language
+        window.I18nMsg.lang = this.language;
+        // This is required due to the removal of Object.observe() - More info on i18n-msg docs
+        window.Platform.performMicrotaskCheckpoint();
       }
 
       _showPage404() {

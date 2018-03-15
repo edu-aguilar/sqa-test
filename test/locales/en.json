@@ -1,0 +1,59 @@
+{
+  "pageNotFound": {
+    "message": "Oops you hit a 404"
+  },
+  "goBackHome": {
+    "message": "Head back to home"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "finish": {
+    "message": "Finish"
+  },
+  "previous": {
+    "message": "Previous"
+  },
+  "next": {
+    "message": "Next"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "lastname": {
+    "message": "Lastname"
+  },
+  "email": {
+    "message": "Email"
+  },
+  "phone": {
+    "message": "Phone number"
+  },
+  "send": {
+    "message": "Send"
+  },
+  "time": {
+    "message": "Time"
+  },
+  "correctAnswers": {
+    "message": "Correct answers"
+  },
+  "incorrectAnswers": {
+    "message": "Incorrect answers"
+  },
+  "finalResult": {
+    "message": "Final Result"
+  },
+  "hours": {
+    "message": "hours"
+  },
+  "minutes": {
+    "message": "minutes"
+  },
+  "seconds": {
+    "message": "seconds"
+  },
+  "and": {
+    "message": "and"
+  }
+}

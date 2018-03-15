@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="landing-view">
@@ -90,18 +92,23 @@
     <img class="company-logo" src="[[importPath]]../../images/soprasteria-logo.png" alt="">
 
     <button class="button-quiz" on-click="_changeRoute">
-      <span>Empezar</span>
+      <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
     </button>
 
   </template>
 
   <script>
-    class LandingView extends Polymer.Element {
+    class LandingView extends (class extends Polymer.Element {}) {
+
       static get is() { return 'landing-view'; }
 
       static get properties() {
         return {
-          quizData: Object
+          quizData: Object,
+          language: {
+            value: 'es'
+          },
+          importPath: String
         };
       }
 
