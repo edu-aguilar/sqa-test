@@ -2,6 +2,7 @@
   "entrypoint": "index.html",
   "shell": "src/sopra-quiz-app.html",
   "fragments": [
+    "src/views/config-view.html",
     "src/views/landing-view.html",
     "src/views/question-view.html",
     "src/views/result-view.html",
@@ -22,16 +23,13 @@
   "builds": [
     {
       "preset": "es5-bundled",
-      "basePath": "/sopra-quiz-app/",
       "name": "sopra-quiz-app"
     },
     {
-      "preset": "es6-bundled",
-      "basePath": "/sopra-quiz-app/"
+      "preset": "es6-bundled"
     },
     {
-      "preset": "es6-unbundled",
-      "basePath": "/sopra-quiz-app/"
+      "preset": "es6-unbundled"
     }
   ]
 }
