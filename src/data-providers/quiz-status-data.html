@@ -69,16 +69,22 @@
         }
       }
 
+      setUserData(user) {
+        console.log(this.profile);
+        this.$.quizLocalStorage.updateStorage(this.profile, 'user', user);
+      }
+
       _setProfile(profile) {
         if (profile) this.profile = profile;
       }
 
       _loadFromStorage(storageData) {
-        if (storageData[this.profile]) {
+        if (this.profile && storageData[this.profile]) {
           this.timePassed = storageData[this.profile].timePassed;
           this.answeredQuestions = storageData[this.profile].answeredQuestions || {};
         }
       }
+
       setAnsweredQuestion(questionId, answerId) {
         if (!quizStatusData.answeredQuestions[questionId]) {
           quizStatusData.answeredQuestions[questionId] = '';
