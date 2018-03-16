@@ -28,22 +28,12 @@
         };
       }
 
-      updateStorage(profile, key, data) {
-        if (!profile) return;
-        if (!this.storageData[profile]) {
-          this.set(`storageData.${profile}`, {
-            'quizData': {},
-            'answeredQuestions': {},
-            'timePassed': 0,
-            'user': {}
-          });
-        }
-        this.set(`storageData.${profile}.${key}`, data);
+      updateStorage(key, data) {
+        this.set(`storageData.${key}`, data);
       }
 
       clearStorage() {
-        // this.set('storageData', {});
-        this.$.appLocalStorage.reset();
+        this.$.appLocalStorage.destroy();
       }
     }
 
