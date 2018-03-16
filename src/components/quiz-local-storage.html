@@ -4,7 +4,11 @@
 <dom-module id="quiz-local-storage">
 
   <template>
-    <app-localstorage-document key="quiz-local-storage" data="{{storageData}}"></app-localstorage-document>
+    <app-localstorage-document 
+      id="appLocalStorage"
+      key="quiz-local-storage"
+      data="{{storageData}}">
+    </app-localstorage-document>
   </template>
 
   <script>
@@ -30,13 +34,16 @@
           this.set(`storageData.${profile}`, {
             'quizData': {},
             'answeredQuestions': {},
-            'timePassed': 0 });
+            'timePassed': 0,
+            'user': {}
+          });
         }
         this.set(`storageData.${profile}.${key}`, data);
       }
 
-      clearStorage(profile) {
-        this.set('storageData', {});
+      clearStorage() {
+        // this.set('storageData', {});
+        this.$.appLocalStorage.reset();
       }
     }
 
