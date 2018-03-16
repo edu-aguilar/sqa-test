@@ -1,7 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
 <link rel="import" href="../styles/shared-styles.html">
 
-<!-- <link rel="import" href="../data-providers/quiz-status-data.html"> -->
+<link rel="import" href="../data-providers/quiz-status-data.html">
 
 <dom-module id="config-view">
   <template>
@@ -50,41 +52,44 @@
       }
     </style>
 
-    <!-- Store User Data -->
-    <!-- <quiz-status-data 
+    <!-- Store Candidate's Information -->
+    <quiz-status-data 
       id="quizStatusData"
-      profile="[[profile]]"
+      profile="{{profile}}"
       storage-data="{{storageData}}">
-    </quiz-status-data> -->
+    </quiz-status-data>
 
     <div class="box-wrapper">
-      <p class="text-result">[[resultMessage]]</p>
+      <p class="text-result"> 
+        ¡Bienvenido a Sopra Steria Quiz! 
+        Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba
+      </p>
     </div>
-    <div class="box-wrapper" hidden$="[[onSite]]" id="formContainer">
-      <form id="resultForm">
-        <div class="input-container">
-          <label>Nombre*</label>
-          <input class="input-quiz" name="surname"  value="{{user.name::input}}" type="text" required>
-        </div>
-
-        <div class="input-container">
-          <label>Apellidos*</label>
-          <input class="input-quiz" name="name" value="{{user.surname::input}}" type="text" required>
-        </div>
-
-          <div class="input-container">
-            <label>Teléfono</label>
-            <input class="input-quiz" name="phone" value="{{user.phone::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+    <div class="box-wrapper" id="formContainer">
+        <form id="resultForm">
+          <div class="input-container"> 
+            <label> <i18n-msg msgid="name">Name</i18n-msg>*</label>
+            <input class="input-quiz" name="name"  value="{{user.name::input}}" type="text" required>
           </div>
 
-        <div class="input-container">
-          <label>Email*</label>
-          <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
-        </div>
-      </form>
+          <div class="input-container">
+            <label> <i18n-msg msgid="lastname">Lastname</i18n-msg>*</label>
+            <input class="input-quiz" name="lastname" value="{{user.lastname::input}}" type="text" required>
+          </div>
+
+            <div class="input-container">
+              <label> <i18n-msg msgid="phone">Phone Number</i18n-msg>*</label>
+              <input class="input-quiz" name="phone" value="{{user.phone::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+            </div>
+
+          <div class="input-container">
+            <label> <i18n-msg msgid="email">Email</i18n-msg>*</label>
+            <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
+          </div>
+        </form>
       <div class="button-container">
-        <button class="button-quiz" on-click="_sendForm" disabled$="{{!isValid}}">
-          <span>Enviar</span>
+        <button class="button-quiz" on-click="_beginQuiz" disabled$="{{!isValid}}">
+          <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
         </button>
       </div>
     </div>
@@ -95,9 +100,56 @@
     class ConfigView extends Polymer.Element {
       static get is() { return 'config-view'; }
 
+      static get observers() {
+        return [
+          '_checkFormValid(user.*)'
+        ];
+      }
+
       static get properties() {
         return {
+          /** Quiz profile (frontend, backend, fullstack, etc.) */
+          profile: String,
+          /** Data from localStorage */
+          storageData: Object,
+          /** Candidate's information */
+          user: {
+            type: Object,
+            value: () => ({}),
+            notify: true
+          },
+          /** Value to check if the form is valid */
+          isValid: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
         };
+      }
+
+      /** Ready function */
+      ready() {
+        super.ready();
+        this.$.quizStatusData.clearLocalStorage();
+      }
+
+      /** Method to observe if the form is valid or not */
+      _checkFormValid() {
+        this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
+      }
+    
+      /** Function that stores the candidate's information in localStorage and redirects to landing-view */
+      _beginQuiz() {
+        this.profile = 'frontend';
+        
+        const profileEvent = new CustomEvent(
+          'onProfileChange',
+          { detail: { profile: this.profile }, composed: true }
+        );
+
+        this.dispatchEvent(profileEvent);
+
+        this.$.quizStatusData.setUserData(this.user);        
       }
     }
     window.customElements.define(ConfigView.is, ConfigView);
