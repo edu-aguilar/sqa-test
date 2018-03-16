@@ -18,7 +18,8 @@
           notify: true
         },
         profile: {
-          type: String
+          type: String,
+          observer: '_loadData'
         },
         storageData: {
           type: Object,
