@@ -104,7 +104,7 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <config-view name="config" profile="[[routeData.profile]]"></config-view>
+          <config-view name="config" profile="{{routeData.profile}}"></config-view>
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view
             name="question"
@@ -166,6 +166,8 @@
         this.addEventListener('HTMLImportsLoaded', this._initLanguage);
 
         this.addEventListener('onRouteChange', this._onRouteChange);
+
+        this.addEventListener('onProfileChange', this._routeProfileChanged)
       }
 
       _routePageChanged(page) {
@@ -181,6 +183,13 @@
           return;
         }
         this.page = page;
+      }
+
+      _routeProfileChanged(e) {
+        const profile = e.detail.profile;
+        this.set('routeData.profile', profile);
+        //read json
+        this.set('route.path', `${this.rootPath}${this.routeData.profile}/landing`);
       }
 
       _pageChanged(page) {
