@@ -69,14 +69,16 @@
     * </sqa-dropdown>
     * ```
     *
-    * Note: The params attribute must be double quoted JSON.
+    * Note: Because of `iron-ajax', the params attribute must be double quoted JSON.
     *
     * ## Styling
     *
-    * | Custom property            | Description                                            | Default |
-    * |----------------------------|--------------------------------------------------------|---------|
-    * | `--sqa-dropdown-props`     | Mixin applied to dropdown look and feel.               | {}      |
-    *
+    * | Custom property                  | Description                                            | Default |
+    * |----------------------------------|--------------------------------------------------------|---------|
+    * | `--sqa-dropdown-loading-message` | Mixin applied to dropdown loading message.             | {}      |
+    * 
+    * To style the dropdown itself you can use `paper-dropdown-menu` style mixins. 
+    * 
     * @customElement
     * @polymer
     */

@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="fullDropdown">
     <template>
-      <sqa-dropdown id="sqaDropdown" 
+      <sqa-dropdown 
         title="Custom Title" 
         end-point="../mock-data/dropdownArray.json" 
         params="" 
@@ -42,7 +42,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="fullComplexDropdown">
     <template>
       <sqa-dropdown 
-        id="sqaDropdown"
         title="MockTitle"
         end-point="../mock-data/dropdownComplexObject.json"
         params=""
@@ -54,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="failDropdown">
     <template>
-      <sqa-dropdown id="sqaDropdown" 
+      <sqa-dropdown 
         title="Mock title" 
         loading-message="Loading forever">
       </sqa-dropdown>
@@ -62,7 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script>
-    let request, server;
+    let request;
+    let server = sinon.fakeServer.create();
 
     const responseHeaders = {
       json: { 'Content-Type': 'application/json' }
@@ -78,6 +78,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         "value": "Backend"
       }
     ];
+
+    server.respondWith(
+      [
+        200,
+        responseHeaders.json,
+        JSON.stringify(mockJson)
+      ]
+    );
+
 
     suite('sqa-dropdown tests', function () {
       test('Should have all required components', function (done) {
@@ -148,15 +157,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('_formatResponseData should format data correctly', function (done) {
         const fullDropdown = fixture('fullDropdown');
         flush(function () {
-          server = sinon.fakeServer.create();
-          server.respondWith(
-            [
-              200,
-              responseHeaders.json,
-              JSON.stringify(mockJson)
-            ]
-          );
-
           request = fullDropdown.shadowRoot.querySelector('iron-ajax').generateRequest();
           server.respond();
 
@@ -167,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      test('_setKeys should set id and vale keys according to options', function (done) {
+      test('_setKeys should set id and value keys according to options', function (done) {
         const fullDropdown = fixture('fullComplexDropdown');
         flush(function () {
           const noFormatMockJson = [
@@ -184,6 +184,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           let formatJson = fullDropdown._setKeys(noFormatMockJson);
 
           assert.deepEqual(formatJson, mockJson);
+          done();
+        });
+      });
+
+      test('_setKeys should return empty array if input data is not the right format', function (done) {
+        const fullDropdown = fixture('fullComplexDropdown');
+        flush(function () {
+          let formatJson = fullDropdown._setKeys('Hello');
+
+          assert.deepEqual(formatJson, []);
           done();
         });
       });
