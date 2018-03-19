@@ -34,7 +34,7 @@
     </iron-ajax>
 
     <template is="dom-if" if="{{loadingMessage}}">
-        <div class="sqa-dropdown_loading-message">[[loadingMessage]]</div>
+      <div class="sqa-dropdown_loading-message">[[loadingMessage]]</div>
     </template>
     <template is="dom-if" if="{{_responseData}}">
       <paper-dropdown-menu label="[[title]]" selected-item="{{selectedItem}}">
@@ -81,7 +81,6 @@
     * @polymer
     */
     class sqaDropdown extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
-
       static get is() {
         return 'sqa-dropdown';
       }
