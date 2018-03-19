@@ -64,14 +64,12 @@
       }
 
       updateTime(timePassed) {
-        if (this.profile && this.$.quizLocalStorage.storageData[this.profile]) {
-          this.$.quizLocalStorage.updateStorage(this.profile, 'timePassed', timePassed);
-        }
+        this.$.quizLocalStorage.updateStorage('timePassed', timePassed);
       }
 
       setUserData(user) {
-        console.log(this.profile);
-        this.$.quizLocalStorage.updateStorage(this.profile, 'user', user);
+        this.$.quizLocalStorage.updateStorage('user', user);
+        this.updateTime(0);
       }
 
       _setProfile(profile) {
@@ -79,9 +77,9 @@
       }
 
       _loadFromStorage(storageData) {
-        if (this.profile && storageData[this.profile]) {
-          this.timePassed = storageData[this.profile].timePassed;
-          this.answeredQuestions = storageData[this.profile].answeredQuestions || {};
+        if (this.profile && storageData) {
+          this.timePassed = storageData.timePassed;
+          this.answeredQuestions = storageData.answeredQuestions || {};
         }
       }
 
@@ -91,11 +89,7 @@
           this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
-        this.$.quizLocalStorage.updateStorage(
-          this.profile,
-          `answeredQuestions.${questionId}`,
-          answerId
-        );
+        this.$.quizLocalStorage.updateStorage(`answeredQuestions.${questionId}`, answerId);
         this.__updateSubscribers(`answeredQuestions.${questionId}`);
       }
 
@@ -109,7 +103,7 @@
       }
 
       clearLocalStorage() {
-        this.$.quizLocalStorage.clearStorage(this.profile);
+        this.$.quizLocalStorage.clearStorage();
       }
     }
 

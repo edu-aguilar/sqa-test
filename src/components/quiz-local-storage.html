@@ -30,10 +30,12 @@
 
       updateStorage(key, data) {
         this.set(`storageData.${key}`, data);
+        this.$.appLocalStorage.setStoredValue(`storageData.${key}`, data);
       }
 
       clearStorage() {
-        this.$.appLocalStorage.destroy();
+        this.set(`storageData`, {});
+        this.$.appLocalStorage.saveValue('quiz-local-storage');
       }
     }
 
