@@ -8,26 +8,73 @@
 <dom-module id="config-view">
   <template>
     <style include="shared-styles">
+
       :host {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .landing-img {
+        width: 100%;
+        height: 50%;
+        background-image: url(../../images/landing-background.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .button-quiz {
+        margin: auto 0 1rem 0;
+      }
+
+      .description-wrapper {
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 90%;
+        position: absolute;
+        top: 15%;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
-        padding: 20px 0px 20px 0px;
+        height: 450px;
       }
 
-      .box-wrapper {
-        width: 80%;
-        padding-bottom: 20px;
-      }
-
-      .box-wrapper > p {
-        margin: 1em;
-        text-align: center;
-        margin: 0px;
+      .description-wrapper > p {
+        text-align : center;
         line-height: 1.7;
         font-size: var(--sopra-font-xl);
         color: #333333;
+        margin: 1em 1em 0 1em;
+      }
+
+      .box-wrapper {
+        margin: 1em 1em 0 1em;
+        width: 15em;
+      }
+
+      @media screen and (min-width: 768px) {
+        .landing-img {
+          background-attachment: fixed;
+          background-position: center; 
+        }
+
+        .button-quiz {
+          margin-bottom: 2rem;
+        }
+       
+        .box-wrapper {
+          width: 30em;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        .description-wrapper {
+          top: 20%;
+        }
+
+        .description-wrapper > p {
+          font-size: var(--sopra-font-xxl);
+        }
       }
 
       .input-container {
@@ -36,19 +83,9 @@
         flex-direction: column;
         height: 80px;
       }
-      
-      .button-container{
-        display: flex;
-        justify-content: center;
-      }
 
-      @media screen and (min-width: 768px) {
-        .box-wrapper {
-          width: 65%;
-        }
-        .box-wrapper > p {
-          font-size: var(--sopra-font-xxl);
-        }
+      .input-container > input {
+        border-bottom: 2px solid var(--sopra-grey-200);
       }
     </style>
 
@@ -59,13 +96,16 @@
       storage-data="{{storageData}}">
     </quiz-status-data>
 
-    <div class="box-wrapper">
+    <div class="landing-img"></div>
+    
+    <div class="description-wrapper">
       <p class="text-result"> 
-        ¡Bienvenido a Sopra Steria Quiz! 
-        Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba
+        <i18n-msg msgid="app-description">
+          ¡Bienvenido a Sopra Steria Quiz!
+          Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba.
+        </i18n-msg>
       </p>
-    </div>
-    <div class="box-wrapper" id="formContainer">
+      <div class="box-wrapper" id="formContainer">
         <form id="resultForm">
           <div class="input-container"> 
             <label> <i18n-msg msgid="name">Name</i18n-msg>*</label>
@@ -87,13 +127,12 @@
             <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
           </div>
         </form>
-      <div class="button-container">
-        <button class="button-quiz" on-click="_beginQuiz" disabled$="{{!isValid}}">
-          <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
-        </button>
-      </div>
+      </div> 
     </div>
 
+    <button class="button-quiz" on-click="_beginQuiz">
+      <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
+    </button>
   </template>
 
   <script>
@@ -141,6 +180,8 @@
       /** Function that stores the candidate's information in localStorage and redirects to landing-view */
       _beginQuiz() {
         this.profile = 'frontend';
+
+        this.$.quizStatusData.setUserData(this.user);        
         
         const profileEvent = new CustomEvent(
           'onProfileChange',
@@ -148,8 +189,6 @@
         );
 
         this.dispatchEvent(profileEvent);
-
-        this.$.quizStatusData.setUserData(this.user);        
       }
     }
     window.customElements.define(ConfigView.is, ConfigView);
