@@ -5,6 +5,9 @@
   "goBackHome": {
     "message": "Head back to home"
   },
+  "appDescription": {
+    "message": "Welcome to Sopra Steria Quiz! Please input the candidate's information and select a profile to begin the test."
+  },
   "start": {
     "message": "Start"
   },

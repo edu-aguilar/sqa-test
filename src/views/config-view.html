@@ -42,7 +42,7 @@
       .description-wrapper > p {
         text-align : center;
         line-height: 1.7;
-        font-size: var(--sopra-font-xl);
+        font-size: var(--sopra-font-l);
         color: #333333;
         margin: 1em 1em 0 1em;
       }
@@ -53,11 +53,6 @@
       }
 
       @media screen and (min-width: 768px) {
-        .landing-img {
-          background-attachment: fixed;
-          background-position: center; 
-        }
-
         .button-quiz {
           margin-bottom: 2rem;
         }
@@ -81,7 +76,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        height: 80px;
+        height: 60px;
+        margin-bottom: 10px;
       }
 
       .input-container > input {
@@ -92,17 +88,15 @@
     <!-- Store Candidate's Information -->
     <quiz-status-data 
       id="quizStatusData"
-      profile="{{profile}}"
-      storage-data="{{storageData}}">
+      profile="{{profile}}">
     </quiz-status-data>
 
     <div class="landing-img"></div>
     
     <div class="description-wrapper">
       <p class="text-result"> 
-        <i18n-msg msgid="app-description">
-          ¡Bienvenido a Sopra Steria Quiz!
-          Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba.
+        <i18n-msg msgid="appDescription">
+          Welcome to Sopra Steria Quiz! Please input the candidate's information and select a profile to begin the test.
         </i18n-msg>
       </p>
       <div class="box-wrapper" id="formContainer">
@@ -126,16 +120,48 @@
             <label> <i18n-msg msgid="email">Email</i18n-msg>*</label>
             <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
           </div>
+
+          <div class="input-container">
+            <label> <i18n-msg msgid="profile">Profile</i18n-msg>*</label>
+            <input class="input-quiz" name="profile" type="text" value="frontend">
+          </div>
         </form>
       </div> 
     </div>
 
-    <button class="button-quiz" on-click="_beginQuiz">
+    <button class="button-quiz" on-click="_beginQuiz" disabled$="{{!isValid}}">
       <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
     </button>
   </template>
 
   <script>
+    /**
+      * `<config-view>` is the initial view where the human resource's person selects the candidate's profile to begin the test
+      *
+      * ## Usage
+      *
+      * ```
+      * <config-view 
+      *   name="config" 
+      *   profile="{{routeData.profile}}"
+      * </config-view>
+      * ```
+      *
+      * ## i18n fields
+      *
+      * | Field Name       | Description                            |
+      * |------------------|----------------------------------------|
+      * | `appDescription` | Initial message with app's description |
+      * | `name`           | Candidate's name label                 |
+      * | `lastname`       | Candidate's lastname label             |
+      * | `phone`          | Candidate's phone label                |
+      * | `email`          | Candidate's email label                |
+      * | `profile`        | Candidate's profile label              |
+      * | `start`          | Label for `start` button               |
+      *
+      * @customElement
+      * @polymer
+    */
     class ConfigView extends Polymer.Element {
       static get is() { return 'config-view'; }
 
@@ -149,8 +175,6 @@
         return {
           /** Quiz profile (frontend, backend, fullstack, etc.) */
           profile: String,
-          /** Data from localStorage */
-          storageData: Object,
           /** Candidate's information */
           user: {
             type: Object,
