@@ -59,9 +59,7 @@
 
       test('Language should be initialized', function(done) {
         const appShell = fixture('shell');
-        
         flush(function() {
-          console.log(appShell.i18n);
           assert(appShell.i18n !== null);
           done();
         });

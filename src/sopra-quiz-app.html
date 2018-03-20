@@ -78,11 +78,6 @@
         tail="{{subrouteTail}}">
     </app-route>
 
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="{{_storageData}}">
-    </quiz-local-storage>
-
     <quiz-data
       id="quizData"
       profile="[[routeData.profile]]"
@@ -131,7 +126,6 @@
       static get properties() {
         return {
           _subrouteData: Object,
-          _storageData: Object,
           page: {
             type: String,
             reflectToAttribute: true,
