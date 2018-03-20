@@ -86,7 +86,7 @@
       "id": "5",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -113,7 +113,7 @@
       "id": "6",
       "question": {
         "title": "¿Cuál es la sintaxis correcta?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -140,7 +140,7 @@
       "id": "7",
       "question": {
         "title": "¿Cómo se insertan comentarios en un archivo CSS?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -167,7 +167,7 @@
       "id": "8",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -194,7 +194,7 @@
       "id": "9",
       "question": {
         "title": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -217,7 +217,7 @@
       "id": "10",
       "question": {
         "title": "¿Los script externos deben contener la etiqueta <script>?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -236,7 +236,7 @@
       "id": "11",
       "question": {
         "title": "¿Qué significan las iniciales HTML?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -263,7 +263,7 @@
       "id": "12",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -290,7 +290,7 @@
       "id": "13",
       "question": {
         "title": "¿Con qué etiqueta se crean las listas enumeradas?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -317,7 +317,7 @@
       "id": "14",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un checkbox?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -502,7 +502,7 @@
       "id": "16",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -529,7 +529,7 @@
       "id": "26",
       "question": {
         "title": "¿Qué es una función en JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -556,7 +556,7 @@
       "id": "27",
       "question": {
         "title": "Cuándo tomará una variable de JavaScript el valor 'undefined' ?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -592,7 +592,7 @@
       "id": "29",
       "question": {
         "title": "¿Cómo funcionan los Closures en JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 2,
       "type": "simple",
@@ -619,7 +619,7 @@
       "id": "30",
       "question": {
         "title": "¿Qué son los prototypes de JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 3,
       "type": "simple",
