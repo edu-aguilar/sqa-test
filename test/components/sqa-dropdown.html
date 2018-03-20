@@ -61,7 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </test-fixture>
 
   <script>
+    // Request object
     let request;
+    // Fake serve initialization
     let server = sinon.fakeServer.create();
 
     const responseHeaders = {
@@ -79,6 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     ];
 
+    // Server will respond with this object to all requests
     server.respondWith(
       [
         200,
@@ -153,9 +156,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('_formatResponseData should format data correctly', function (done) {
         const fullDropdown = fixture('fullDropdown');
         flush(function () {
+          // Generate request
           request = fullDropdown.shadowRoot.querySelector('iron-ajax').generateRequest();
+          // Send respond to all pending requests
           server.respond();
 
+          // request now contains the corresponding response
           fullDropdown._formatResponseData(request.response);
 
           assert.deepEqual(fullDropdown._formattedData, mockJson);
