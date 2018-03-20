@@ -15,14 +15,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-  <title>my-view1</title>
+  <title> sqa-dropdown </title>
 
+  <!-- We're not adding this library because of maximum call stack -->
   <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../bower_components/web-component-tester/browser.js"></script>
 
   <!-- Import the element to test -->
   <link rel="import" href="../../src/components/sqa-dropdown.html">
-
 </head>
 
 <body>
@@ -87,19 +87,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ]
     );
 
-
     suite('sqa-dropdown tests', function () {
-      test('Should have all required components', function (done) {
+      test('Should have all required components', function () {
         const fullDropdown = fixture('fullDropdown');
-        flush(function () {
-          const ironAjax = fullDropdown.shadowRoot.querySelector('iron-ajax');
-          const paperDropdownMenu = fullDropdown.shadowRoot.querySelectorAll('paper-dropdown-menu');
-          const paperItem = fullDropdown.shadowRoot.querySelectorAll('paper-item');
-          assert(ironAjax, 'ironAjax is neither `null` nor `undefined`');
-          assert(paperDropdownMenu, 'paperDropdownMenu is neither `null` nor `undefined`');
-          assert(paperItem, 'paperItem is neither `null` nor `undefined`');
-          done();
-        });
+        const ironAjax = fullDropdown.shadowRoot.querySelector('iron-ajax');
+        const paperDropdownMenu = fullDropdown.shadowRoot.querySelectorAll('paper-dropdown-menu');
+        const paperItem = fullDropdown.shadowRoot.querySelectorAll('paper-item');
+        assert(ironAjax, 'ironAjax is neither `null` nor `undefined`');
+        assert(paperDropdownMenu, 'paperDropdownMenu is neither `null` nor `undefined`');
+        assert(paperItem, 'paperItem is neither `null` nor `undefined`');
       });
 
       test('Title should be a String', function () {
@@ -198,6 +194,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
     });
-  </script>
+  </script> 
 </body>
 </html>
