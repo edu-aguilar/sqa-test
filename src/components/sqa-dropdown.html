@@ -35,8 +35,8 @@
       <div class="sqa-dropdown_loading-message">[[loadingMessage]]</div>
     </template>
     <template is="dom-if" if="{{_responseData}}">
-      <paper-dropdown-menu label="[[title]]" selected-item="{{selectedItem}}">
-        <paper-listbox slot="dropdown-content">
+      <paper-dropdown-menu label="[[title]]">
+        <paper-listbox slot="dropdown-content" attr-for-selected="id" selected-item="{{selectedItem}}">
           <template is="dom-repeat" items="{{_formattedData}}" as="option">
             <paper-item id="[[option.id]]">[[option.value]]</paper-item>
           </template>
@@ -112,7 +112,7 @@
           options: Object,
           /** Sets the selected option */
           selectedItem: {
-            type: String,
+            type: Object,
             notify: true
           },
           /** Formatted array ready to be printed */

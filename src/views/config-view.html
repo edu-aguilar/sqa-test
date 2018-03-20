@@ -3,6 +3,7 @@
 
 <link rel="import" href="../styles/shared-styles.html">
 
+<link rel="import" href="../components/sqa-dropdown.html">
 <link rel="import" href="../data-providers/quiz-status-data.html">
 
 <dom-module id="config-view">
@@ -48,7 +49,7 @@
       }
 
       .box-wrapper {
-        margin: 1em 1em 0 1em;
+        margin: 1em 1em 1em 1em;
         width: 15em;
       }
 
@@ -82,6 +83,12 @@
 
       .input-container > input {
         border-bottom: 2px solid var(--sopra-grey-200);
+      }
+
+      sqa-dropdown {
+        --paper-dropdown-menu: {
+          width: 100%;
+        }
       }
     </style>
 
@@ -123,7 +130,16 @@
 
           <div class="input-container">
             <label> <i18n-msg msgid="profile">Profile</i18n-msg>*</label>
-            <input class="input-quiz" name="profile" type="text" value="frontend">
+            <sqa-dropdown
+              id="profileDropdown"
+              title="[[_i18n.profile]]"
+              method="get"
+              end-point="[[endPoint]]"
+              options="[[dropdownOptions]]"
+              selected-item="{{profile}}"
+              loading-message="[[_i18n.loading]]">
+            </sqa-dropdown>
+            <!-- <input class="input-quiz" name="profile" type="text" value="frontend"> -->
           </div>
         </form>
       </div> 
@@ -162,7 +178,7 @@
       * @customElement
       * @polymer
     */
-    class ConfigView extends Polymer.Element {
+    class ConfigView extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
       static get is() { return 'config-view'; }
 
       static get observers() {
@@ -174,7 +190,7 @@
       static get properties() {
         return {
           /** Quiz profile (frontend, backend, fullstack, etc.) */
-          profile: String,
+          profile: Object,
           /** Candidate's information */
           user: {
             type: Object,
@@ -187,6 +203,23 @@
             value: false,
             notify: true
           },
+          /** Endpoint to get profiles list **/
+          endPoint: {
+            type: String,
+            value: 'https://dev-sopra-quiz-app.apps.sodigital.io/backend/api/profile'
+          },
+          /** Options to map endpoint respond with dropdown object **/
+          dropdownOptions: {
+            type: Object,
+            value: () => {
+              return {
+                'id': 'id',
+                'value': 'name'
+              };
+            }
+          },
+          /** i18n object to translate labels */
+          _i18n: Object
         };
       }
 
@@ -194,6 +227,7 @@
       ready() {
         super.ready();
         this.$.quizStatusData.clearLocalStorage();
+        this.set('_i18n', this.i18n);
       }
 
       /** Method to observe if the form is valid or not */
