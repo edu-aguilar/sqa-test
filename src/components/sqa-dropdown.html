@@ -1,0 +1,163 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="sqa-dropdown">
+  <template>
+    
+    <style include="shared-styles">
+      .sqa-dropdown_loading-message {
+        min-height: 62px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 62px;
+        color: #777;
+        @apply --sqa-dropdown-props;
+      }
+    </style>
+   
+    <iron-ajax 
+      auto
+      method="[[method]]"
+      url="[[endPoint]]" 
+      params="[[params]]"
+      handle-as="json" 
+      last-response="{{_responseData}}"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <template is="dom-if" if="{{loadingMessage}}">
+      <div class="sqa-dropdown_loading-message">[[loadingMessage]]</div>
+    </template>
+    <template is="dom-if" if="{{_responseData}}">
+      <paper-dropdown-menu label="[[title]]" selected-item="{{selectedItem}}">
+        <paper-listbox slot="dropdown-content">
+          <template is="dom-repeat" items="{{_formattedData}}" as="option">
+            <paper-item id="[[option.id]]">[[option.value]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </template>
+  </template>
+
+  <script>
+    /**
+    * `<sqa-dropdown>` provides a populated paper-dropdown-menu via iron-ajax component
+    *
+    * ## Usage
+    * Just inject the `<sqa-dropdown>` component with the variables `title`, `method`, `endpoint`,
+    * `params`, `options`, `selectedItem` and `loadingMessage`, we will use `selectedItem` variable
+    * to retrieve the selected value.
+    *
+    * ```
+    * <sqa-dropdown
+    *     id="sqaDropdown"
+    *     title="Profiles"
+    *     method="get"
+    *     end-point="[[endPoint]]"
+    *     params="[[params]]"
+    *     options="[[dropdownOptions]]"
+    *     selected-item="{{selectedItem}}"
+    *     loading-message="Loading...">
+    * </sqa-dropdown>
+    * ```
+    *
+    * Note: Because of `iron-ajax', the params attribute must be double quoted JSON.
+    *
+    * ## Styling
+    *
+    * | Custom property                  | Description                                            | Default |
+    * |----------------------------------|--------------------------------------------------------|---------|
+    * | `--sqa-dropdown-loading-message` | Mixin applied to dropdown loading message.             | {}      |
+    * 
+    * To style the dropdown itself you can use `paper-dropdown-menu` style mixins. 
+    * 
+    * @customElement
+    * @polymer
+    */
+    class sqaDropdown extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+      static get is() {
+        return 'sqa-dropdown';
+      }
+
+      static get properties() {
+        return {
+          /** Description title for dropDown */
+          title: String,
+          /** Request method */
+          method: {
+            type: String,
+            value: 'get'
+          },
+          /** endPoint url */
+          endPoint: String,
+          /** This will be shown while data is loading  */
+          loadingMessage: String,
+          /** Params for endPoint */
+          params: String,
+          /** Options to print data, object with keys: `id`, `value` and `key`
+            * ```json
+            * {
+            *   "id": "_id", // customKey to set in optionId
+            *   "value": "effect", // customKey to set in optionValue
+            *   "key": "available" // place in responseObject to find the array, by default goes to response root
+            * }
+            * ```
+          */
+          options: Object,
+          /** Sets the selected option */
+          selectedItem: {
+            type: String,
+            notify: true
+          },
+          /** Formatted array ready to be printed */
+          _formattedData: Object,
+          /** Original responseData returned by iron-ajax */
+          _responseData: {
+            type: Object,
+            observer: '_formatResponseData'
+          }
+        };
+      }
+
+      /**
+        * Format response from iron-ajax.
+        * @param {Object} responseData
+      */
+      _formatResponseData(responseData) {
+        if (!responseData) return;
+        let formattedData = responseData || {};
+        if (this.options && this.options.key) {
+          formattedData = responseData[this.options.key];
+        }
+        this.loadingMessage = '';
+        this.set('_formattedData', this._setKeys(formattedData));
+      }
+
+      /**
+        * Helper function to set keys provided by options.
+        * @param {Object} formattedData
+        * @return {Object}.
+      */
+      _setKeys(formattedData) {
+        if (typeof formattedData !== 'object' || !formattedData.length) return [];
+        if (!this.options || !this.options.id || !this.options.value) return formattedData;
+        const newFormattedData = [];
+        formattedData.map((element) => {
+          newFormattedData.push({
+            'id': element[this.options.id],
+            'value': element[this.options.value]
+          });
+        });
+        return newFormattedData;
+      }
+    }
+
+    window.customElements.define(sqaDropdown.is, sqaDropdown);
+  </script>
+</dom-module>

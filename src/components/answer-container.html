@@ -30,7 +30,11 @@
       </iron-selector>
     </template>
     <template is="dom-if" if="[[!_isSelector(answerType)]]">
-      <paper-textarea placeholder="[[_i18n.writeAnswer]]" value="{{_selectedAnswerSingle}}"></paper-textarea>
+      <paper-textarea 
+        class="sqa-answer_paper-textarea" 
+        placeholder="[[_i18n.writeAnswer]]" 
+        value="{{_selectedAnswerSingle}}">
+      </paper-textarea>
     </template>
   </template>
 
@@ -62,8 +66,8 @@
     * @customElement
     * @polymer
     */
-    class AnswerContainer extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
 
+    class AnswerContainer extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
       static get is() {
         return 'answer-container';
       }
