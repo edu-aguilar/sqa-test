@@ -32,6 +32,9 @@
   "phone": {
     "message": "Teléfono"
   },
+  "profile": {
+    "message": "Perfil"
+  },
   "send": {
     "message": "Enviar"
   },
@@ -61,5 +64,8 @@
   },
   "writeAnswer": {
     "message": "Escribe aquí tu respuesta"
+  },
+  "loading": {
+    "message": "Cargando..."
   }
 }
