@@ -1,0 +1,205 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title> sqa-dropdown </title>
+
+  <!-- We're not adding this library because of maximum call stack -->
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../../src/components/sqa-dropdown.html">
+</head>
+
+<body>
+
+  <test-fixture id="fullDropdown">
+    <template>
+      <sqa-dropdown 
+        title="Custom Title" 
+        end-point="../mock-data/dropdownArray.json" 
+        params="" 
+        selected-item=""
+        loading-message="Loading!!!">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="fullComplexDropdown">
+    <template>
+      <sqa-dropdown 
+        title="MockTitle"
+        end-point="../mock-data/dropdownComplexObject.json"
+        params=""
+        options='{"id": "customId", "value": "customValue", "key": "dropdownContent"}'
+        loading-message="Loading!!!">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="failDropdown">
+    <template>
+      <sqa-dropdown 
+        title="Mock title" 
+        loading-message="Loading forever">
+      </sqa-dropdown>
+    </template>
+  </test-fixture>
+
+  <script>
+    // Request object
+    let request;
+    // Fake serve initialization
+    let server = sinon.fakeServer.create();
+
+    const responseHeaders = {
+      json: { 'Content-Type': 'application/json' }
+    };
+
+    const mockJson = [
+      {
+        "id": 1,
+        "value": "Frontend"
+      },
+      {
+        "id": 2,
+        "value": "Backend"
+      }
+    ];
+
+    // Server will respond with this object to all requests
+    server.respondWith(
+      [
+        200,
+        responseHeaders.json,
+        JSON.stringify(mockJson)
+      ]
+    );
+
+    suite('sqa-dropdown tests', function () {
+      test('Should have all required components', function () {
+        const fullDropdown = fixture('fullDropdown');
+        const ironAjax = fullDropdown.shadowRoot.querySelector('iron-ajax');
+        const paperDropdownMenu = fullDropdown.shadowRoot.querySelectorAll('paper-dropdown-menu');
+        const paperItem = fullDropdown.shadowRoot.querySelectorAll('paper-item');
+        assert(ironAjax, 'ironAjax is neither `null` nor `undefined`');
+        assert(paperDropdownMenu, 'paperDropdownMenu is neither `null` nor `undefined`');
+        assert(paperItem, 'paperItem is neither `null` nor `undefined`');
+      });
+
+      test('Title should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.title, 'string');
+      });
+
+      test('Method should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.method, 'string');
+      });
+
+      test('endPoint should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.endPoint, 'string');
+      });
+
+      test('loadingMessage should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.loadingMessage, 'string');
+      });
+
+      test('Params should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.params, 'string');
+      });
+
+      test('Options should be a Object', function () {
+        let fullDropdown = fixture('fullComplexDropdown');
+        assert.typeOf(fullDropdown.options, 'object');
+      });
+
+      test('selectedItem should be a String', function () {
+        let fullDropdown = fixture('fullDropdown');
+        assert.typeOf(fullDropdown.selectedItem, 'string');
+      });
+
+      test('Should have a loadingMessage', function (done) {
+        const fullDropdown = fixture('failDropdown');
+        flush(function () {
+          let loadingMessage = fullDropdown.shadowRoot.querySelector('.sqa-dropdown_loading-message').innerText;
+          assert.equal(loadingMessage, 'Loading forever');
+          done();
+        });
+      });
+
+      test('Should load a custom title', function (done) {
+        const fullDropdown = fixture('fullDropdown');
+        flush(function () {
+          assert.equal(fullDropdown.title, 'Custom Title');
+        done();
+        });
+      });
+
+      test('_formatResponseData should format data correctly', function (done) {
+        const fullDropdown = fixture('fullDropdown');
+        flush(function () {
+          // Generate request
+          request = fullDropdown.shadowRoot.querySelector('iron-ajax').generateRequest();
+          // Send respond to all pending requests
+          server.respond();
+
+          // request now contains the corresponding response
+          fullDropdown._formatResponseData(request.response);
+
+          assert.deepEqual(fullDropdown._formattedData, mockJson);
+          done();
+        });
+      });
+
+      test('_setKeys should set id and value keys according to options', function (done) {
+        const fullDropdown = fixture('fullComplexDropdown');
+        flush(function () {
+          const noFormatMockJson = [
+            {
+              "customId": 1,
+              "customValue": "Frontend"
+            },
+            {
+              "customId": 2,
+              "customValue": "Backend"
+            }
+          ];
+
+          let formatJson = fullDropdown._setKeys(noFormatMockJson);
+
+          assert.deepEqual(formatJson, mockJson);
+          done();
+        });
+      });
+
+      test('_setKeys should return empty array if input data is not the right format', function (done) {
+        const fullDropdown = fixture('fullComplexDropdown');
+        flush(function () {
+          let formatJson = fullDropdown._setKeys('Hello');
+
+          assert.deepEqual(formatJson, []);
+          done();
+        });
+      });
+    });
+  </script> 
+</body>
+</html>
