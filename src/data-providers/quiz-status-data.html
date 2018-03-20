@@ -73,7 +73,10 @@
       }
 
       _setProfile(profile) {
-        if (profile) this.profile = profile;
+        if (profile && profile.id) {
+          this.profile = profile.id;
+          this.$.quizLocalStorage.updateStorage('profile', this.profile);
+        }       
       }
 
       _loadFromStorage(storageData) {
