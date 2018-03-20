@@ -3,7 +3,7 @@
   "testName": "Frontend test",
   "description": "Bienvenido a Sopra Steria Quiz, la plataforma que nos ayuda a realizar una primera aproximación sobre el nivel técnico de nuestros candidatos a través de unas preguntas de selección simple. Si estás listo, presiona el botón de más abajo para comenzar tu prueba. ¡Mucha suerte!",
   "resultMessage": "¡Muchas gracias por completar nuestro quiz! Rellena el siguiente formulario para que nuestro departamento de Recursos Humanos pueda ponerse en contacto contigo.",
-  "onSite": true,
+  "onSite": false,
   "questions": [
     {
       "id": "1",
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "id": "4",
+      "id": "3",
       "question": {
         "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
         "image": "https://thumbor.forbes.com/thumbor/960x0/smart/https%3A%2F%2Fblogs-images.forbes.com%2Frajatbhageria%2Ffiles%2F2017%2F09%2Fcode-copy-1200x1200.jpg%3Fwidth%3D960"
@@ -83,7 +83,7 @@
       ]
     },
     {
-      "id": "5",
+      "id": "4",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
         "image": null
@@ -110,7 +110,7 @@
       ]
     },
     {
-      "id": "6",
+      "id": "5",
       "question": {
         "title": "¿Cuál es la sintaxis correcta?",
         "image": null
@@ -137,7 +137,7 @@
       ]
     },
     {
-      "id": "7",
+      "id": "6",
       "question": {
         "title": "¿Cómo se insertan comentarios en un archivo CSS?",
         "image": null
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "id": "8",
+      "id": "7",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
         "image": null
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "id": "9",
+      "id": "8",
       "question": {
         "title": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
         "image": null
@@ -214,7 +214,7 @@
       ]
     },
     {
-      "id": "10",
+      "id": "9",
       "question": {
         "title": "¿Los script externos deben contener la etiqueta <script>?",
         "image": null
@@ -233,7 +233,7 @@
       ]
     },
     {
-      "id": "11",
+      "id": "10",
       "question": {
         "title": "¿Qué significan las iniciales HTML?",
         "image": null
@@ -260,7 +260,7 @@
       ]
     },
     {
-      "id": "12",
+      "id": "11",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
         "image": null
@@ -287,7 +287,7 @@
       ]
     },
     {
-      "id": "13",
+      "id": "12",
       "question": {
         "title": "¿Con qué etiqueta se crean las listas enumeradas?",
         "image": null
@@ -314,7 +314,7 @@
       ]
     },
     {
-      "id": "14",
+      "id": "13",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un checkbox?",
         "image": null
@@ -341,7 +341,7 @@
       ]
     },
     {
-      "id": "17",
+      "id": "14",
       "question": {
         "title": "¿Qué indica doctype en la etiqueta HTML?",
         "image": null
@@ -368,7 +368,7 @@
       ]
     },
     {
-      "id": "18",
+      "id": "15",
       "question": {
         "title": "¿Cómo indicamos el lenguaje en un documento HTML?",
         "image": null
@@ -395,7 +395,7 @@
       ]
     },
     {
-      "id": "19",
+      "id": "16",
       "question": {
         "title": "¿Para qué se utilizan las propiedades declaradas bajo la convención 'data-' en las etiquetas HTML?",
         "image": null
@@ -422,7 +422,7 @@
       ]
     },
     {
-      "id": "20",
+      "id": "17",
       "question": {
         "title": "¿Cuál de las siguientes NO es una etiqueta de HTML5?",
         "image": null
@@ -449,7 +449,7 @@
       ]
     },
     {
-      "id": "21",
+      "id": "18",
       "question": {
         "title": "¿Cuál es la diferencia entre sessionStorage y localStorage?",
         "image": null
@@ -459,7 +459,7 @@
       "options": []
     },
     {
-      "id": "22",
+      "id": "19",
       "question": {
         "title": "¿Qué elemento HTML se utiliza para agrupar enlaces de navegación?",
         "image": null
@@ -469,7 +469,7 @@
       "options": []
     },
     {
-      "id": "23",
+      "id": "20",
       "question": {
         "title": "Escribe el esqueleto HTML de una web actual",
         "image": null
@@ -479,7 +479,7 @@
       "options": []
     },
     {
-      "id": "24",
+      "id": "21",
       "question": {
         "title": "Describe las diferencias entre padding y margin",
         "image": null
@@ -489,7 +489,7 @@
       "options": []
     },
     {
-      "id": "25",
+      "id": "22",
       "question": {
         "title": "Describe las diferencias a nivel de display en el DOM de las etiquetas <span> y <p>",
         "image": null
@@ -499,7 +499,7 @@
       "options": []
     },
     {
-      "id": "16",
+      "id": "23",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
         "image": null
@@ -526,7 +526,7 @@
       ]
     },
     {
-      "id": "26",
+      "id": "24",
       "question": {
         "title": "¿Qué es una función en JavaScript?",
         "image": null
@@ -553,7 +553,7 @@
       ]
     },
     {
-      "id": "27",
+      "id": "25",
       "question": {
         "title": "Cuándo tomará una variable de JavaScript el valor 'undefined' ?",
         "image": null
@@ -580,7 +580,7 @@
       ]
     },
     {
-      "id": "28",
+      "id": "26",
       "question": {
         "title": "¿Qué es el asincronismo?"
       },
@@ -589,7 +589,7 @@
       "options": []
     },
     {
-      "id": "29",
+      "id": "27",
       "question": {
         "title": "¿Cómo funcionan los Closures en JavaScript?",
         "image": null
@@ -616,7 +616,7 @@
       ]
     },
     {
-      "id": "30",
+      "id": "28",
       "question": {
         "title": "¿Qué son los prototypes de JavaScript?",
         "image": null
@@ -643,7 +643,7 @@
       ]
     },
     {
-      "id": "31",
+      "id": "29",
       "question": {
         "title": "Reescribe el siguiente código utilizando el objeto document",
         "image": "https://image.ibb.co/dewL2x/Captura_de_pantalla_2018_03_20_a_las_13_33_31.png"
@@ -653,7 +653,7 @@
       "options": []
     },
     {
-      "id": "32",
+      "id": "30",
       "question": {
         "title": "¿Qué muestra por consola el siguiente código?",
         "image": "https://image.ibb.co/jDEjUc/Captura_de_pantalla_2018_03_20_a_las_13_35_16.png"
@@ -679,7 +679,7 @@
         }]
     },
     {
-      "id": "33",
+      "id": "31",
       "question": {
         "title": "¿Qué muestra por consola el siguiente código?",
         "image": "https://image.ibb.co/ff5r9c/Captura_de_pantalla_2018_03_20_a_las_13_37_05.png"
@@ -706,7 +706,7 @@
       ]
     },
     {
-      "id": "34",
+      "id": "32",
       "question": {
         "title": "¿Cómo modificarías, si consideras necesario, el siguiente código para que la salida por consola fuera 'Edu'?",
         "image": "https://image.ibb.co/ff5r9c/Captura_de_pantalla_2018_03_20_a_las_13_37_05.png"
@@ -716,7 +716,7 @@
       "options": []
     },
     {
-      "id": "35",
+      "id": "33",
       "question": {
         "title": "Según el Array definido e inicializado en la siguiente imagen, escribe un algoritmo que devuelva true o false si todas las personas son mayores de edad",
         "image": "https://image.ibb.co/fKRypc/Captura_de_pantalla_2018_03_20_a_las_13_44_20.png"
@@ -726,7 +726,7 @@
       "options": []
     },
     {
-      "id": "3",
+      "id": "34",
       "question": {
         "title": "¿Qué es este código y para qué sirve?",
         "image": "https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/94/33/42/funnysyntax.png"
