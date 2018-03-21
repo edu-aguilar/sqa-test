@@ -39,7 +39,7 @@
         "image": null
       },
       "level": 1,
-      "type": "multiple",
+      "type": "simple",
       "options": [
         {
           "id": "1",
