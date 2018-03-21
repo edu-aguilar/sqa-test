@@ -160,7 +160,7 @@
 
         this.addEventListener('onRouteChange', this._onRouteChange);
 
-        this.addEventListener('onProfileChange', this._routeProfileChanged)
+        this.addEventListener('onProfileChange', this._routeProfileChanged);
       }
 
       _routePageChanged(page) {
@@ -181,7 +181,7 @@
       _routeProfileChanged(e) {
         const profile = e.detail.profile;
         this.set('routeData.profile', profile);
-        //read json
+        // read json
         this.set('route.path', `${this.rootPath}${this.routeData.profile}/landing`);
       }
 

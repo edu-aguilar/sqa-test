@@ -132,8 +132,8 @@
       * ## Usage
       *
       * ```
-      * <config-view 
-      *   name="config" 
+      * <config-view
+      *   name="config"
       *   profile="{{routeData.profile}}"
       * </config-view>
       * ```
@@ -212,8 +212,8 @@
     
       /** Function that stores the candidate's information in localStorage and redirects to landing-view */
       _beginQuiz() {
-        this.$.quizStatusData.setUserData(this.user);        
-        
+        this.$.quizStatusData.setUserData(this.user);
+    
         const profileEvent = new CustomEvent(
           'onProfileChange',
           { detail: { profile: this.profile }, composed: true }
