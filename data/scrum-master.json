@@ -1,0 +1,408 @@
+{
+  "id": "1",
+  "testName": "Frontend test",
+  "description": "Bienvenido a Sopra Steria Quiz, la plataforma que nos ayuda a realizar una primera aproximación sobre el nivel técnico de nuestros candidatos a través de unas preguntas de selección simple. Si estás listo, presiona el botón de más abajo para comenzar tu prueba. ¡Mucha suerte!",
+  "resultMessage": "¡Muchas gracias por completar nuestro quiz! Nuestro departamento de Recursos Humanos se prondrá en contacto contigo.",
+  "onSite": true,
+  "questions": [
+    {
+      "id": "1",
+      "question": {
+        "title": "¿Qué significan las iniciales CSS?",
+        "image": "https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png"
+      },
+      "level": 1,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Cascading Style Sheets"
+        },
+        {
+          "id": "2",
+          "value": "Colorful Style Sheets"
+        },
+        {
+          "id": "3",
+          "value": "Creative Style Sheets"
+        },
+        {
+          "id": "4",
+          "value": "Computer Style Sheets"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
+        "image": "http://yalsa.ala.org/blog/wp-content/uploads/2016/01/code.org_logo.png"
+      },
+      "level": 4,
+      "type": "multiple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\">"
+        },
+        {
+          "id": "2",
+          "value": "<style src=\"mystyle.css\">"
+        },
+        {
+          "id": "3",
+          "value": "<stylesheet>mystyle.css</stylesheet>"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "question": {
+        "title": "¿Qué es este código y para qué sirve?",
+        "image": "https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/94/33/42/funnysyntax.png"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "4",
+      "question": {
+        "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
+        "image": "https://thumbor.forbes.com/thumbor/960x0/smart/https%3A%2F%2Fblogs-images.forbes.com%2Frajatbhageria%2Ffiles%2F2017%2F09%2Fcode-copy-1200x1200.jpg%3Fwidth%3D960"
+      },
+      "level": 1,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "En la sección <body>"
+        },
+        {
+          "id": "2",
+          "value": "En la sección <head>"
+        },
+        {
+          "id": "3",
+          "value": "Al final del documento"
+        },
+        {
+          "id": "4",
+          "value": "Los tres anteriores"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "question": {
+        "title": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<script>"
+        },
+        {
+          "id": "2",
+          "value": "<style>"
+        },
+        {
+          "id": "3",
+          "value": "<css>"
+        },
+        {
+          "id": "4",
+          "value": "<style-html>"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta?",
+        "image": ""
+      },
+      "level": 1,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "body:color=black;"
+        },
+        {
+          "id": "2",
+          "value": "{body;color:black;}"
+        },
+        {
+          "id": "3",
+          "value": "{body:color=black;}"
+        },
+        {
+          "id": "4",
+          "value": "body {color: black;}"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "question": {
+        "title": "¿Cómo se insertan comentarios en un archivo CSS?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "/* this is a comment */"
+        },
+        {
+          "id": "2",
+          "value": "// this is a comment //"
+        },
+        {
+          "id": "3",
+          "value": "' this is a comment"
+        },
+        {
+          "id": "4",
+          "value": "// this is a comment"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "question": {
+        "title": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
+        "image": ""
+      },
+      "level": 1,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<script>"
+        },
+        {
+          "id": "2",
+          "value": "<scripting>"
+        },
+        {
+          "id": "3",
+          "value": "<js>"
+        },
+        {
+          "id": "4",
+          "value": "<javascript>"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<script src=\"xxx.js\">"
+        },
+        {
+          "id": "2",
+          "value": "<script href=\"xxx.js\">"
+        },
+        {
+          "id": "3",
+          "value": "<script name=\"xxx.js\">"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "question": {
+        "title": "¿Los script externos deben contener la etiqueta <script>?",
+        "image": ""
+      },
+      "level": 1,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Si"
+        },
+        {
+          "id": "2",
+          "value": "No"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "question": {
+        "title": "¿Qué significan las iniciales HTML?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Hyper Text Markup Language"
+        },
+        {
+          "id": "2",
+          "value": "Home Tool Markup Language"
+        },
+        {
+          "id": "3",
+          "value": "Hyperlinks and Text Markup Language"
+        },
+        {
+          "id": "4",
+          "value": "Hybrid Tools Makeup Longitude"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<a href=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "2",
+          "value": "<a url=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "3",
+          "value": "<a name=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "4",
+          "value": "<a> http://www.sopra-quiz.com </a>"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "question": {
+        "title": "¿Con qué etiqueta se crean las listas enumeradas?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<ol>"
+        },
+        {
+          "id": "2",
+          "value": "<il>"
+        },
+        {
+          "id": "3",
+          "value": "<ul>"
+        },
+        {
+          "id": "4",
+          "value": "<lol>"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un checkbox?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<checkbox>"
+        },
+        {
+          "id": "2",
+          "value": "<check>"
+        },
+        {
+          "id": "3",
+          "value": "<input type=\"check\">"
+        },
+        {
+          "id": "4",
+          "value": "<input type=\"checkbox\">"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "<a href=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "2",
+          "value": "<a url=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "3",
+          "value": "<a name=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+        },
+        {
+          "id": "4",
+          "value": "<a> http://www.sopra-quiz.com </a>"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
+        "image": ""
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "var colors = ['red', 'green', 'blue']"
+        },
+        {
+          "id": "2",
+          "value": "var colors = (1: 'red', 2: 'green', 3: 'blue')"
+        },
+        {
+          "id": "3",
+          "value": "var colors = {1: 'red', 2: 'green', 3: 'blue'}"
+        },
+        {
+          "id": "4",
+          "value": "var colors = 'red', 'green', 'blue'"
+        }
+      ]
+    }
+  ]
+}
