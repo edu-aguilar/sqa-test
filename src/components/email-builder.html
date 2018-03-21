@@ -267,7 +267,7 @@
           <tr>
             <td>
               <h4>${this.i18n.name}: <span>${scoreData.name} ${scoreData.surname}</span></h4>
-              <h4>${this.i18n.phone}: <span>${scoreData.telefono}</span></h4>
+              <h4>${this.i18n.phone}: <span>${scoreData.phone}</span></h4>
               <h4>${this.i18n.email}: <span>${scoreData.email}</span></h4>
               <h4>${this.i18n.time}: <span>${this._formatTime(scoreData.timePassed)}</span></h4>
             </td>
@@ -276,7 +276,8 @@
                 ${this.i18n.correctAnswers}: <span>${scoreData.correctCount}</span>
               </h4>
               <h4 class="incorrect">
-                ${this.i18n.incorrectAnswers}: <span>${scoreData.totalCount}</span>
+                ${this.i18n.incorrectAnswers}: 
+                  <span>${scoreData.totalCount - scoreData.correctCount}</span>
               </h4>
               <h3 class="final-result">
                 ${this.i18n.finalResult}: ${scoreData.correctPercentage}% 

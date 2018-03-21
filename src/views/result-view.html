@@ -126,9 +126,9 @@
       * ## Usage
       *
       * ```
-      * <result-view 
-      *   name="result" 
-      *   on-site="[[quizData.presencial]]" 
+      * <result-view
+      *   name="result"
+      *   on-site="[[quizData.presencial]]"
       *   result-message="[[quizData.resultMessage]]">
       * </result-view>
       * ```
@@ -164,9 +164,16 @@
           /** Object with correct answers to the questions */
           correctQuestions: {
             type: Object,
-            value: { '1': '1', '2': ['2', '3'], '4': '2', '5': '2', '6': '2', '7': '2',
-              '8': '2', '9': '2', '10': '2', '11': '2', '12': '2', '13': '2',
-              '14': '2', '15': '2', '16': '2' }
+            value: {
+              '1': '1', '2': '1', '3': '2', '4': '2', '5': '4',
+              '6': '1', '7': '1', '8': '1', '9': '2', '10': '1',
+              '11': '1', '12': '1', '13': '4', '14': '1', '15': '2',
+              '16': '4', '17': '3', '18': 'texto', '19': 'texto',
+              '20': 'texto', '21': 'texto', '22': 'texto', '23': '1',
+              '24': '3', '25': '2', '26': 'texto', '27': '4', '28': '2',
+              '29': 'texto', '30': '2', '31': '1', '32': 'texto',
+              '33': 'texto', '34': 'texto'
+            }
           },
           /** Data from storage */
           storageData: Object,
@@ -225,7 +232,7 @@
         this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
         this.set('_config', {
-          to: 'alfonso.estepa@soprasteria.com',
+          to: 'alfonso.estepa@soprasteria.com, eduardo.aguilar@soprasteria.com',
           html: this.htmlString,
           subject: 'Resultado del test'
         });

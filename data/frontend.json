@@ -9,7 +9,7 @@
       "id": "1",
       "question": {
         "title": "¿Qué significan las iniciales CSS?",
-        "image": "https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png"
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -36,10 +36,10 @@
       "id": "2",
       "question": {
         "title": "¿Cuál es la sintaxis correcta de HTML para referenciar una hoja de estilos externa?",
-        "image": "http://yalsa.ala.org/blog/wp-content/uploads/2016/01/code.org_logo.png"
+        "image": null
       },
-      "level": 4,
-      "type": "multiple",
+      "level": 1,
+      "type": "simple",
       "options": [
         {
           "id": "1",
@@ -58,18 +58,8 @@
     {
       "id": "3",
       "question": {
-        "title": "¿Qué es este código y para qué sirve?",
-        "image": "https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/94/33/42/funnysyntax.png"
-      },
-      "level": 4,
-      "type": "text",
-      "options": []
-    },
-    {
-      "id": "4",
-      "question": {
         "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
-        "image": "https://thumbor.forbes.com/thumbor/960x0/smart/https%3A%2F%2Fblogs-images.forbes.com%2Frajatbhageria%2Ffiles%2F2017%2F09%2Fcode-copy-1200x1200.jpg%3Fwidth%3D960"
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -93,12 +83,12 @@
       ]
     },
     {
-      "id": "5",
+      "id": "4",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para definir una hoja de estilos interna?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 1,
       "type": "simple",
       "options": [
         {
@@ -120,10 +110,10 @@
       ]
     },
     {
-      "id": "6",
+      "id": "5",
       "question": {
         "title": "¿Cuál es la sintaxis correcta?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -147,12 +137,12 @@
       ]
     },
     {
-      "id": "7",
+      "id": "6",
       "question": {
         "title": "¿Cómo se insertan comentarios en un archivo CSS?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 1,
       "type": "simple",
       "options": [
         {
@@ -174,10 +164,10 @@
       ]
     },
     {
-      "id": "8",
+      "id": "7",
       "question": {
         "title": "¿Qué etiqueta de HTML se usa para escribir código JavaScript?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -201,12 +191,12 @@
       ]
     },
     {
-      "id": "9",
+      "id": "8",
       "question": {
         "title": "¿Cuál es la sintaxis correcta de HTML para referenciar un script externo?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 2,
       "type": "simple",
       "options": [
         {
@@ -224,10 +214,10 @@
       ]
     },
     {
-      "id": "10",
+      "id": "9",
       "question": {
         "title": "¿Los script externos deben contener la etiqueta <script>?",
-        "image": ""
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -243,12 +233,12 @@
       ]
     },
     {
-      "id": "11",
+      "id": "10",
       "question": {
         "title": "¿Qué significan las iniciales HTML?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 1,
       "type": "simple",
       "options": [
         {
@@ -270,12 +260,12 @@
       ]
     },
     {
-      "id": "12",
+      "id": "11",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 2,
       "type": "simple",
       "options": [
         {
@@ -297,12 +287,12 @@
       ]
     },
     {
-      "id": "13",
+      "id": "12",
       "question": {
         "title": "¿Con qué etiqueta se crean las listas enumeradas?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 2,
       "type": "simple",
       "options": [
         {
@@ -324,12 +314,12 @@
       ]
     },
     {
-      "id": "14",
+      "id": "13",
       "question": {
         "title": "¿Cuál es la sintaxis correcta para crear un checkbox?",
-        "image": ""
+        "image": null
       },
-      "level": 4,
+      "level": 2,
       "type": "simple",
       "options": [
         {
@@ -351,39 +341,170 @@
       ]
     },
     {
-      "id": "15",
+      "id": "14",
       "question": {
-        "title": "¿Cuál es la sintaxis correcta para crear un hiperenlace?",
-        "image": ""
+        "title": "¿Qué indica doctype en la etiqueta HTML?",
+        "image": null
       },
-      "level": 4,
+      "level": 3,
       "type": "simple",
       "options": [
         {
           "id": "1",
-          "value": "<a href=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+          "value": "Indica al navegador qué versión de HTML estamos usando"
         },
         {
           "id": "2",
-          "value": "<a url=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+          "value": "Es un comentario para que otros desarrolladores conozcan el tipo de documento"
         },
         {
           "id": "3",
-          "value": "<a name=\"http://www.sopra-quiz.com\"> Sopra Quiz </a>"
+          "value": "Carga todas las referencias de javascript externas"
         },
         {
           "id": "4",
-          "value": "<a> http://www.sopra-quiz.com </a>"
+          "value": "Carga las referencias HTML locales"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "question": {
+        "title": "¿Cómo indicamos el lenguaje en un documento HTML?",
+        "image": null
+      },
+      "level": 3,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Añadiendo la propiedad 'lang' en la etiqueta body"
+        },
+        {
+          "id": "2",
+          "value": "Añadiendo la propiedad 'lang' en la etiqueta html"
+        },
+        {
+          "id": "3",
+          "value": "No hay forma de declararlo mediante HTML, es necesario hacerlo con JavaScript"
+        },
+        {
+          "id": "4",
+          "value": "Añadiendo una clase a la etiqueta body"
         }
       ]
     },
     {
       "id": "16",
       "question": {
-        "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
-        "image": ""
+        "title": "¿Para qué se utilizan las propiedades declaradas bajo la convención 'data-' en las etiquetas HTML?",
+        "image": null
       },
       "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Para mejorar el SEO"
+        },
+        {
+          "id": "2",
+          "value": "Para hacer más facil el trabajo a los selectores de CSS"
+        },
+        {
+          "id": "3",
+          "value": "No es una buena práctica"
+        },
+        {
+          "id": "4",
+          "value": "Para añadir propiedades personalizadas a las etiquetas HTML"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "question": {
+        "title": "¿Cuál de las siguientes NO es una etiqueta de HTML5?",
+        "image": null
+      },
+      "level": 3,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "audio"
+        },
+        {
+          "id": "2",
+          "value": "canvas"
+        },
+        {
+          "id": "3",
+          "value": "block"
+        },
+        {
+          "id": "4",
+          "value": "section"
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "question": {
+        "title": "¿Cuál es la diferencia entre sessionStorage y localStorage?",
+        "image": null
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "19",
+      "question": {
+        "title": "¿Qué elemento HTML se utiliza para agrupar enlaces de navegación?",
+        "image": null
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "20",
+      "question": {
+        "title": "Escribe el esqueleto HTML de una web actual",
+        "image": null
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "21",
+      "question": {
+        "title": "Describe las diferencias entre padding y margin",
+        "image": null
+      },
+      "level": 2,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "22",
+      "question": {
+        "title": "Describe las diferencias a nivel de display en el DOM de las etiquetas <span> y <p>",
+        "image": null
+      },
+      "level": 2,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "23",
+      "question": {
+        "title": "¿Cuál es la sintaxis correcta para crear un array en JavaScript?",
+        "image": null
+      },
+      "level": 2,
       "type": "simple",
       "options": [
         {
@@ -403,6 +524,216 @@
           "value": "var colors = 'red', 'green', 'blue'"
         }
       ]
+    },
+    {
+      "id": "24",
+      "question": {
+        "title": "¿Qué es una función en JavaScript?",
+        "image": null
+      },
+      "level": 2,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Es una forma de calcular un resultado"
+        },
+        {
+          "id": "2",
+          "value": "Sirve para obtener una respuesta de un API REST de forma correcta"
+        },
+        {
+          "id": "3",
+          "value": "Es un bloque de código diseñado para realizar una tarea concreta"
+        },
+        {
+          "id": "4",
+          "value": "Sirve para importar librerías"
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "question": {
+        "title": "Cuándo tomará una variable de JavaScript el valor 'undefined' ?",
+        "image": null
+      },
+      "level": 2,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Cuando la definimos utilizando let o const"
+        },
+        {
+          "id": "2",
+          "value": "Cuando la definimos pero no la inicializamos"
+        },
+        {
+          "id": "3",
+          "value": "Una variable nunca puede tomar ese valor"
+        },
+        {
+          "id": "4",
+          "value": "Ninguna de las anteriores"
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "question": {
+        "title": "¿Qué es el asincronismo?"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "27",
+      "question": {
+        "title": "¿Cómo funcionan los Closures en JavaScript?",
+        "image": null
+      },
+      "level": 2,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Los closures son aquellos métodos indicados para incluir la lógica de negocio y así abstraerla de nuestros componentes lógicos"
+        },
+        {
+          "id": "2",
+          "value": "Sirven para exponer varibales en el ámbito global"
+        },
+        {
+          "id": "3",
+          "value": "Los Closures ayudan a la correcta estructuración de los objetos"
+        },
+        {
+          "id": "4",
+          "value": "Es una función dentro de otra función, con la finalidad de que ésta última tenga acceso a las variables de la función que la contiene"
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "question": {
+        "title": "¿Qué son los prototypes de JavaScript?",
+        "image": null
+      },
+      "level": 3,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Los prototypes son funciones que se utilizan para actualizar distintos tipos de datos"
+        },
+        {
+          "id": "2",
+          "value": "Los prototypes permiten definir métodos para todas las instancias de un objeto en particular"
+        },
+        {
+          "id": "3",
+          "value": "Es un método para acceder al contenido de un objeto en particular"
+        },
+        {
+          "id": "4",
+          "value": "Una variable global que contiene información sobre el navegador en el que se está ejecutando nuestra web"
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "question": {
+        "title": "Reescribe el siguiente código utilizando el objeto document",
+        "image": "https://image.ibb.co/dewL2x/Captura_de_pantalla_2018_03_20_a_las_13_33_31.png"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "30",
+      "question": {
+        "title": "¿Qué muestra por consola el siguiente código?",
+        "image": "https://image.ibb.co/jDEjUc/Captura_de_pantalla_2018_03_20_a_las_13_35_16.png"
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "NaN"
+        },
+        {
+          "id": "2",
+          "value": "undefined"
+        },
+        {
+          "id": "3",
+          "value": "global"
+        },
+        {
+          "id": "4",
+          "value": "null"
+        }]
+    },
+    {
+      "id": "31",
+      "question": {
+        "title": "¿Qué muestra por consola el siguiente código?",
+        "image": "https://image.ibb.co/ff5r9c/Captura_de_pantalla_2018_03_20_a_las_13_37_05.png"
+      },
+      "level": 4,
+      "type": "simple",
+      "options": [
+        {
+          "id": "1",
+          "value": "Alfonso"
+        },
+        {
+          "id": "2",
+          "value": "Edu"
+        },
+        {
+          "id": "3",
+          "value": "null"
+        },
+        {
+          "id": "4",
+          "value": "undefined"
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "question": {
+        "title": "¿Cómo modificarías, si consideras necesario, el siguiente código para que la salida por consola fuera 'Edu'?",
+        "image": "https://image.ibb.co/ff5r9c/Captura_de_pantalla_2018_03_20_a_las_13_37_05.png"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "33",
+      "question": {
+        "title": "Según el Array definido e inicializado en la siguiente imagen, escribe un algoritmo que devuelva true o false si todas las personas son mayores de edad",
+        "image": "https://image.ibb.co/fKRypc/Captura_de_pantalla_2018_03_20_a_las_13_44_20.png"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
+    },
+    {
+      "id": "34",
+      "question": {
+        "title": "¿Qué es este código y para qué sirve?",
+        "image": "https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/94/33/42/funnysyntax.png"
+      },
+      "level": 4,
+      "type": "text",
+      "options": []
     }
   ]
 }
