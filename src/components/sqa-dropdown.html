@@ -36,7 +36,7 @@
     </template>
     <template is="dom-if" if="{{_responseData}}">
       <paper-dropdown-menu label="[[title]]">
-        <paper-listbox slot="dropdown-content" attr-for-selected="id" selected-item="{{selectedItem}}">
+        <paper-listbox slot="dropdown-content" attr-for-selected="id" selected-item="{{_selectedPaperItem}}">
           <template is="dom-repeat" items="{{_formattedData}}" as="option">
             <paper-item id="[[option.id]]">[[option.value]]</paper-item>
           </template>
@@ -110,10 +110,15 @@
             * ```
           */
           options: Object,
-          /** Sets the selected option */
+          /** Sets the selected id */
           selectedItem: {
-            type: Object,
+            type: String,
             notify: true
+          },
+          /** Sets the selected option */
+          _selectedPaperItem: {
+            type: Object,
+            observer: '_setSelectedItem'
           },
           /** Formatted array ready to be printed */
           _formattedData: Object,
@@ -123,6 +128,14 @@
             observer: '_formatResponseData'
           }
         };
+      }
+
+      /**
+        * Set this.selectedItem to an selected object id.
+        * @param {Object} selectedPaperItem
+      */
+      _setSelectedItem(selectedPaperItem) {
+        if (selectedPaperItem) this.selectedItem = selectedPaperItem.id;
       }
 
       /**
