@@ -36,6 +36,7 @@
 
       .box-wrapper > p {
         font-size: var(--sopra-font-xl);
+        text-align: center;
       }
 
       @media screen and (min-width: 768px) {
@@ -164,7 +165,7 @@
       static get properties() {
         return {
           /** Quiz profile (frontend, backend, fullstack, etc.) */
-          profile: Object,
+          profile: String,
           /** Candidate's information */
           user: {
             type: Object,
@@ -211,8 +212,6 @@
     
       /** Function that stores the candidate's information in localStorage and redirects to landing-view */
       _beginQuiz() {
-        this.profile = 'frontend';
-
         this.$.quizStatusData.setUserData(this.user);        
         
         const profileEvent = new CustomEvent(
