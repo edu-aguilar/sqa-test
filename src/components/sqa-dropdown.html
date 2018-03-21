@@ -163,12 +163,35 @@
         const newFormattedData = [];
         formattedData.map((element) => {
           newFormattedData.push({
-            'id': element[this.options.id],
+            'id': this._slugify(element[this.options.id]),
             'value': element[this.options.value]
           });
         });
         return newFormattedData;
       }
+
+      /**
+        * Helper function to slugify a string.
+        * @param {String} str
+        * @return {String}.
+      */
+      _slugify(str) {
+          str = str.replace(/^\s+|\s+$/g, ''); // trim
+          str = str.toLowerCase();
+
+          // remove accents, swap ñ for n, etc
+          var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+          var to = "aaaaeeeeiiiioooouuuunc------";
+          for (var i = 0, l = from.length; i < l; i++) {
+            str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+          }
+
+          str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+            .replace(/\s+/g, '-') // collapse whitespace and replace by -
+            .replace(/-+/g, '-'); // collapse dashes
+
+          return str;
+        }
     }
 
     window.customElements.define(sqaDropdown.is, sqaDropdown);
