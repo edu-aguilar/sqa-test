@@ -9,7 +9,7 @@
       "id": "1",
       "question": {
         "title": "¿Qué significan las iniciales CSS?",
-        "image": "https://cdn.static-economist.com/sites/default/files/images/2015/09/blogs/economist-explains/code2.png"
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -59,7 +59,7 @@
       "id": "3",
       "question": {
         "title": "¿Cuál es el lugar correcto del documento HTML para referenciar una hoja de estilos externa?",
-        "image": "https://thumbor.forbes.com/thumbor/960x0/smart/https%3A%2F%2Fblogs-images.forbes.com%2Frajatbhageria%2Ffiles%2F2017%2F09%2Fcode-copy-1200x1200.jpg%3Fwidth%3D960"
+        "image": null
       },
       "level": 1,
       "type": "simple",
@@ -378,11 +378,11 @@
       "options": [
         {
           "id": "1",
-          "value": "Añadiendo la propiedad 'language' en la etiqueta body"
+          "value": "Añadiendo la propiedad 'lang' en la etiqueta body"
         },
         {
           "id": "2",
-          "value": "Añadiendo la propiedad 'language' en la etiqueta html"
+          "value": "Añadiendo la propiedad 'lang' en la etiqueta html"
         },
         {
           "id": "3",
@@ -599,7 +599,7 @@
       "options": [
         {
           "id": "1",
-          "value": "Los closures son aquellos métidos indicados para incluir la lógica de negocio y así abstraerla de nuestros componentes lógicos"
+          "value": "Los closures son aquellos métodos indicados para incluir la lógica de negocio y así abstraerla de nuestros componentes lógicos"
         },
         {
           "id": "2",
