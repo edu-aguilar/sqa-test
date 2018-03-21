@@ -170,7 +170,7 @@
           return;
         }
         if (!page) {
-          this.set('route.path', `${this.rootPath}frontend`);
+          this.set('route.path', `${this.rootPath}${this.routeData.profile}`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
