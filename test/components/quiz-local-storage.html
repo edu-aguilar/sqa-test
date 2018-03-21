@@ -45,17 +45,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('Should update localStorage', function() {
           const quizLocalStorage = fixture('localStorage');
-          quizLocalStorage.updateStorage('test', 'quizData', 'test');
-          assert.typeOf(quizLocalStorage.storageData.test.quizData, 'string');
-          assert(quizLocalStorage.storageData.test.quizData === 'test');
+          quizLocalStorage.updateStorage('quizData', 'test');
+          assert.typeOf(quizLocalStorage.storageData.quizData, 'string');
+          assert(quizLocalStorage.storageData.quizData === 'test');
         });
 
         test('Should clear localStorage', function() {
           const quizLocalStorage = fixture('localStorage');
-          quizLocalStorage.updateStorage('test', 'quizData', 'test');
-          assert(quizLocalStorage.storageData.test.quizData === 'test');
+          quizLocalStorage.updateStorage('quizData', 'test');
+          assert(quizLocalStorage.storageData.quizData === 'test');
           quizLocalStorage.clearStorage();
-          assert.typeOf(quizLocalStorage.storageData.test, 'undefined');
+          assert.deepEqual(quizLocalStorage.storageData, {});
         });
       });
     </script>
