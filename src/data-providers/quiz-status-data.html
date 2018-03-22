@@ -92,7 +92,7 @@
           this.__updateSubscribers(`answeredQuestions.${questionId}`);
         }
         quizStatusData.answeredQuestions[questionId] = answerId;
-        this.$.quizLocalStorage.updateStorage(`answeredQuestions.${questionId}`, answerId);
+        this.$.quizLocalStorage.updateStorage(`answeredQuestions`, quizStatusData.answeredQuestions);
         this.__updateSubscribers(`answeredQuestions.${questionId}`);
       }
 
