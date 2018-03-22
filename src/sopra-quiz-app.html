@@ -164,6 +164,9 @@
       }
 
       _routePageChanged(page) {
+        if (page === 'config') {
+          this.set('routeData', {});
+        }
         if (!this.routeData.profile) {
           this.set('route.path', `${this.rootPath}`);
           this.page = 'config';
