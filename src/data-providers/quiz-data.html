@@ -28,7 +28,7 @@
       };}
 
       _loadData() {
-        if (!this.profile) return;
+        if (!this.profile || this.storageData === undefined) return;
         if (this.storageData.quizData) {
           this.loadFromStorage();
         } else {
