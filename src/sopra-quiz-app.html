@@ -138,7 +138,7 @@
         return {
           /** Contains route data provided by `<app-route route="{{route}}">` */
           _subrouteData: Object,
-          /** Data provided by localStorage, contains quizData, timePassed and answeredQuestions */
+          /** Data provided by localStorage */
           _storageData: Object,
           /** Current pageName ready to provide to `<iron-pages>` */
           page: {
@@ -190,7 +190,7 @@
       }
 
       /**
-        * Listener launched when routePage is changed and set `this.page` variable.
+        * Listener launched when routePage is changed and sets `this.page` variable.
         * @param {String} page
       */
       _routePageChanged(page) {
@@ -212,7 +212,7 @@
       }
 
       /**
-        * Listener launched when profile is changed and set `routeData.profilef` with new data.
+        * Listener launched when profile is changed and sets `routeData.profilef` with new data.
         * @param {Object} e
       */
       _routeProfileChanged(e) {
@@ -223,7 +223,7 @@
       }
 
       /**
-        * Listener launched when page is changed and set `Polymer.importHref` with new data.
+        * Listener launched when page is changed and sets `Polymer.importHref` with new data.
         * @param {String} page
       */
       _pageChanged(page) {
@@ -237,7 +237,7 @@
       }
 
       /**
-        * Listener launched when route is changed and set `route.path` with new data.
+        * Listener launched when route is changed and sets `route.path` with new data.
         * @param {Object} e
       */
       _onRouteChange(e) {
