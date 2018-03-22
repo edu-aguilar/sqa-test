@@ -136,21 +136,21 @@
 
       static get properties() {
         return {
-          /** Contains data provided by <app-route> with attribute route setted with tail of the main route `subroute` */
+          /** Contains route data provided by `<app-route route="{{route}}">` */
           _subrouteData: Object,
           /** Data provided by localStorage, contains quizData, timePassed and answeredQuestions */
           _storageData: Object,
-          /** Current pageName ready to provide to to iron-pages */
+          /** Current pageName ready to provide to `<iron-pages>` */
           page: {
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged'
           },
-          /** Contains data provided by <app-route> with attribute route setted the main route */
+          /** Contains data provided by `<app-route>` */
           routeData: Object,
           /** Contains the tail of the route */
           subroute: Object,
-          /** Contains rootPath of the capplication and depends of the kind of deploy, usually is `/` or `sopra-quiz-app` */
+          /** Contains root path of the application and it's currently set to `/` */
           rootPath: String,
           /** Contains value of the locale language */
           language: {
