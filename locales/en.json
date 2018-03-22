@@ -67,5 +67,8 @@
   },
   "loading": {
     "message": "Loading..."
+  },
+  "sendResults": {
+    "message": "Send Results"
   }
 }
