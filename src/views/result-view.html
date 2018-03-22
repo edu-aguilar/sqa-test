@@ -45,6 +45,7 @@
       .button-container{
         display: flex;
         justify-content: center;
+        margin-top: 20%;
       }
 
       @media screen and (min-width: 768px) {
@@ -87,6 +88,12 @@
 
     <div class="box-wrapper">
       <p class="text-result">[[resultMessage]]</p>
+
+      <div class="button-container" hidden$="[[!onSite]]">
+        <button class="button-quiz" on-click="_sendForm">
+          <span> <i18n-msg msgid="sendResults"> Send Results </i18n-msg> </span>
+        </button>
+      </div>
     </div>
     <div class="box-wrapper" hidden$="[[onSite]]" id="formContainer">
       <form id="resultForm">
@@ -164,16 +171,20 @@
           /** Object with correct answers to the questions */
           correctQuestions: {
             type: Object,
-            value: {
-              '1': '1', '2': '1', '3': '2', '4': '2', '5': '4',
-              '6': '1', '7': '1', '8': '1', '9': '2', '10': '1',
-              '11': '1', '12': '1', '13': '4', '14': '1', '15': '2',
-              '16': '4', '17': '3', '18': 'texto', '19': 'texto',
-              '20': 'texto', '21': 'texto', '22': 'texto', '23': '1',
-              '24': '3', '25': '2', '26': 'texto', '27': '4', '28': '2',
-              '29': 'texto', '30': '2', '31': '1', '32': 'texto',
-              '33': 'texto', '34': 'texto'
+            value: { // These are the answers for scrum-master.json
+              '1': '1', '2': ['1'], '3': 'hola mundo'
             }
+            // These are the answers for frontend.json
+            // {
+            //   '1': '1', '2': '1', '3': '2', '4': '2', '5': '4',
+            //   '6': '1', '7': '1', '8': '1', '9': '2', '10': '1',
+            //   '11': '1', '12': '1', '13': '4', '14': '1', '15': '2',
+            //   '16': '4', '17': '3', '18': 'texto', '19': 'texto',
+            //   '20': 'texto', '21': 'texto', '22': 'texto', '23': '1',
+            //   '24': '3', '25': '2', '26': 'texto', '27': '4', '28': '2',
+            //   '29': 'texto', '30': '2', '31': '1', '32': 'texto',
+            //   '33': 'texto', '34': 'texto'
+            // }
           },
           /** Data from storage */
           storageData: Object,
@@ -215,7 +226,7 @@
           this.$.quizStatusData.clearLocalStorage();
           const event = new CustomEvent('onRouteChange',
             {
-              detail: { newRoute: `landing` },
+              detail: { newRoute: `config` },
               composed: true
             });
           this.dispatchEvent(event);
@@ -229,11 +240,13 @@
     
       /** Send form actions -> computeScore -> buildEmail -> sendEmail */
       _sendForm() {
-        this.set('statusData', this.storageData[this.profile] );
+        this.set('statusData', this.storageData);
         this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
         this.set('_config', {
-          to: 'alfonso.estepa@soprasteria.com, eduardo.aguilar@soprasteria.com',
+          to: `alfonso.estepa@soprasteria.com,
+            eduardo.aguilar@soprasteria.com,
+            karina.dasousa@ext.soprasteria.com`,
           html: this.htmlString,
           subject: 'Resultado del test'
         });
