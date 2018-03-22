@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title> config-view </title>
+
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+  <!-- Import the element to test -->
+  <link rel="import" href="../../src/views/config-view.html">
+</head>
+
+<body>
+  <test-fixture id="configView">
+    <template>
+      <config-view></config-view>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('config view tests', function() {
+      test('Form should be valid if every field is provided', function() {
+        const configView = fixture('configView');
+        configView.user = { 
+          'name': 'candidate',
+          'lastname': 'lastname',
+          'email': 'candidate@soprasteria.com',
+          'phone': 12345678,
+          'profile': 'frontend'
+        };
+        assert.equal(configView.isValid, true);
+      });
+
+      test('Form should be invalid if required fields are provided', function() {
+        const configView = fixture('configView');
+        configView.user = { 
+          'email': 'candidate@soprasteria.com',
+          'phone': 12345678,
+          'profile': 'frontend'
+        };
+        assert.equal(configView.isValid, false);
+      });
+    });
+  </script>
+</body>
+</html>

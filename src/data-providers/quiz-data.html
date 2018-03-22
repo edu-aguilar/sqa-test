@@ -18,7 +18,8 @@
           notify: true
         },
         profile: {
-          type: String
+          type: String,
+          observer: '_loadData'
         },
         storageData: {
           type: Object,
@@ -27,8 +28,8 @@
       };}
 
       _loadData() {
-        if (!this.profile) return;
-        if (this.storageData && this.storageData[this.profile]) {
+        if (!this.profile || this.storageData === undefined) return;
+        if (this.storageData.quizData) {
           this.loadFromStorage();
         } else {
           this.loadFromJson();
@@ -36,7 +37,7 @@
       }
 
       loadFromStorage() {
-        const quizData = this.storageData[this.profile].quizData;
+        const quizData = this.storageData.quizData;
         if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
           this.set('data', quizData);
         }
@@ -47,7 +48,7 @@
         fetch(url)
         .then((resp) => resp.json())
         .then((data) => {
-          this.$.quizLocalStorage.updateStorage(this.profile, 'quizData', data);
+          this.$.quizLocalStorage.updateStorage('quizData', data);
           this.set('data', data);
         })
         .catch(() => {this._notifyError();});

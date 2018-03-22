@@ -29,10 +29,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="computeScoreTest">
     <template>
       <compute-score
-       user-data='{ "name": "candidato1", "surname": "ape2", "email": "candidato@soprasteria.com"}'
+       user-data='{ "name": "candidato1", "lastname": "ape2", "email": "candidato@soprasteria.com", "phone": "123456"}'
        correct-questions='{"1": "1", "2": "1" , "3": "2", "5" : ["2","3"], "6" : ["2","3"]}'
        status-data='{ "answeredQuestions": {"1": "3", "2": "1" , "3": "2", "4": "estilos en cascada", "5" : ["2","3"], "6" : ["1","3"] },
                       "timePassed": "1532" , 
+                      "user": { "name": "candidato1", "lastname": "ape2", "email": "candidato@soprasteria.com", "phone": "123456"},
                       "quizData": {"id": "1", "testName": "testExample", "description": "bienvenido al test",
                          "questions":[ {  
                           "id":"1",
@@ -146,7 +147,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
 
     suite('compute-score tests', function () {
-
       test('Option should be and Object', function () {
         let computeScore = fixture('computeScoreTest');
         computeScore.buildTemplate();

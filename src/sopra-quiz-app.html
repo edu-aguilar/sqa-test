@@ -14,6 +14,7 @@
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
+<link rel="lazy-import" href="views/config-view.html">
 <link rel="lazy-import" href="views/landing-view.html">
 <link rel="lazy-import" href="views/question-view.html">
 <link rel="lazy-import" href="views/result-view.html">
@@ -76,10 +77,7 @@
         data="{{_subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="{{_storageData}}">
-    </quiz-local-storage>
+
     <quiz-data
       id="quizData"
       profile="[[routeData.profile]]"
@@ -101,6 +99,7 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
+          <config-view name="config" profile="{{routeData.profile}}"></config-view>
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view
             name="question"
@@ -127,7 +126,6 @@
       static get properties() {
         return {
           _subrouteData: Object,
-          _storageData: Object,
           page: {
             type: String,
             reflectToAttribute: true,
@@ -161,16 +159,33 @@
         this.addEventListener('HTMLImportsLoaded', this._initLanguage);
 
         this.addEventListener('onRouteChange', this._onRouteChange);
+
+        this.addEventListener('onProfileChange', this._routeProfileChanged);
       }
 
       _routePageChanged(page) {
+        if (page === 'config') {
+          this.set('routeData', {});
+        }
+        if (!this.routeData.profile) {
+          this.set('route.path', `${this.rootPath}`);
+          this.page = 'config';
+          return;
+        }
         if (!page) {
-          this.set('route.path', `${this.rootPath}frontend`);
+          this.set('route.path', `${this.rootPath}${this.routeData.profile}`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
         }
         this.page = page;
+      }
+
+      _routeProfileChanged(e) {
+        const profile = e.detail.profile;
+        this.set('routeData.profile', profile);
+        // read json
+        this.set('route.path', `${this.rootPath}${this.routeData.profile}/landing`);
       }
 
       _pageChanged(page) {

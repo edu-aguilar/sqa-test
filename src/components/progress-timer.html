@@ -95,6 +95,9 @@
       _formatTime() {
         const date = new Date(null);
         date.setSeconds(this.timePassed);
+        if (!this.timePassed) {
+          this.timePassed = 0;
+        }
         const result = date.toISOString().substr(11, 8);
         return result;
       }

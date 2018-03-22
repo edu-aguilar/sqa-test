@@ -42,7 +42,6 @@
         const appShell = fixture('shell');
         
         assert.typeOf(appShell._subrouteData, 'object');
-        assert.typeOf(appShell._storageData, 'object');
         assert.typeOf(appShell.page, 'string');
         assert.typeOf(appShell.routeData, 'object');
         assert.typeOf(appShell.subroute, 'object');
@@ -59,9 +58,7 @@
 
       test('Language should be initialized', function(done) {
         const appShell = fixture('shell');
-        
         flush(function() {
-          console.log(appShell.i18n);
           assert(appShell.i18n !== null);
           done();
         });
@@ -69,7 +66,7 @@
 
       test('_routePageChanged observer is fired when page changes and set the page property properly', function() {
         const appShell = fixture('shell');
-        const newPage = 'result';
+        const newPage = 'config';
         appShell.set('_subrouteData.page', newPage);
 
         assert.equal(appShell.page, newPage);

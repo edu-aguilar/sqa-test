@@ -5,6 +5,9 @@
   "goBackHome": {
     "message": "Head back to home"
   },
+  "appDescription": {
+    "message": "Welcome to Sopra Steria Quiz! Please input the candidate's information and select a profile to begin the test."
+  },
   "start": {
     "message": "Start"
   },
@@ -28,6 +31,9 @@
   },
   "phone": {
     "message": "Phone number"
+  },
+  "profile": {
+    "message": "Profile"
   },
   "send": {
     "message": "Send"
@@ -58,5 +64,11 @@
   },
   "writeAnswer": {
     "message": "Write your answer here"
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "sendResults": {
+    "message": "Send Results"
   }
 }

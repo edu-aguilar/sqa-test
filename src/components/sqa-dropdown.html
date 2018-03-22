@@ -35,8 +35,8 @@
       <div class="sqa-dropdown_loading-message">[[loadingMessage]]</div>
     </template>
     <template is="dom-if" if="{{_responseData}}">
-      <paper-dropdown-menu label="[[title]]" selected-item="{{selectedItem}}">
-        <paper-listbox slot="dropdown-content">
+      <paper-dropdown-menu label="[[title]]">
+        <paper-listbox slot="dropdown-content" attr-for-selected="id" selected-item="{{_selectedPaperItem}}">
           <template is="dom-repeat" items="{{_formattedData}}" as="option">
             <paper-item id="[[option.id]]">[[option.value]]</paper-item>
           </template>
@@ -110,10 +110,15 @@
             * ```
           */
           options: Object,
-          /** Sets the selected option */
+          /** Sets the selected id */
           selectedItem: {
             type: String,
             notify: true
+          },
+          /** Sets the selected option */
+          _selectedPaperItem: {
+            type: Object,
+            observer: '_setSelectedItem'
           },
           /** Formatted array ready to be printed */
           _formattedData: Object,
@@ -123,6 +128,14 @@
             observer: '_formatResponseData'
           }
         };
+      }
+
+      /**
+        * Set this.selectedItem to an selected object id.
+        * @param {Object} selectedPaperItem
+      */
+      _setSelectedItem(selectedPaperItem) {
+        if (selectedPaperItem) this.selectedItem = selectedPaperItem.id;
       }
 
       /**
@@ -150,11 +163,35 @@
         const newFormattedData = [];
         formattedData.map((element) => {
           newFormattedData.push({
-            'id': element[this.options.id],
+            'id': this._slugify(element[this.options.id]),
             'value': element[this.options.value]
           });
         });
         return newFormattedData;
+      }
+
+      /**
+        * Helper function to slugify a string.
+        * @param {String} str
+        * @return {String}.
+      */
+      _slugify(str) {
+        if (typeof str !== 'string') return str;
+        str = str.replace(/^\s+|\s+$/g, ''); // trim
+        str = str.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        var from = 'àáäâèéëêìíïîòóöôùúüûñç·/_,:;';
+        var to = 'aaaaeeeeiiiioooouuuunc------';
+        for (var i = 0, l = from.length; i < l; i++) {
+          str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+
+        str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+          .replace(/\s+/g, '-') // collapse whitespace and replace by -
+          .replace(/-+/g, '-'); // collapse dashes
+
+        return str;
       }
     }
 

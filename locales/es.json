@@ -5,6 +5,9 @@
   "goBackHome": {
     "message": "Ve de vuelta al Inicio"
   },
+  "appDescription": {
+    "message": "¡Bienvenido a Sopra Steria Quiz! Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba."
+  },
   "start": {
     "message": "Empezar"
   },
@@ -28,6 +31,9 @@
   },
   "phone": {
     "message": "Teléfono"
+  },
+  "profile": {
+    "message": "Perfil"
   },
   "send": {
     "message": "Enviar"
@@ -58,5 +64,11 @@
   },
   "writeAnswer": {
     "message": "Escribe aquí tu respuesta"
+  },
+  "loading": {
+    "message": "Cargando..."
+  },
+  "sendResults": {
+    "message": "Enviar Resultados"
   }
 }
