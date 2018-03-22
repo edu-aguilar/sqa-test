@@ -76,7 +76,6 @@
       profile="{{profile}}">
     </quiz-status-data>
 
-    
     <div class="box-wrapper" id="formContainer">
       <p class="text-result"> 
         <i18n-msg msgid="appDescription">
@@ -165,7 +164,10 @@
       static get properties() {
         return {
           /** Quiz profile (frontend, backend, fullstack, etc.) */
-          profile: String,
+          profile: {
+            type: String,
+            value: ''
+          },
           /** Candidate's information */
           user: {
             type: Object,
