@@ -3,8 +3,6 @@
 
 <link rel="import" href="../styles/shared-styles.html">
 
-<link rel="import" href="../data-providers/quiz-status-data.html">
-
 <link rel="import" href="../components/compute-score.html">
 <link rel="import" href="../components/email-builder.html">
 <link rel="import" href="../components/email-sender.html">
@@ -57,13 +55,6 @@
         }
       }
     </style>
-
-    <!-- 1 - Get data from statusData -->
-    <quiz-status-data 
-      id="quizStatusData"
-      profile="[[profile]]"
-      storage-data="{{storageData}}">
-    </quiz-status-data>
 
     <!-- 2 - Compute score after send form -->    
     <compute-score
@@ -208,8 +199,6 @@
           },
           /** Object with computed test score data */
           scoreData: Object,
-          /** Object with profile from storage data */
-          statusData: Object,
           /** Email html to be send */
           htmlString: String,
           /** Email sender configuration object */
@@ -223,7 +212,6 @@
 
         this.addEventListener('onEmailSentSuccesfully', () => {
           alert('Muchas gracias por completar nuestro quiz. ヽ(´▽`)/');
-          this.$.quizStatusData.clearLocalStorage();
           const event = new CustomEvent('onRouteChange',
             {
               detail: { newRoute: `config` },
@@ -240,7 +228,6 @@
     
       /** Send form actions -> computeScore -> buildEmail -> sendEmail */
       _sendForm() {
-        this.set('statusData', this.storageData);
         this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
         this.set('_config', {

@@ -10,6 +10,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/i18n-msg/i18n-msg.html">
+<link rel="import" href="components/quiz-local-storage.html">
 
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
@@ -77,6 +78,11 @@
         data="{{_subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
+
+    <quiz-local-storage
+      id="quizLocalStorage"
+      profile="{{routeData.profile}}">
+    </quiz-local-storage>
 
     <quiz-data
       id="quizData"
@@ -171,6 +177,11 @@
         ];
       }
 
+      constructor() {
+        super();
+        if(window.location.pathname === '/') localStorage.clear();
+      }
+
       /**
         * Ready function to configure i18n.
         * After overwriting the ready function, I18nMsg needs to be initialized again
@@ -203,7 +214,7 @@
           return;
         }
         if (!page) {
-          this.set('route.path', `${this.rootPath}${this.routeData.profile}`);
+          this.set('route.path', `${this.rootPath}`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;

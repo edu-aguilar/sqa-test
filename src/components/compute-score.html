@@ -1,8 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="../data-providers/quiz-data.html">
 
 <dom-module id="compute-score">
   <template>
-
+    <!-- Get data from statusData -->
+    <quiz-status-data 
+      quiz-data="{{quizData}}"
+      status-data="{{statusData}}"
+      answered-questions="{{answeredQuestions}}"
+      time-passed="{{timePassed}}"
+      user="{{user}}">
+    </quiz-status-data>
+    <quiz-data data="{{quizData}}"></quiz-data>
   </template>
   <script>
 
@@ -13,9 +23,7 @@
   *
   * ```
   * <compute-score
-  *   user-data='userData'
   *   correct-questions='correctQuestions'
-  *   status-data='statusData'
   *   score-data='scoreData'>
   * </compute-score>
   * ```
@@ -27,12 +35,6 @@
       static get is() { return 'compute-score'; }
       static get properties() {
         return {
-          /** candidate information */
-          userData: Object,
-          /** input object where store the test information  */
-          statusData: {
-            type: Object
-          },
           /** input object that stores the answers */
           correctQuestions: Object,
           /** output object to generate the mail template */
@@ -47,7 +49,7 @@
       buildTemplate() {
         let scoreData = this._inizializeScoreData();
 
-        this.statusData.quizData.questions.map((questionMap) => {
+        this.quizData.questions.map((questionMap) => {
           const question = {
             id: questionMap.id,
             statement: questionMap.question,
@@ -56,7 +58,7 @@
           };
 
           const correctOptionAswered = this.correctQuestions[question.id];
-          const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
+          const selectedOptionAswered = this.answeredQuestions[question.id];
 
           switch (question.type) {
             case 'simple':
@@ -106,12 +108,12 @@
         return {
           correctCount: 0,
           totalCount: 0,
-          testName: this.statusData.quizData.testName,
-          timePassed: this.statusData.timePassed,
-          name: this.statusData.user.name,
-          surname: this.statusData.user.lastname,
-          email: this.statusData.user.email,
-          phone: this.statusData.user.phone,
+          testName: this.quizData.testName,
+          timePassed: this.timePassed,
+          name: this.user.name,
+          surname: this.user.lastname,
+          email: this.user.email,
+          phone: this.user.phone,
           questions: []
         };
       }

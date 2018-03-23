@@ -56,8 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       progress="{{quizProgress}}"
       answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}"
-      time-passed="{{timePassed}}"
-      profile="[[profile]]">
+      time-passed="{{timePassed}}">
     </quiz-status-data>
 
     <question-tabs
@@ -92,13 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           _question: Object,
           _selectedAnswerArray: Array,
           route: Object,
-          quizData: Object,
-          profile: String,
-          timePassed: {
-            type: Number,
-            notify: true,
-            observer: '_updateStorageTime'
-          }
+          quizData: Object
         };
       }
 
@@ -113,10 +106,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super.ready();
         this.$.progressTimer.start();
         this.addEventListener('onPageQuestionChange', this._pageChange);
-      }
-
-      _updateStorageTime(timePassed) {
-        this.$.quizStatusData.updateTime(timePassed);
       }
 
       _setAnsweredQuestion(answer) {

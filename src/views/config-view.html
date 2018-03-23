@@ -72,8 +72,7 @@
 
     <!-- Store Candidate's Information -->
     <quiz-status-data 
-      id="quizStatusData"
-      profile="{{profile}}">
+      id="quizStatusData">
     </quiz-status-data>
 
     <div class="box-wrapper" id="formContainer">
@@ -203,7 +202,6 @@
       /** Ready function */
       ready() {
         super.ready();
-        this.$.quizStatusData.clearLocalStorage();
         this.set('_i18n', this.i18n);
       }
 
