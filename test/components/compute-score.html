@@ -10,154 +10,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title> Compute Score Tests </title>
 
-  <title>compute score Test</title>
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
 
-  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../bower_components/web-component-tester/browser.js"></script>
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/components/compute-score.html">
+  </head>
 
-  <!-- Import the element to test -->
-  <link rel="import" href="../../src/components/compute-score.html">
-</head>
+  <body>
+    <test-fixture id="computeScoreTest">
+      <template>
+        <compute-score
+          answered-questions = '{ "1": "3", "2": "estilos en cascada", "3" : ["2","3"] }',
+          correct-questions = '{ "1": "1", "3" : ["2","3"] }',
+          time-passed = '1532',
+          user = '{ "name": "candidato1", "lastname": "ape2", "email": "candidato@soprasteria.com", "phone": "123456" }',
+          quiz-data ='{
+            "id": "1",
+            "testName": "testExample",
+            "description": "bienvenido al test",
+            "questions":[
+              {  
+                "id":"1",
+                "question":"¿Qué significan las iniciales CSS?",
+                "level":"1",
+                "type": "simple",
+                "options":[  
+                  {  
+                    "id":"1",
+                    "value":"Cascading Style Sheets"
+                  },
+                  {  
+                    "id":"2",
+                    "value":"Colorful Style Sheets"
+                  },
+                  {  
+                    "id":"3",
+                    "value":"Creative Style Sheets"
+                  }
+                ]
+              },
+              {  
+                "id":"2",
+                "question":"¿Qué significan las iniciales CSS?",
+                "level":"1",
+                "type": "text",
+                "options":[]
+              },
+              {  
+                "id":"3",
+                "question":"¿Qué significan las iniciales CSS?",
+                "level":"1",
+                "type": "multiple",
+                "options":[  
+                  {  
+                    "id":"1",
+                    "value":"Cascading Style Sheets"
+                  },
+                  {  
+                    "id":"2",
+                    "value":"Colorful Style Sheets"
+                  },
+                  {  
+                    "id":"3",
+                    "value":"Creative Style Sheets"
+                  }
+                ]
+              }
+            ]
+          }'>
+        </compute-score>
+      </template>
+    </test-fixture>
 
-<body>
-
-  <test-fixture id="computeScoreTest">
-    <template>
-      <compute-score
-       user-data='{ "name": "candidato1", "lastname": "ape2", "email": "candidato@soprasteria.com", "phone": "123456"}'
-       correct-questions='{"1": "1", "2": "1" , "3": "2", "5" : ["2","3"], "6" : ["2","3"]}'
-       status-data='{ "answeredQuestions": {"1": "3", "2": "1" , "3": "2", "4": "estilos en cascada", "5" : ["2","3"], "6" : ["1","3"] },
-                      "timePassed": "1532" , 
-                      "user": { "name": "candidato1", "lastname": "ape2", "email": "candidato@soprasteria.com", "phone": "123456"},
-                      "quizData": {"id": "1", "testName": "testExample", "description": "bienvenido al test",
-                         "questions":[ {  
-                          "id":"1",
-                          "question":"¿Qué significan las iniciales CSS?",
-                          "level":"1",
-                          "type": "simple",
-                          "options":[  
-                             {  
-                                "id":"1",
-                                "value":"Cascading Style Sheets"
-                             },
-                             {  
-                                "id":"2",
-                                "value":"Colorful Style Sheets"
-                             },
-                             {  
-                                "id":"3",
-                                "value":"Creative Style Sheets"
-                             }
-                          ]},
-                          {  
-                            "id":"2",
-                            "question":"¿Qué significan las iniciales CSS?",
-                            "level":"1",
-                            "type": "simple",
-                            "options":[  
-                               {  
-                                  "id":"1",
-                                  "value":"Cascading Style Sheets"
-                               },
-                               {  
-                                  "id":"2",
-                                  "value":"Colorful Style Sheets"
-                               },
-                               {  
-                                  "id":"3",
-                                  "value":"Creative Style Sheets"
-                               }
-                            ]},
-                            {  
-                              "id":"3",
-                              "question":"¿Qué significan las iniciales CSS?",
-                              "level":"1",
-                              "type": "simple",
-                              "options":[  
-                                 {  
-                                    "id":"1",
-                                    "value":"Cascading Style Sheets"
-                                 },
-                                 {  
-                                    "id":"2",
-                                    "value":"Colorful Style Sheets"
-                                 },
-                                 {  
-                                    "id":"3",
-                                    "value":"Creative Style Sheets"
-                                 }
-                            ]},
-                            {  
-                              "id":"4",
-                              "question":"¿Qué significan las iniciales CSS?",
-                              "level":"1",
-                              "type": "text",
-                              "options":[]
-                            },
-                            {  
-                              "id":"5",
-                              "question":"¿Qué significan las iniciales CSS?",
-                              "level":"1",
-                              "type": "multiple",
-                              "options":[  
-                                 {  
-                                    "id":"1",
-                                    "value":"Cascading Style Sheets"
-                                 },
-                                 {  
-                                    "id":"2",
-                                    "value":"Colorful Style Sheets"
-                                 },
-                                 {  
-                                    "id":"3",
-                                    "value":"Creative Style Sheets"
-                                 }
-                            ]},
-                            {  
-                              "id":"6",
-                              "question":"¿Qué significan las iniciales CSS?",
-                              "level":"1",
-                              "type": "multiple",
-                              "options":[  
-                                 {  
-                                    "id":"1",
-                                    "value":"Cascading Style Sheets"
-                                 },
-                                 {  
-                                    "id":"2",
-                                    "value":"Colorful Style Sheets"
-                                 },
-                                 {  
-                                    "id":"3",
-                                    "value":"Creative Style Sheets"
-                                 }
-                            ]}
-
-                          ]}
-                        }'>
-      </compute-score>
-    </template>
-  </test-fixture>
-
-  <script>
-
-    suite('compute-score tests', function () {
-      test('Option should be and Object', function () {
-        let computeScore = fixture('computeScoreTest');
-        computeScore.buildTemplate();
-        assert.equal(computeScore.scoreData.totalCount, 5);
-        assert.equal(computeScore.scoreData.correctCount, 3);
-        assert.equal(computeScore.scoreData.questions.length, 6);
-        assert.equal(computeScore.scoreData.correctPercentage, 60);
+    <script>
+      suite('compute-score tests', function () {
+        test('Option should be and Object', function () {
+          let computeScore = fixture('computeScoreTest');
+          computeScore.buildTemplate();
+          assert.equal(computeScore.scoreData.totalCount, 2);
+          assert.equal(computeScore.scoreData.correctCount, 1);
+          assert.equal(computeScore.scoreData.questions.length, 3);
+          assert.equal(computeScore.scoreData.correctPercentage, 50);
+        });
       });
-
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
