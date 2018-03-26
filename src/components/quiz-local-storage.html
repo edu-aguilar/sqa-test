@@ -3,7 +3,7 @@
 
 <dom-module id="quiz-local-storage">
   <script>
-
+    /* eslint new-cap: "off", no-undef: "off" */
     class quizLocalStorage extends SharedPropertiesMixin(Polymer.Element) {
       static get is() {return 'quiz-local-storage';}
 
@@ -41,7 +41,9 @@
           if(localStorageString !== null) {
             try {
               localStorageValue = JSON.parse(localStorage.getItem(property));
-            } catch(e) {}
+            } catch(e) {
+              // Do nothing
+            }
           }
 
           this.setSharedProperty(property, property, localStorageValue);

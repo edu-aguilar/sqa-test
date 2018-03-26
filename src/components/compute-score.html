@@ -5,36 +5,46 @@
 <dom-module id="compute-score">
   <template>
     <!-- Get data from statusData -->
-    <quiz-status-data 
-      quiz-data="{{quizData}}"
-      status-data="{{statusData}}"
+    <quiz-status-data
       answered-questions="{{answeredQuestions}}"
       time-passed="{{timePassed}}"
       user="{{user}}">
     </quiz-status-data>
-    <quiz-data data="{{quizData}}"></quiz-data>
-  </template>
-  <script>
 
+    <!-- Get quizData -->
+    <quiz-data 
+      data="{{quizData}}">
+    </quiz-data>
+  </template>
+
+  <script>
     /**
-  * `<compute-score>` component to calculate the test result and generate the object of the template
-  *
-  * ## Usage
-  *
-  * ```
-  * <compute-score
-  *   correct-questions='correctQuestions'
-  *   score-data='scoreData'>
-  * </compute-score>
-  * ```
-  *
-  * @customElement
-  * @polymer
-*/
+      * `<compute-score>` component to calculate the test results and generate the object to build the email template
+      *
+      * ## Usage
+      *
+      * ```
+      * <compute-score
+      *   correct-questions = "[[correctQuestions]]"
+      *   score-data = "{{scoreData}}">
+      * </compute-score>
+      * ```
+      *
+      * @customElement
+      * @polymer
+    */
     class ComputeScore extends (class extends Polymer.Element { }) {
       static get is() { return 'compute-score'; }
       static get properties() {
         return {
+          /** Private object that contains the user answers (Obtained from quiz-status-data) */
+          answeredQuestions: Object,
+          /** Private object that contains the time taken by the user to finish the quiz (Obtained from quiz-status-data) */
+          timePassed: Object,
+          /** Private object that contains the user data (Obtained from quiz-status-data) */
+          user: Object,
+          /** Private object that contains the quiz detail (Obtained from quiz-data) */
+          quizData: Object,
           /** input object that stores the answers */
           correctQuestions: Object,
           /** output object to generate the mail template */
@@ -46,6 +56,7 @@
         };
       }
 
+      /** Function that builds the scoreData object used for creating the email template */
       buildTemplate() {
         let scoreData = this._inizializeScoreData();
 
@@ -99,11 +110,21 @@
         this.set('scoreData', scoreData);
       }
 
+      /**
+      * Helper function to check if question of typer 'multiple' is correct or not
+      * @param {Object[]} arrayA containing the correct answers.
+      * @param {Object[]} arrayB containing the user answers.
+      * @return {boolean} true or false, depending on whether the user answered correctly.
+      */
       _checkMultipleQuestions(arrayA, arrayB) {
         if (arrayA.length !== arrayB.length) return false;
         return arrayA.every((a) => a === arrayB.find((b) => a === b));
       }
 
+      /**
+      * Sets initial value for scoreData
+      * @return {Object} initial scoreData configuration.
+      */
       _inizializeScoreData() {
         return {
           correctCount: 0,
@@ -120,5 +141,4 @@
     }
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
-
 </dom-module>
