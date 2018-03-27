@@ -149,8 +149,13 @@
         this.scoreData.questions.forEach((question) => {
           answersHtml += `<tr> 
             <td>
-              <h3> ${question.id} - ${this._escapeHtml(question.statement.title)} </h3>
-              ${this._processAnswers(
+              <h3> ${question.id} - ${this._escapeHtml(question.statement.title)} </h3>`
+              
+          if (question.statement.image) {
+            answersHtml += `<img src="${question.statement.image}">`
+          }
+
+          answersHtml += `${this._processAnswers(
                 question.type,
                 question.userAnswer,
                 question.correctAnswer,
