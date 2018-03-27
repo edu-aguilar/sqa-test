@@ -14,6 +14,7 @@
             notify: true,
             sharedStoreKey: 'quizDataStorage'
           },
+          currentProfile: String,
           profile: {
             type: String,
             observer: '_loadData'
@@ -22,10 +23,9 @@
       }
 
       _loadData() {
-        /*
-          TODO: we need to know if the stored profile is different to the current,
-          maybe with an additional key in the JSON or storing quizID for comparison
-        */
+        if (this.profile && this.currentProfile !== this.profile) {
+          this.loadFromJson();
+        }
         if (this.profile && !this.data) {
           this.loadFromJson();
         }
@@ -37,6 +37,7 @@
         .then((resp) => resp.json())
         .then((data) => {
           this.set('data', data);
+          this.currentProfile = this.profile;
         })
         .catch((e) => {this._notifyError(e);});
       }
