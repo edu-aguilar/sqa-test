@@ -105,7 +105,7 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <config-view name="config" profile="{{routeData.profile}}"></config-view>
+          <config-view name="config" profile="[[routeData.profile]]"></config-view>
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view
             name="question"
@@ -143,8 +143,6 @@
         return {
           /** Contains route data provided by `<app-route route="{{route}}">` */
           _subrouteData: Object,
-          /** Data provided by localStorage */
-          _storageData: Object,
           /** Current pageName ready to provide to `<iron-pages>` */
           page: {
             type: String,
@@ -197,6 +195,10 @@
         this.addEventListener('onRouteChange', this._onRouteChange);
 
         this.addEventListener('onProfileChange', this._routeProfileChanged);
+
+        this.addEventListener('removeAnswers', this._clearAnsweredQuestions);
+
+        this.addEventListener('startQuizTimer', this._startTimer);
       }
 
       /**
@@ -274,6 +276,17 @@
       */
       _showPage404() {
         this.page = 'not-found';
+      }
+
+      _clearAnsweredQuestions() {
+        this.shadowRoot.querySelector('config-view').clearStorage();
+      }
+
+      _startTimer() {
+        let questionView = this.shadowRoot.querySelector('question-view');
+        if (typeof questionView.startTimer !== "undefined") {
+          questionView.startTimer();
+        }
       }
     }
 

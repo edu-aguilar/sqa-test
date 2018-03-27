@@ -215,6 +215,10 @@
               composed: true
             });
           this.dispatchEvent(event);
+          this.dispatchEvent(new CustomEvent('removeAnswers',
+            {
+              composed: true
+            }));
         });
       }
 
@@ -228,9 +232,7 @@
         this.$.computeScore.buildTemplate();
         this.$.emailBuilder.buildHTMLString();
         this.set('_config', {
-          to: `alfonso.estepa@soprasteria.com,
-            eduardo.aguilar@soprasteria.com,
-            karina.dasousa@ext.soprasteria.com`,
+          to: `karina.dasousa@ext.soprasteria.com`,
           html: this.htmlString,
           subject: 'Resultado del test'
         });

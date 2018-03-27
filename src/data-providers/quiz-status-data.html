@@ -15,7 +15,7 @@
             type: Object,
             notify: true,
             sharedStoreKey: 'answeredQuestions',
-            value: {}
+            value: () => ({})
           },
           profile: {
             type: String,
@@ -55,6 +55,13 @@
 
       setUserData(user) {
         this.user = user;
+      }
+
+      //this method shoud be clearAll?
+      clear() {
+        this.set('answeredQuestions', {});
+        this.profile = "";
+        this.timePassed = 0;
       }
 
       setAnsweredQuestion(questionId, answerId) {

@@ -104,8 +104,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        this.$.progressTimer.start();
+        this.startTimer();
         this.addEventListener('onPageQuestionChange', this._pageChange);
+      }
+
+      startTimer() {
+        this.$.progressTimer.start();
       }
 
       _setAnsweredQuestion(answer) {
@@ -124,6 +128,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
+          if (!this.answeredQuestions) {
+            this.set('answeredQuestions', {});
+          }
           this._selectedAnswerArray =
             this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : [];
         }

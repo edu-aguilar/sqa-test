@@ -205,6 +205,10 @@
         this.set('_i18n', this.i18n);
       }
 
+      clearStorage() {
+        this.shadowRoot.querySelector('quiz-status-data').clear();
+      }
+
       /** Method to observe if the form is valid or not */
       _checkFormValid() {
         this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
@@ -220,6 +224,10 @@
         );
 
         this.dispatchEvent(profileEvent);
+
+        //this._clearForm
+        this.set('user', {});
+        this.shadowRoot.querySelector('sqa-dropdown').reset();
       }
     }
     window.customElements.define(ConfigView.is, ConfigView);
