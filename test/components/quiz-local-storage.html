@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>my-view1</title>
+    <title> Quiz Local Storage Tests </title>
 
     <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../bower_components/web-component-tester/browser.js"></script>
@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <body>
     <test-fixture id="localStorage">
       <template>
-        <quiz-local-storage id="quizLocalStorage" storage-data="{}">
+        <quiz-local-storage id="quizLocalStorage">
         </quiz-local-storage>
       </template>
     </test-fixture>
@@ -38,24 +38,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           done();
         });
 
-        test('localStorage has to be right types', function() {
-          const quizLocalStorage = fixture('localStorage');
-          assert.typeOf(quizLocalStorage.storageData, 'object');
-        });
-
         test('Should update localStorage', function() {
           const quizLocalStorage = fixture('localStorage');
-          quizLocalStorage.updateStorage('quizData', 'test');
-          assert.typeOf(quizLocalStorage.storageData.quizData, 'string');
-          assert(quizLocalStorage.storageData.quizData === 'test');
-        });
-
-        test('Should clear localStorage', function() {
-          const quizLocalStorage = fixture('localStorage');
-          quizLocalStorage.updateStorage('quizData', 'test');
-          assert(quizLocalStorage.storageData.quizData === 'test');
-          quizLocalStorage.clearStorage();
-          assert.deepEqual(quizLocalStorage.storageData, {});
+          quizLocalStorage.quizDataStorage = 'test';
+          quizLocalStorage.profile = 'front-End';
+          assert.equal(quizLocalStorage.quizDataStorage, JSON.parse(localStorage.getItem('quizDataStorage')));
+          assert.equal(quizLocalStorage.profile, JSON.parse(localStorage.getItem('profile')));
         });
       });
     </script>

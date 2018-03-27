@@ -1,38 +1,54 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="../../bower_components/shared-properties-mixin/shared-properties-mixin.html">
 
 <dom-module id="quiz-local-storage">
-
-  <template>
-    <app-localstorage-document 
-      id="appLocalStorage"
-      key="quiz-local-storage"
-      data="{{storageData}}">
-    </app-localstorage-document>
-  </template>
-
   <script>
-
-    class quizLocalStorage extends Polymer.Element {
+    /* eslint new-cap: "off", no-undef: "off" */
+    class quizLocalStorage extends SharedPropertiesMixin(Polymer.Element) {
       static get is() {return 'quiz-local-storage';}
 
       static get properties() {
         return {
-          storageData: {
-            type: Object,
-            notify: true
-          }
+          profile: String
         };
       }
 
-      updateStorage(key, data) {
-        this.set(`storageData.${key}`, data);
-        this.$.appLocalStorage.setStoredValue(`storageData.${key}`, data);
+      constructor() {
+        super();
+        this.__setStoredKeys(
+          'quizDataStorage',
+          'profile',
+          'answeredQuestions',
+          'userStorage',
+          'timePassedStorage'
+        );
       }
 
-      clearStorage() {
-        this.set(`storageData`, {});
-        this.$.appLocalStorage.saveValue('quiz-local-storage');
+      _observeStore(storeName) {
+        const value = JSON.stringify(this[storeName]);
+        if(value) {
+          localStorage.setItem(storeName, value);
+        }
+      }
+
+      __setStoredKeys(...propertyNames) {
+        this.storeKeys = propertyNames;
+
+        propertyNames.forEach((property) => {
+          let localStorageValue;
+          let localStorageString = localStorage.getItem(property);
+
+          if(localStorageString !== null) {
+            try {
+              localStorageValue = JSON.parse(localStorage.getItem(property));
+            } catch(e) {
+              // Do nothing
+            }
+          }
+
+          this.setSharedProperty(property, property, localStorageValue);
+          this._createMethodObserver(`_observeStore('${property}', ${property}.*)`);
+        });
       }
     }
 

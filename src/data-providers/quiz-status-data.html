@@ -1,22 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../components/quiz-local-storage.html">
+<link rel="import" href="../../bower_components/shared-properties-mixin/shared-properties-mixin.html">
 
 <dom-module id="quiz-status-data">
-  <template>
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="{{storageData}}">
-    </quiz-local-storage>
-  </template>
+
   <script>
-  (function() {
-    let quizStatusData = {
-      answeredQuestions: {}
-    };
-
-    let subscribers = [];
-
-    class QuizStatusData extends Polymer.Element {
+    /* eslint new-cap: "off", no-undef: "off" */
+    class QuizStatusData extends SharedPropertiesMixin(Polymer.Element) {
       static get is() {return 'quiz-status-data';}
 
       static get properties() {
@@ -25,12 +14,12 @@
           answeredQuestions: {
             type: Object,
             notify: true,
-            value: () => quizStatusData.answeredQuestions
+            sharedStoreKey: 'answeredQuestions',
+            value: () => ({})
           },
           profile: {
             type: String,
-            value: () => quizStatusData.profile,
-            observer: '_setProfile'
+            sharedStoreKey: 'profile'
           },
           progress: {
             type: Number,
@@ -39,15 +28,16 @@
           },
           timePassed: {
             type: Number,
-            notify: true
+            sharedStoreKey: 'timePassedStorage',
+            notify: true,
+            observer: 'timePassedChanged'
           },
           answeredQuestionsCount: {
             type: Number,
             notify: true
           },
-          storageData: {
+          user: {
             type: Object,
-            observer: '_loadFromStorage',
             notify: true
           }
         };
@@ -55,63 +45,39 @@
 
       constructor() {
         super();
-        subscribers.push(this);
+        this.setSharedProperty('user', 'userStorage');
       }
 
-      disconnectedCallback() {
-        super.disconnectedCallback();
-        subscribers.splice(subscribers.indexOf(this), 1);
-      }
-
-      updateTime(timePassed) {
-        this.$.quizLocalStorage.updateStorage('timePassed', timePassed);
+      timePassedChanged(value) {
+        // Fixes a binding bug
+        this.timePassed = value;
       }
 
       setUserData(user) {
-        this.$.quizLocalStorage.updateStorage('user', user);
-        this.updateTime(0);
+        this.user = user;
       }
 
-      _setProfile(profile) {
-        if (profile && profile.id) {
-          this.profile = profile.id;
-          this.$.quizLocalStorage.updateStorage('profile', this.profile);
-        }
-      }
-
-      _loadFromStorage(storageData) {
-        if (this.profile && storageData) {
-          this.timePassed = storageData.timePassed;
-          this.answeredQuestions = storageData.answeredQuestions || {};
-        }
+      clear() {
+        this.set('answeredQuestions', {});
+        this.profile = '';
+        this.timePassed = 0;
       }
 
       setAnsweredQuestion(questionId, answerId) {
-        if (!quizStatusData.answeredQuestions[questionId]) {
-          quizStatusData.answeredQuestions[questionId] = '';
-          this.__updateSubscribers(`answeredQuestions.${questionId}`);
+        if (!this.answeredQuestions[questionId]) {
+          this.set(`answeredQuestions.${questionId}`, '');
         }
-        quizStatusData.answeredQuestions[questionId] = answerId;
-        this.$.quizLocalStorage.updateStorage(`answeredQuestions`, quizStatusData.answeredQuestions);
-        this.__updateSubscribers(`answeredQuestions.${questionId}`);
+        this.set(`answeredQuestions.${questionId}`, answerId);
       }
 
       _computeProgress() {
-        this.answeredQuestionsCount = Object.keys(this.answeredQuestions).length;
+        this.answeredQuestionsCount = Object.keys(this.answeredQuestions||{}).length;
         return this.answeredQuestionsCount / this.totalQuestions * 100;
-      }
-
-      __updateSubscribers(path) {
-        subscribers.forEach((subscriber) => {subscriber.notifyPath(path);});
-      }
-
-      clearLocalStorage() {
-        this.$.quizLocalStorage.clearStorage();
       }
     }
 
     customElements.define(QuizStatusData.is, QuizStatusData);
-  })();
+
   </script>
 
 </dom-module>

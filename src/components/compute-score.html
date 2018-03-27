@@ -1,38 +1,50 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../data-providers/quiz-status-data.html">
+<link rel="import" href="../data-providers/quiz-data.html">
 
 <dom-module id="compute-score">
   <template>
+    <!-- Get data from statusData -->
+    <quiz-status-data
+      answered-questions="{{answeredQuestions}}"
+      time-passed="{{timePassed}}"
+      user="{{user}}">
+    </quiz-status-data>
 
+    <!-- Get quizData -->
+    <quiz-data 
+      data="{{quizData}}">
+    </quiz-data>
   </template>
-  <script>
 
+  <script>
     /**
-  * `<compute-score>` component to calculate the test result and generate the object of the template
-  *
-  * ## Usage
-  *
-  * ```
-  * <compute-score
-  *   user-data='userData'
-  *   correct-questions='correctQuestions'
-  *   status-data='statusData'
-  *   score-data='scoreData'>
-  * </compute-score>
-  * ```
-  *
-  * @customElement
-  * @polymer
-*/
+      * `<compute-score>` component to calculate the test results and generate the object to build the email template
+      *
+      * ## Usage
+      *
+      * ```
+      * <compute-score
+      *   correct-questions = "[[correctQuestions]]"
+      *   score-data = "{{scoreData}}">
+      * </compute-score>
+      * ```
+      *
+      * @customElement
+      * @polymer
+    */
     class ComputeScore extends (class extends Polymer.Element { }) {
       static get is() { return 'compute-score'; }
       static get properties() {
         return {
-          /** candidate information */
-          userData: Object,
-          /** input object where store the test information  */
-          statusData: {
-            type: Object
-          },
+          /** Private object that contains the user answers (Obtained from quiz-status-data) */
+          answeredQuestions: Object,
+          /** Private object that contains the time taken by the user to finish the quiz (Obtained from quiz-status-data) */
+          timePassed: Object,
+          /** Private object that contains the user data (Obtained from quiz-status-data) */
+          user: Object,
+          /** Private object that contains the quiz detail (Obtained from quiz-data) */
+          quizData: Object,
           /** input object that stores the answers */
           correctQuestions: Object,
           /** output object to generate the mail template */
@@ -44,10 +56,11 @@
         };
       }
 
+      /** Function that builds the scoreData object used for creating the email template */
       buildTemplate() {
         let scoreData = this._inizializeScoreData();
 
-        this.statusData.quizData.questions.map((questionMap) => {
+        this.quizData.questions.map((questionMap) => {
           const question = {
             id: questionMap.id,
             statement: questionMap.question,
@@ -56,7 +69,7 @@
           };
 
           const correctOptionAswered = this.correctQuestions[question.id];
-          const selectedOptionAswered = this.statusData.answeredQuestions[question.id];
+          const selectedOptionAswered = this.answeredQuestions[question.id];
 
           switch (question.type) {
             case 'simple':
@@ -97,26 +110,35 @@
         this.set('scoreData', scoreData);
       }
 
+      /**
+      * Helper function to check if question of typer 'multiple' is correct or not
+      * @param {Object[]} arrayA containing the correct answers.
+      * @param {Object[]} arrayB containing the user answers.
+      * @return {boolean} true or false, depending on whether the user answered correctly.
+      */
       _checkMultipleQuestions(arrayA, arrayB) {
         if (arrayA.length !== arrayB.length) return false;
         return arrayA.every((a) => a === arrayB.find((b) => a === b));
       }
 
+      /**
+      * Sets initial value for scoreData
+      * @return {Object} initial scoreData configuration.
+      */
       _inizializeScoreData() {
         return {
           correctCount: 0,
           totalCount: 0,
-          testName: this.statusData.quizData.testName,
-          timePassed: this.statusData.timePassed,
-          name: this.statusData.user.name,
-          surname: this.statusData.user.lastname,
-          email: this.statusData.user.email,
-          phone: this.statusData.user.phone,
+          testName: this.quizData.testName,
+          timePassed: this.timePassed,
+          name: this.user.name,
+          surname: this.user.lastname,
+          email: this.user.email,
+          phone: this.user.phone,
           questions: []
         };
       }
     }
     customElements.define(ComputeScore.is, ComputeScore);
   </script>
-
 </dom-module>

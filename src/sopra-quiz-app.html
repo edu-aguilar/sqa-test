@@ -10,6 +10,7 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/i18n-msg/i18n-msg.html">
+<link rel="import" href="components/quiz-local-storage.html">
 
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
@@ -78,6 +79,11 @@
         tail="{{subrouteTail}}">
     </app-route>
 
+    <quiz-local-storage
+      id="quizLocalStorage"
+      profile="{{routeData.profile}}">
+    </quiz-local-storage>
+
     <quiz-data
       id="quizData"
       profile="[[routeData.profile]]"
@@ -99,13 +105,12 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <config-view name="config" profile="{{routeData.profile}}"></config-view>
+          <config-view name="config" profile="[[routeData.profile]]"></config-view>
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view
             name="question"
             route="{{subrouteTail}}"
-            quiz-data="[[quizData]]"
-            profile="[[routeData.profile]]">
+            quiz-data="[[quizData]]">
           </question-view>
           <result-view 
             name="result" 
@@ -138,8 +143,6 @@
         return {
           /** Contains route data provided by `<app-route route="{{route}}">` */
           _subrouteData: Object,
-          /** Data provided by localStorage */
-          _storageData: Object,
           /** Current pageName ready to provide to `<iron-pages>` */
           page: {
             type: String,
@@ -171,6 +174,11 @@
         ];
       }
 
+      constructor() {
+        super();
+        if(window.location.pathname === '/') localStorage.clear();
+      }
+
       /**
         * Ready function to configure i18n.
         * After overwriting the ready function, I18nMsg needs to be initialized again
@@ -187,6 +195,10 @@
         this.addEventListener('onRouteChange', this._onRouteChange);
 
         this.addEventListener('onProfileChange', this._routeProfileChanged);
+
+        this.addEventListener('removeAnswers', this._clearAnsweredQuestions);
+
+        this.addEventListener('startQuizTimer', this._startTimer);
       }
 
       /**
@@ -203,7 +215,7 @@
           return;
         }
         if (!page) {
-          this.set('route.path', `${this.rootPath}${this.routeData.profile}`);
+          this.set('route.path', `${this.rootPath}`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
@@ -264,6 +276,17 @@
       */
       _showPage404() {
         this.page = 'not-found';
+      }
+
+      _clearAnsweredQuestions() {
+        this.shadowRoot.querySelector('config-view').clearStorage();
+      }
+
+      _startTimer() {
+        let questionView = this.shadowRoot.querySelector('question-view');
+        if (typeof questionView.startTimer !== 'undefined') {
+          questionView.startTimer();
+        }
       }
     }
 

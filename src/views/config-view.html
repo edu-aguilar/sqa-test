@@ -72,8 +72,7 @@
 
     <!-- Store Candidate's Information -->
     <quiz-status-data 
-      id="quizStatusData"
-      profile="{{profile}}">
+      id="quizStatusData">
     </quiz-status-data>
 
     <div class="box-wrapper" id="formContainer">
@@ -203,8 +202,11 @@
       /** Ready function */
       ready() {
         super.ready();
-        this.$.quizStatusData.clearLocalStorage();
         this.set('_i18n', this.i18n);
+      }
+
+      clearStorage() {
+        this.shadowRoot.querySelector('quiz-status-data').clear();
       }
 
       /** Method to observe if the form is valid or not */
@@ -222,6 +224,9 @@
         );
 
         this.dispatchEvent(profileEvent);
+
+        this.set('user', {});
+        this.shadowRoot.querySelector('sqa-dropdown').reset();
       }
     }
     window.customElements.define(ConfigView.is, ConfigView);
