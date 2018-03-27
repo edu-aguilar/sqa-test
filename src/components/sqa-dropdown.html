@@ -20,7 +20,7 @@
         @apply --sqa-dropdown-props;
       }
     </style>
-   
+
     <iron-ajax 
       auto
       method="[[method]]"
@@ -118,7 +118,8 @@
           /** Sets the selected option */
           _selectedPaperItem: {
             type: Object,
-            observer: '_setSelectedItem'
+            observer: '_setSelectedItem',
+            notify: true
           },
           /** Formatted array ready to be printed */
           _formattedData: Object,
@@ -128,6 +129,14 @@
             observer: '_formatResponseData'
           }
         };
+      }
+
+      reset() {
+        /* TODO - At the moment the component doesn't allow us to select the same profile type twice in a row
+        * We need to (somehow) reset the selected value in both the paper-dropdown-menu and the paper-listbox
+        * and leave it completely empty, back to its original state.
+        */
+        this.shadowRoot.querySelector('paper-dropdown-menu')._setSelectedItem(null);
       }
 
       /**
