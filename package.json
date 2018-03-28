@@ -16,7 +16,7 @@
     "polymer-build": "^2.2.0"
   },
   "scripts": {
-    "postinstall": "bower install && node node_modules/gulp/bin/gulp.js build",
+    "postinstall": "bower install",
     "start": "node node_modules/http-server/bin/http-server build",
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html",
