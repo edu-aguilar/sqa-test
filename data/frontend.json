@@ -734,6 +734,16 @@
       "level": 4,
       "type": "text",
       "options": []
+    },
+    {
+      "id": "35",
+      "question": {
+        "title": "Añade el código que falta para centrar el span vertical y horizontalmente con respecto al div",
+        "image": "https://preview.ibb.co/h4z8X7/flex.png"
+      },
+      "level": 3,
+      "type": "text",
+      "options": []
     }
   ]
 }
