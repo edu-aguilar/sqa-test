@@ -22,8 +22,7 @@
   },
   "builds": [
     {
-      "preset": "es5-bundled",
-      "name": "sqa-test"
+      "preset": "es5-bundled"
     },
     {
       "preset": "es6-bundled"
