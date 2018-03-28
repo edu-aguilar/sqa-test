@@ -8,17 +8,17 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 
-<link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="../styles/shared-styles.html">
 
-<link rel="import" href="data-providers/quiz-status-data.html">
+<link rel="import" href="../data-providers/quiz-status-data.html">
 
-<link rel="import" href="components/question-tabs.html">
-<link rel="import" href="components/question-container.html">
-<link rel="import" href="components/gradient-progress-bar.html">
-<link rel="import" href="components/progress-timer.html">
+<link rel="import" href="../components/question-tabs.html">
+<link rel="import" href="../components/question-container.html">
+<link rel="import" href="../components/gradient-progress-bar.html">
+<link rel="import" href="../components/progress-timer.html">
 
 <dom-module id="question-view">
   <template>
@@ -56,22 +56,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       progress="{{quizProgress}}"
       answered-questions="{{answeredQuestions}}"
       answered-questions-count="{{answeredQuestionsCount}}"
-      time-passed="{{timePassed}}"
-      quiz-type="[[quizType]]">
+      time-passed="{{timePassed}}">
     </quiz-status-data>
 
     <question-tabs
-     questions="[[quizData.questions]]"
-     answered-questions="[[answeredQuestions]]"
-     selected="{{routeData.id}}">
+      questions="[[quizData.questions]]"
+      answered-questions="[[answeredQuestions]]"
+      selected="{{routeData.id}}">
     </question-tabs>
 
     <question-container
-     quiz-data="[[quizData]]"
-     current-question-id="[[routeData.id]]"
-     answered-questions-count="{{answeredQuestionsCount}}"
-     question="[[_question]]" 
-     selected-answer-array="{{_selectedAnswerArray}}">
+      quiz-data="[[quizData]]"
+      current-question-id="[[routeData.id]]"
+      answered-questions-count="{{answeredQuestionsCount}}"
+      question="[[_question]]" 
+      selected-answer-array="{{_selectedAnswerArray}}">
     </question-container>
 
     <gradient-progress-bar progress="[[quizProgress]]">
@@ -92,13 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           _question: Object,
           _selectedAnswerArray: Array,
           route: Object,
-          quizData: Object,
-          quizType: String,
-          timePassed: {
-            type: Number,
-            notify: true,
-            observer: '_updateStorageTime'
-          }
+          quizData: Object
         };
       }
 
@@ -111,12 +104,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        this.$.progressTimer.start();
+        this.startTimer();
         this.addEventListener('onPageQuestionChange', this._pageChange);
       }
 
-      _updateStorageTime(timePassed) {
-        this.$.quizStatusData.updateTime(timePassed);
+      startTimer() {
+        this.$.progressTimer.start();
       }
 
       _setAnsweredQuestion(answer) {
@@ -135,6 +128,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (question) {
           this.set('_question', question);
+          if (!this.answeredQuestions) {
+            this.set('answeredQuestions', {});
+          }
           this._selectedAnswerArray =
             this.answeredQuestions[question.id] ? this.answeredQuestions[question.id] : [];
         }
@@ -152,6 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             index--;
             break;
           case 'finish':
+            this.$.progressTimer.pause();
             event = new CustomEvent('onRouteChange', {
               detail: {
                 newRoute: 'result'

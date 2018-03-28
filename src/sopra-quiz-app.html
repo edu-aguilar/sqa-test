@@ -9,13 +9,17 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/i18n-msg/i18n-msg.html">
+<link rel="import" href="components/quiz-local-storage.html">
+
 <link rel="import" href="data-providers/quiz-data.html">
 <link rel="import" href="styles/shared-styles.html">
 
-<link rel="lazy-import" href="landing-view.html">
-<link rel="lazy-import" href="question-view.html">
-<link rel="lazy-import" href="result-view.html">
-<link rel="lazy-import" href="not-found-view.html">
+<link rel="lazy-import" href="views/config-view.html">
+<link rel="lazy-import" href="views/landing-view.html">
+<link rel="lazy-import" href="views/question-view.html">
+<link rel="lazy-import" href="views/result-view.html">
+<link rel="lazy-import" href="views/not-found-view.html">
 
 
 <dom-module id="sopra-quiz-app">
@@ -60,9 +64,9 @@
     </app-location>
 
     <app-route
-        id="appRouteType"
+        id="appRouteProfile"
         route="{{route}}"
-        pattern="[[rootPath]]:type"
+        pattern="[[rootPath]]:profile"
         data="{{routeData}}"
         tail="{{subroute}}">
     </app-route>
@@ -74,13 +78,15 @@
         data="{{_subrouteData}}"
         tail="{{subrouteTail}}">
     </app-route>
+
     <quiz-local-storage
       id="quizLocalStorage"
-      storage-data="{{_storageData}}">
+      profile="{{routeData.profile}}">
     </quiz-local-storage>
+
     <quiz-data
       id="quizData"
-      quiz-type="[[routeData.type]]"
+      profile="[[routeData.profile]]"
       data="{{quizData}}">
     </quiz-data>
 
@@ -99,18 +105,18 @@
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
+          <config-view name="config" profile="[[routeData.profile]]"></config-view>
           <landing-view name="landing" quiz-data="[[quizData]]"></landing-view>
           <question-view
             name="question"
             route="{{subrouteTail}}"
-            quiz-data="[[quizData]]"
-            quiz-type="[[routeData.type]]">
+            quiz-data="[[quizData]]">
           </question-view>
           <result-view 
             name="result" 
             on-site="[[quizData.onSite]]" 
             result-message="[[quizData.resultMessage]]"
-            quiz-type="[[routeData.type]]">
+            profile="[[routeData.profile]]">
           </result-view>
           <not-found-view name="not-found"></not-found-view>
         </iron-pages>
@@ -119,21 +125,46 @@
   </template>
 
   <script>
-    class SopraQuizApp extends Polymer.Element {
+    /**
+    * `<sopra-quiz-app>` is the shell of the app
+    *
+    * ## Usage
+    * Just inject the `<sopra-quiz-app>` component.
+    *
+    * `<sopra-quiz-app></sopra-quiz-app>`
+    *
+    * @customElement
+    * @polymer
+    */
+    class SopraQuizApp extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
       static get is() {return 'sopra-quiz-app';}
 
       static get properties() {
         return {
+          /** Contains route data provided by `<app-route route="{{route}}">` */
           _subrouteData: Object,
-          _storageData: Object,
+          /** Current pageName ready to provide to `<iron-pages>` */
           page: {
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged'
           },
+          /** Contains data provided by `<app-route>` */
           routeData: Object,
+          /** Contains the tail of the route */
           subroute: Object,
-          rootPath: String
+          /** Contains root path of the application and it's currently set to `/` */
+          rootPath: String,
+          /** Contains value of the locale language */
+          language: {
+            type: String,
+            value: 'es'
+          },
+          /** An instance property set to the value of `Polymer.rootPath` which is globally settable and
+            * defaults to the main document URL. It may be useful to set Polymer.rootPath to provide a
+            * stable application mount path when using client side routing.
+          */
+          importPath: String
         };
       }
 
@@ -143,14 +174,48 @@
         ];
       }
 
-      ready() {
-        super.ready();
-        this.addEventListener('onRouteChange', this._onRouteChange);
+      constructor() {
+        super();
+        if(window.location.pathname === '/') localStorage.clear();
       }
 
+      /**
+        * Ready function to configure i18n.
+        * After overwriting the ready function, I18nMsg needs to be initialized again
+        * Language initialization event under the polyfill for browsers that don't support HTML imports
+      */
+      ready() {
+        super.ready();
+
+        this.init(window.I18nMsg);
+        this._initLanguage();
+
+        this.addEventListener('HTMLImportsLoaded', this._initLanguage);
+
+        this.addEventListener('onRouteChange', this._onRouteChange);
+
+        this.addEventListener('onProfileChange', this._routeProfileChanged);
+
+        this.addEventListener('removeAnswers', this._clearAnsweredQuestions);
+
+        this.addEventListener('startQuizTimer', this._startTimer);
+      }
+
+      /**
+        * Listener launched when routePage is changed and sets `this.page` variable.
+        * @param {String} page
+      */
       _routePageChanged(page) {
+        if (page === 'config') {
+          this.set('routeData', {});
+        }
+        if (!this.routeData.profile) {
+          this.set('route.path', `${this.rootPath}`);
+          this.page = 'config';
+          return;
+        }
         if (!page) {
-          this.set('route.path', `${this.rootPath}frontend`);
+          this.set('route.path', `${this.rootPath}`);
           this.set('subroute.path', 'landing');
           this.page = 'landing';
           return;
@@ -158,9 +223,24 @@
         this.page = page;
       }
 
+      /**
+        * Listener launched when profile is changed and sets `routeData.profilef` with new data.
+        * @param {Object} e
+      */
+      _routeProfileChanged(e) {
+        const profile = e.detail.profile;
+        this.set('routeData.profile', profile);
+        // read json
+        this.set('route.path', `${this.rootPath}${this.routeData.profile}/landing`);
+      }
+
+      /**
+        * Listener launched when page is changed and sets `Polymer.importHref` with new data.
+        * @param {String} page
+      */
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        var resolvedPageUrl = this.resolveUrl(`views/${page}-view.html`);
         Polymer.importHref(
             resolvedPageUrl,
             null,
@@ -168,17 +248,45 @@
             true);
       }
 
+      /**
+        * Listener launched when route is changed and sets `route.path` with new data.
+        * @param {Object} e
+      */
       _onRouteChange(e) {
         const newRoute = e.detail.newRoute;
         let path = newRoute === 'not-found'
           ? `${this.rootPath}test/${newRoute}`
-          : `${this.rootPath}${this.routeData.type}/${newRoute}`;
+          : `${this.rootPath}${this.routeData.profile}/${newRoute}`;
 
         this.set('route.path', path);
       }
 
+      /**
+        * Helper function to set initial i18n language.
+      */
+      _initLanguage() {
+        window.I18nMsg.lang = this.language;
+
+        // This is required due to the removal of Object.observe() - More info on i18n-msg docs
+        window.Platform.performMicrotaskCheckpoint();
+      }
+
+      /**
+        * Helper function that set `this.page` to "not-found".
+      */
       _showPage404() {
         this.page = 'not-found';
+      }
+
+      _clearAnsweredQuestions() {
+        this.shadowRoot.querySelector('config-view').clearStorage();
+      }
+
+      _startTimer() {
+        let questionView = this.shadowRoot.querySelector('question-view');
+        if (typeof questionView.startTimer !== 'undefined') {
+          questionView.startTimer();
+        }
       }
     }
 

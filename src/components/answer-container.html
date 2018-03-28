@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
 
 <link rel="import" href="../styles/shared-styles.html">
 
@@ -29,7 +30,11 @@
       </iron-selector>
     </template>
     <template is="dom-if" if="[[!_isSelector(answerType)]]">
-      <paper-textarea label="Escribe aquí tu respuesta" value="{{_selectedAnswerSingle}}"></paper-textarea>
+      <paper-textarea 
+        class="sqa-answer_paper-textarea" 
+        placeholder="[[_i18n.writeAnswer]]" 
+        value="{{_selectedAnswerSingle}}">
+      </paper-textarea>
     </template>
   </template>
 
@@ -43,12 +48,14 @@
     *  easy access to its public functions and expose The variables `answerType`, `options` and
     *  `selectedAnswer`.
     *
-    * `<answer-container
+    * ````
+    * <answer-container
     *     id="answerContainer"
     *     answer-type="[[answerType]]"
     *     options="[[questionOptions]]"
     *     selected-answer-array="{{selectedAnswerArray}}">
-    * </answer-container>`
+    * </answer-container>
+    *```
     *
     * ## Styling
     *
@@ -59,7 +66,8 @@
     * @customElement
     * @polymer
     */
-    class AnswerContainer extends (class extends Polymer.Element {}) {
+
+    class AnswerContainer extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
       static get is() {
         return 'answer-container';
       }
@@ -83,8 +91,18 @@
             value: [],
             notify: true,
             observer: '_setSingleAnswerAsString'
-          }
+          },
+          /** i18n object to translate labels */
+          _i18n: Object
         };
+      }
+
+      /**
+        * Ready function to check if i18n has been configured.
+      */
+      ready() {
+        super.ready();
+        this.set('_i18n', this.i18n);
       }
 
       /**

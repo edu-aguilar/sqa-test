@@ -1,10 +1,11 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="styles/shared-styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
+<link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="landing-view">
   <template>
     <style include="shared-styles">
-
       :host {
         display: flex;
         flex-direction: column;
@@ -15,7 +16,7 @@
       .landing-img {
         width: 100%;
         height: 50%;
-        background-image: url(../images/landing-background.jpeg);
+        background-image: url(../../images/landing-background.jpeg);
         background-repeat: no-repeat;
         background-size: cover;
       }
@@ -87,21 +88,25 @@
       <p>[[quizData.description]] </p>
     </div>
 
-    <img class="company-logo" src="[[importPath]]../images/soprasteria-logo.png" alt="">
+    <img class="company-logo" src="[[importPath]]../../images/soprasteria-logo.png" alt="">
 
     <button class="button-quiz" on-click="_changeRoute">
-      <span>Empezar</span>
+      <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
     </button>
 
   </template>
 
   <script>
-    class LandingView extends Polymer.Element {
+    class LandingView extends (class extends Polymer.Element {}) {
       static get is() { return 'landing-view'; }
 
       static get properties() {
         return {
-          quizData: Object
+          quizData: Object,
+          language: {
+            value: 'es'
+          },
+          importPath: String
         };
       }
 
@@ -112,6 +117,10 @@
         );
 
         this.dispatchEvent(event);
+        this.dispatchEvent(new CustomEvent('startQuizTimer',
+          {
+            composed: true
+          }));
       }
     }
     window.customElements.define(LandingView.is, LandingView);

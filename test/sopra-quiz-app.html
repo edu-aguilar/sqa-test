@@ -7,11 +7,11 @@
 
   <title>my-view1</title>
 
-  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../bower_components/web-component-tester/browser.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
 
   <!-- Import the element to test -->
-  <link rel="import" href="../../src/sopra-quiz-app.html">
+  <link rel="import" href="../src/sopra-quiz-app.html">
 </head>
 
 <body>
@@ -26,24 +26,22 @@
       test('We should have main components', function() {
         const appShell = fixture('shell');
         const appLocation = appShell.shadowRoot.querySelector('#appLocation');
-        const appRouteType = appShell.shadowRoot.querySelector('#appRouteType');
+        const appRouteProfile = appShell.shadowRoot.querySelector('#appRouteProfile');
         const appRoutePage = appShell.shadowRoot.querySelector('#appRoutePage');
         const quizData = appShell.shadowRoot.querySelector('#quizData');
         const appDrawer = appShell.shadowRoot.querySelector('#appDrawer');
 
         assert(appLocation !== null);
-        assert(appRouteType !== null);
+        assert(appRouteProfile !== null);
         assert(appRoutePage !== null);
         assert(quizData !== null);
         assert(appDrawer !== null);
       });
 
-
       test('We have already defined needed component properties', function() {
         const appShell = fixture('shell');
         
         assert.typeOf(appShell._subrouteData, 'object');
-        assert.typeOf(appShell._storageData, 'object');
         assert.typeOf(appShell.page, 'string');
         assert.typeOf(appShell.routeData, 'object');
         assert.typeOf(appShell.subroute, 'object');
@@ -58,9 +56,17 @@
         assert.typeOf(appShell._showPage404, 'function');
       });
 
+      test('Language should be initialized', function(done) {
+        const appShell = fixture('shell');
+        flush(function() {
+          assert(appShell.i18n !== null);
+          done();
+        });
+      });
+
       test('_routePageChanged observer is fired when page changes and set the page property properly', function() {
         const appShell = fixture('shell');
-        const newPage = 'result';
+        const newPage = 'config';
         appShell.set('_subrouteData.page', newPage);
 
         assert.equal(appShell.page, newPage);

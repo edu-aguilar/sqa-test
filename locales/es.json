@@ -1,0 +1,74 @@
+{
+  "pageNotFound": {
+    "message": "Oops has obtenido un 404"
+  },
+  "goBackHome": {
+    "message": "Ve de vuelta al Inicio"
+  },
+  "appDescription": {
+    "message": "¡Bienvenido a Sopra Steria Quiz! Por favor ingresa los datos del candidato y selecciona un perfil para comenzar la prueba."
+  },
+  "start": {
+    "message": "Empezar"
+  },
+  "finish": {
+    "message": "Finalizar"
+  },
+  "previous": {
+    "message": "Anterior"
+  },
+  "next": {
+    "message": "Siguiente"
+  },
+  "name": {
+    "message": "Nombre"
+  },
+  "lastname": {
+    "message": "Apellido"
+  },
+  "email": {
+    "message": "Correo Electrónico"
+  },
+  "phone": {
+    "message": "Teléfono"
+  },
+  "profile": {
+    "message": "Perfil"
+  },
+  "send": {
+    "message": "Enviar"
+  },
+  "time": {
+    "message": "Tiempo"
+  },
+  "correctAnswers": {
+    "message": "Respuestas correctas"
+  },
+  "incorrectAnswers": {
+    "message": "Respuestas incorrectas"
+  },
+  "finalResult": {
+    "message": "Resultado final"
+  },
+  "hours": {
+    "message": "horas"
+  },
+  "minutes": {
+    "message": "minutos"
+  },
+  "seconds": {
+    "message": "segundos"
+  },
+  "and": {
+    "message": "y"
+  },
+  "writeAnswer": {
+    "message": "Escribe aquí tu respuesta"
+  },
+  "loading": {
+    "message": "Cargando..."
+  },
+  "sendResults": {
+    "message": "Enviar Resultados"
+  }
+}

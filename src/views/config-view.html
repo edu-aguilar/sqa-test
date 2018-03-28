@@ -1,0 +1,234 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/i18n-msg/i18n-msg.html">
+
+<link rel="import" href="../styles/shared-styles.html">
+
+<link rel="import" href="../components/sqa-dropdown.html">
+<link rel="import" href="../data-providers/quiz-status-data.html">
+
+<dom-module id="config-view">
+  <template>
+    <style include="shared-styles">
+
+      :host {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-quiz {
+        margin: 20px 0 20px 0;
+      }
+
+      form {
+        width: 100%;
+      }
+
+      .box-wrapper {
+        margin: 1em 1em 1em 1em;
+        width: 15em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100%;
+      }
+
+      .box-wrapper > p {
+        font-size: var(--sopra-font-xl);
+        text-align: center;
+      }
+
+      @media screen and (min-width: 768px) {
+        .box-wrapper {
+          width: 30em;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        .box-wrapper > p {
+          font-size: var(--sopra-font-xxl);
+        }
+      }
+
+      .input-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      .input-container > input {
+        border-bottom: 2px solid var(--sopra-grey-200);
+      }
+
+      sqa-dropdown {
+        --paper-dropdown-menu: {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <!-- Store Candidate's Information -->
+    <quiz-status-data 
+      id="quizStatusData">
+    </quiz-status-data>
+
+    <div class="box-wrapper" id="formContainer">
+      <p class="text-result"> 
+        <i18n-msg msgid="appDescription">
+          Welcome to Sopra Steria Quiz! Please input the candidate's information and select a profile to begin the test.
+        </i18n-msg>
+      </p>
+      
+      <form id="resultForm">
+        <div class="input-container"> 
+          <label> <i18n-msg msgid="name">Name</i18n-msg>*</label>
+          <input class="input-quiz" name="name"  value="{{user.name::input}}" type="text" required>
+        </div>
+
+        <div class="input-container">
+          <label> <i18n-msg msgid="lastname">Lastname</i18n-msg>*</label>
+          <input class="input-quiz" name="lastname" value="{{user.lastname::input}}" type="text" required>
+        </div>
+
+          <div class="input-container">
+            <label> <i18n-msg msgid="phone">Phone Number</i18n-msg>*</label>
+            <input class="input-quiz" name="phone" value="{{user.phone::input}}" pattern="^(?:\\+?(\\d{1}))?[0-9]{9,19}$"  type="text">
+          </div>
+
+        <div class="input-container">
+          <label> <i18n-msg msgid="email">Email</i18n-msg>*</label>
+          <input class="input-quiz"  name="email" value="{{user.email::input}}" type="email" required>
+        </div>
+
+        <div class="input-container">
+          <label> <i18n-msg msgid="profile">Profile</i18n-msg>*</label>
+          <sqa-dropdown
+            id="profileDropdown"
+            title="[[_i18n.profile]]"
+            method="get"
+            end-point="[[endPoint]]"
+            options="[[dropdownOptions]]"
+            selected-item="{{profile}}"
+            loading-message="[[_i18n.loading]]">
+          </sqa-dropdown>
+        </div>
+      </form>
+
+      <button class="button-quiz" on-click="_beginQuiz" disabled$="{{!isValid}}">
+        <span> <i18n-msg msgid="start"> Start </i18n-msg> </span>
+      </button>
+    </div> 
+  </template>
+
+  <script>
+    /**
+      * `<config-view>` is the initial view where the human resource's person selects the candidate's profile to begin the test
+      *
+      * ## Usage
+      *
+      * ```
+      * <config-view
+      *   name="config"
+      *   profile="{{routeData.profile}}"
+      * </config-view>
+      * ```
+      *
+      * ## i18n fields
+      *
+      * | Field Name       | Description                            |
+      * |------------------|----------------------------------------|
+      * | `appDescription` | Initial message with app's description |
+      * | `name`           | Candidate's name label                 |
+      * | `lastname`       | Candidate's lastname label             |
+      * | `phone`          | Candidate's phone label                |
+      * | `email`          | Candidate's email label                |
+      * | `profile`        | Candidate's profile label              |
+      * | `start`          | Label for `start` button               |
+      *
+      * @customElement
+      * @polymer
+    */
+    class ConfigView extends Polymer.mixinBehaviors([this.i18nMsgBehavior], Polymer.Element) {
+      static get is() { return 'config-view'; }
+
+      static get observers() {
+        return [
+          '_checkFormValid(user.*)'
+        ];
+      }
+
+      static get properties() {
+        return {
+          /** Quiz profile (frontend, backend, fullstack, etc.) */
+          profile: {
+            type: String,
+            value: ''
+          },
+          /** Candidate's information */
+          user: {
+            type: Object,
+            value: () => ({}),
+            notify: true
+          },
+          /** Value to check if the form is valid */
+          isValid: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          /** Endpoint to get profiles list **/
+          endPoint: {
+            type: String,
+            value: 'https://dev-sopra-quiz-app.apps.sodigital.io/backend/api/profile'
+          },
+          /** Options to map endpoint respond with dropdown object **/
+          dropdownOptions: {
+            type: Object,
+            value: () => {
+              return {
+                'id': 'name',
+                'value': 'name'
+              };
+            }
+          },
+          /** i18n object to translate labels */
+          _i18n: Object
+        };
+      }
+
+      /** Ready function */
+      ready() {
+        super.ready();
+        this.set('_i18n', this.i18n);
+      }
+
+      clearStorage() {
+        this.shadowRoot.querySelector('quiz-status-data').clear();
+      }
+
+      /** Method to observe if the form is valid or not */
+      _checkFormValid() {
+        this.isValid = this.$.resultForm ? this.$.resultForm.checkValidity() : false;
+      }
+    
+      /** Function that stores the candidate's information in localStorage and redirects to landing-view */
+      _beginQuiz() {
+        this.$.quizStatusData.setUserData(this.user);
+    
+        const profileEvent = new CustomEvent(
+          'onProfileChange',
+          { detail: { profile: this.profile }, composed: true }
+        );
+
+        this.dispatchEvent(profileEvent);
+
+        this.set('user', {});
+        this.shadowRoot.querySelector('sqa-dropdown').reset();
+      }
+    }
+    window.customElements.define(ConfigView.is, ConfigView);
+  </script>
+</dom-module>

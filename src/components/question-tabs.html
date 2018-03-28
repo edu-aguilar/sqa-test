@@ -3,7 +3,6 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
 
-
 <link rel="import" href="../styles/shared-styles.html">
 
 <dom-module id="question-tabs">
@@ -37,15 +36,11 @@
           font-weight: 800;
         };
       }
-
-
-
     </style>
 
     <paper-tabs selected="{{_selectedIndex}}" scrollable fit-container>
       <template is="dom-repeat" items="{{questions}}">
-            <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
- 
+        <paper-tab class$="[[_answeredClass(item, answeredQuestions.*)]]"> [[_pageNumber(index)]] </paper-tab>
       </template>
     </paper-tabs>
 

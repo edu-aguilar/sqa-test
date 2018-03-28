@@ -1,59 +1,48 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../components/quiz-local-storage.html">
+<link rel="import" href="../../bower_components/shared-properties-mixin/shared-properties-mixin.html">
+
 
 <dom-module id="quiz-data">
-  <template>
-    <quiz-local-storage
-      id="quizLocalStorage"
-      storage-data="{{storageData}}">
-    </quiz-local-storage>
-  </template>
   <script>
-    class QuizData extends Polymer.Element {
+    /* eslint new-cap: "off", no-undef: "off" */
+    class QuizData extends SharedPropertiesMixin(Polymer.Element) {
       static get is() {return 'quiz-data';}
-      static get properties() {return {
-        data: {
-          type: Object,
-          value: () => {},
-          notify: true
-        },
-        quizType: {
-          type: String
-        },
-        storageData: {
-          type: Object,
-          observer: '_loadData'
-        }
-      };}
+      static get properties() {
+        return {
+          data: {
+            type: Object,
+            notify: true,
+            sharedStoreKey: 'quizDataStorage'
+          },
+          currentProfile: String,
+          profile: {
+            type: String,
+            observer: '_loadData'
+          }
+        };
+      }
 
       _loadData() {
-        if (!this.quizType) return;
-        if (this.storageData && this.storageData[this.quizType]) {
-          this.loadFromStorage();
-        } else {
+        if (this.profile && this.currentProfile !== this.profile) {
+          this.loadFromJson();
+        }
+        if (this.profile && !this.data) {
           this.loadFromJson();
         }
       }
 
-      loadFromStorage() {
-        const quizData = this.storageData[this.quizType].quizData;
-        if (!this.data && JSON.stringify(this.data) !== JSON.stringify(quizData)) {
-          this.set('data', quizData);
-        }
-      }
-
       loadFromJson() {
-        let url = `data/${this.quizType}.json`;
+        let url = `data/${this.profile}.json`;
         fetch(url)
         .then((resp) => resp.json())
         .then((data) => {
-          this.$.quizLocalStorage.updateStorage(this.quizType, 'quizData', data);
           this.set('data', data);
+          this.currentProfile = this.profile;
         })
-        .catch(() => {this._notifyError();});
+        .catch((e) => {this._notifyError(e);});
       }
 
-      _notifyError() {
+      _notifyError(err) {
         let event = new CustomEvent(
           'onRouteChange',
           {
@@ -67,5 +56,4 @@
 
     customElements.define(QuizData.is, QuizData);
   </script>
-
 </dom-module>

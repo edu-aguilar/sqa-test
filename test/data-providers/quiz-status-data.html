@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <quiz-status-data
           total-questions="10"
-          quiz-type="frontend">
+          profile="frontend">
         </quiz-status-data>
       </template>
     </test-fixture>
@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <quiz-status-data
           total-questions="10"
-          quiz-type="frontend">
+          profile="frontend">
         </quiz-status-data>
       </template>
     </test-fixture>
@@ -75,7 +75,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(Object.keys(component.answeredQuestions).length, 1);
         });
         test('Multiple instances share data correctly', function() {
-          fixture('storageInstance').clearStorage();
           var component1 = fixture('FirstInstance');
           var component2 = fixture('SecondInstance');
           component1.setAnsweredQuestion('question', 'response');

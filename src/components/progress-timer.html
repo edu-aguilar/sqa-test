@@ -25,7 +25,12 @@
       * Just inject the `<progress-timer>` component with and *id* to provide
       *  easy access to its public functions and expose a variable of type `Number`
       *
-      * `<progress-timer id="progressTimer" time-passed="[[timePassed]]"></progress-timer>`
+      * ```
+      * <progress-timer
+      *   id="progressTimer"
+      *   time-passed="[[timePassed]]">
+      * </progress-timer>
+      * ```
       *
       * ## Styling
       *
@@ -41,26 +46,17 @@
 
       static get properties() {
         return {
-          //* * Formatted time to show */
-          _formattedTime: String,
+          /** Formatted time to show */
+          _formattedTime: {
+            type: String,
+            computed: '_formatTime(timePassed)'
+          },
           /** Seconds passed since the *start()* method is called. */
           timePassed: {
             type: Number,
-            value: 0,
-            notify: true,
-            observer: '_timeChange'
+            notify: true
           }
         };
-      }
-
-      /** Gives initial format to `timePassed` when the component is instantiated. */
-      ready() {
-        super.ready();
-      }
-
-      /** Observer to formatTime when time is changed */
-      _timeChange() {
-        this._formattedTime = this._formatTime();
       }
 
       /** Starts timer. */
@@ -80,7 +76,7 @@
 
       /** Callback that adds one second to *timePassed*. */
       _updateTime() {
-        this.timePassed++;
+        this.set('timePassed', this.timePassed + 1);
       }
 
       /**
@@ -88,10 +84,12 @@
         * @return {result} The time passed in a clock-like format (*HH:mm:ss*).
       */
       _formatTime() {
+        if (!this.timePassed) {
+          this.timePassed = 0;
+        }
         const date = new Date(null);
         date.setSeconds(this.timePassed);
-        const result = date.toISOString().substr(11, 8);
-        return result;
+        return date.toISOString().substr(11, 8);
       }
     }
 
