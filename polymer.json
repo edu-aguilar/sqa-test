@@ -23,7 +23,7 @@
   "builds": [
     {
       "preset": "es5-bundled",
-      "name": "sopra-quiz-app"
+      "name": "sqa-test"
     },
     {
       "preset": "es6-bundled"
